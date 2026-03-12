@@ -110,7 +110,7 @@
       <div class="gift-card__price">
         <h1>
           {% if settings.currency_code_enabled %}
-            {{ gift_card.balance | money_with_currency }}
+            {{ gift_card.balance | money }}
           {% else %}
             {{ gift_card.balance | money }}
           {% endif %}
