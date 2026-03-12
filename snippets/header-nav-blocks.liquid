@@ -1,0 +1,43 @@
+{% comment %}
+  Renders nav links from header section blocks (nav_item).
+  Headwear shows a 47brand-style mega menu (STYLE, TYPE, LEAGUE).
+  Usage: {% render 'header-nav-blocks', nav_blocks: section.blocks, section: section %}
+{% endcomment %}
+
+<nav class="header__inline-menu" aria-label="{{ 'sections.header.menu' | t }}">
+  <ul class="list-menu list-menu--inline flex flex-wrap items-center gap-4 lg:gap-8" role="list">
+    {%- for block in nav_blocks -%}
+      {%- if block.type == 'nav_item' and block.settings.title != blank -%}
+        <li {{ block.shopify_attributes }}>
+          {%- assign nav_title = block.settings.title | strip | downcase -%}
+          {%- if nav_title == 'headwear' -%}
+            <header-menu>
+              <details id="Details-HeaderMenu-Headwear-{{ block.id }}" class="mega-menu mega-menu--hover-only">
+                <summary
+                  id="HeaderMenu-Headwear-{{ block.id }}"
+                  class="header__menu-item list-menu__item link focus-inset uppercase tracking-wide hover:opacity-80"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {%- if block.settings.link != blank -%}
+                    <a href="{{ block.settings.link }}" class="link focus-inset uppercase tracking-wide hover:opacity-80">{{ block.settings.title | escape }}</a>
+                  {%- else -%}
+                    <span>{{ block.settings.title | escape }}</span>
+                  {%- endif -%}
+                </summary>
+                {% render 'header-headwear-mega', section: section %}
+              </details>
+            </header-menu>
+          {%- else -%}
+            <a
+              href="{{ block.settings.link | default: '#' }}"
+              class="header__menu-item list-menu__item link link--text focus-inset uppercase tracking-wide hover:opacity-80"
+            >
+              {{ block.settings.title | escape }}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</nav>

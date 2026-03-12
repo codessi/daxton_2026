@@ -1,0 +1,49 @@
+.shop-by-team {
+  text-align: center;
+}
+
+.shop-by-team__heading {
+  margin: 0 0 0.9375rem;
+}
+
+.shop-by-team__logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem 1.5625rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shop-by-team__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-by-team__logo-link {
+  display: block;
+  line-height: 0;
+  transition: opacity 0.2s ease;
+}
+
+.shop-by-team__logo-link:hover {
+  opacity: 0.75;
+}
+
+.shop-by-team__logo-link img {
+  display: block;
+  width: auto;
+  height: 1.5625rem;
+  max-width: 2.5rem;
+  object-fit: contain;
+}
+
+@media screen and (min-width: 750px) {
+  .shop-by-team__logo-link img {
+    height: 1.875rem;
+    max-width: 3.125rem;
+  }
+}

@@ -1,0 +1,162 @@
+/* Header row: "Shop By" left, tabs (Headwear | Apparel) right */
+.shop-by__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.625rem;
+  margin-bottom: 0.9375rem;
+}
+
+.shop-by__heading {
+  margin: 0;
+  order: 1;
+}
+
+.shop-by__tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem;
+  order: 2;
+}
+
+.shop-by__tab {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.shop-by__tab:hover {
+  opacity: 0.8;
+}
+
+.shop-by__tab.is-active {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+/* Slider layout - slider-component uses display: contents so nav + products participate in flex */
+.shop-by__slider-component {
+  display: contents;
+}
+
+.shop-by__nav {
+  flex: 0 0 auto;
+  order: 3;
+}
+
+.shop-by__products {
+  flex: 1 1 100%;
+  width: 100%;
+  order: 4;
+  min-width: 0;
+}
+
+.shop-by__top .slider-counter {
+  display: none;
+}
+
+/* Horizontal slider list */
+.shop-by__slider {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+  padding: 0 0 0.625rem;
+  list-style: none;
+  /* gap: 0; */
+}
+
+.shop-by__slide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  margin: 0;
+  /* padding: 0 0 0 var(--grid-mobile-horizontal-spacing, 0.9375rem); */
+  box-sizing: border-box;
+}
+
+.shop-by__slide:first-child {
+  padding-left: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .shop-by__slide {
+    width: 45%;
+    min-width: 140px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .shop-by__slide {
+    width: calc((100% - var(--grid-desktop-horizontal-spacing, 1.25rem) * 5) / 6);
+    min-width: 160px;
+  }
+}
+
+/* Card: light grey background, image + underlined label (47brand style) */
+.shop-by__card {
+  display: block;
+  height: 100%;
+  /* background: rgba(var(--color-foreground), 0.06); */
+  border-radius: 0.25rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  transition: opacity 0.2s ease;
+}
+
+.shop-by__card:hover {
+  opacity: 0.9;
+}
+
+.shop-by__card-image {
+  display: block;
+  width: 100%;
+  /* aspect-ratio: 1; */
+  object-fit: contain;
+  /* background: rgba(var(--color-foreground), 0.04); */
+  background: white;
+}
+
+.shop-by__card-label {
+  display: block;
+  padding: 0.46875rem 0.625rem;
+  font-weight: 600;
+  font-size: 0.9em;
+  text-align: center;
+  position: relative;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shop-by__card-label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.35rem;
+  height: 0.12em;
+  background: currentColor;
+  transform-origin: left;
+  transform: scaleX(1);
+  transition: transform 0.25s ease;
+}
+
+.shop-by__card:hover .shop-by__card-label::after {
+  transform: scaleX(0);
+}

@@ -1,0 +1,112 @@
+{{ 'section-looking-for-more.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="looking-for-more color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding isolate">
+    {%- if section.settings.title != blank -%}
+      <h2 class="looking-for-more__heading {{ section.settings.heading_size }}">
+        {{ section.settings.title | escape }}
+      </h2>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <ul class="looking-for-more__buttons" role="list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="looking-for-more__button-link focus-inset">
+                {{ block.settings.label | default: block.settings.link.title | escape }}
+              </a>
+            {%- else -%}
+              <span class="looking-for-more__button-link" aria-disabled="true">
+                {{ block.settings.label | escape }}
+              </span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Looking for more?",
+  "tag": "section",
+  "class": "section section-looking-for-more",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Looking for more?"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "Top padding", "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "Bottom padding", "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Looking for more?",
+      "blocks": [
+        { "type": "button", "settings": { "label": "Men's" } },
+        { "type": "button", "settings": { "label": "Women's" } },
+        { "type": "button", "settings": { "label": "Basics" } },
+        { "type": "button", "settings": { "label": "Dogs" } },
+        { "type": "button", "settings": { "label": "Hitch" } },
+        { "type": "button", "settings": { "label": "Mystery" } },
+        { "type": "button", "settings": { "label": "Clean Up" } },
+        { "type": "button", "settings": { "label": "Sale" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

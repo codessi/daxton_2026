@@ -1,0 +1,414 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Spring 2026",
+            "heading_size": "h0"
+          }
+        },
+        "text_Ka6M3e": {
+          "type": "text",
+          "settings": {
+            "text": "Three new collections merge through Daxton and craftsmanship",
+            "text_style": "body",
+            "text_width": "full"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text_Ka6M3e",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/a-guy-and-girl-wearing-baseball-cap-standing-a-part.png",
+        "placeholder_image": "hero-apparel-1",
+        "image_overlay_opacity": 10,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "top-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "shop_by_team": {
+      "type": "shop-by-team",
+      "blocks": {
+        "team_1": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "MLB"
+          }
+        },
+        "team_2": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "NFL"
+          }
+        },
+        "team_3": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "NCAA"
+          }
+        },
+        "team_4": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "NHL"
+          }
+        },
+        "team_5": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "NBA"
+          }
+        },
+        "team_6": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "MiLB"
+          }
+        },
+        "team_7": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "WNBA"
+          }
+        },
+        "team_8": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "Soccer"
+          }
+        },
+        "team_9": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": "NASCAR"
+          }
+        }
+      },
+      "block_order": [
+        "team_1",
+        "team_2",
+        "team_3",
+        "team_4",
+        "team_5",
+        "team_6",
+        "team_7",
+        "team_8",
+        "team_9"
+      ],
+      "settings": {
+        "title": "Shop by Team",
+        "heading_size": "h1",
+        "color_scheme": "scheme-1",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "image_banner_2": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Spring 2026",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop the collection",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Gemini_Generated_Image_bn2fulbn2fulbn2f.png",
+        "placeholder_image": "hero-apparel-2",
+        "image_overlay_opacity": 40,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "featured_collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "col_1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "snapbacks"
+          }
+        },
+        "col_2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "structured-baseball-hat"
+          }
+        },
+        "col_3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "frame"
+          }
+        },
+        "col_4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "col_5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4",
+        "col_5"
+      ],
+      "settings": {
+        "title": "Featured Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "color_scheme": "scheme-1",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "shop_by": {
+      "type": "shop-by",
+      "blocks": {
+        "style_1": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/shopping.webp",
+            "label": "Baseball",
+            "link": ""
+          }
+        },
+        "style_2": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/5-panel-hat.png",
+            "label": "5 Panel",
+            "link": ""
+          }
+        },
+        "style_3": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/wholesale-blank-caps-in-bulk-gray-vintage-plain-caps_1.webp",
+            "label": "Dad",
+            "link": ""
+          }
+        },
+        "style_4": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/67538c6ebaaa70e69bdfedb1_6d905d05-5959-4344-99b6-f6672883639a.webp",
+            "label": "Trucker",
+            "link": ""
+          }
+        },
+        "style_5": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/download_1.jpg",
+            "label": "Flat Bill",
+            "link": ""
+          }
+        },
+        "style_6": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/2.jpg",
+            "label": "Backs",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "style_1",
+        "style_2",
+        "style_3",
+        "style_4",
+        "style_5",
+        "style_6"
+      ],
+      "settings": {
+        "title": "Shop By",
+        "heading_size": "h1",
+        "tab_1_label": "Headwear",
+        "tab_1_link": "",
+        "tab_2_label": "Apparel",
+        "tab_2_link": "",
+        "active_tab": "1",
+        "color_scheme": "scheme-1",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "looking_for_more": {
+      "type": "looking-for-more",
+      "blocks": {
+        "btn_1": {
+          "type": "button",
+          "settings": {
+            "label": "Men's",
+            "link": ""
+          }
+        },
+        "btn_2": {
+          "type": "button",
+          "settings": {
+            "label": "Women's",
+            "link": ""
+          }
+        },
+        "btn_3": {
+          "type": "button",
+          "settings": {
+            "label": "Basics",
+            "link": ""
+          }
+        },
+        "btn_4": {
+          "type": "button",
+          "settings": {
+            "label": "Dogs",
+            "link": ""
+          }
+        },
+        "btn_5": {
+          "type": "button",
+          "settings": {
+            "label": "Hitch",
+            "link": ""
+          }
+        },
+        "btn_6": {
+          "type": "button",
+          "settings": {
+            "label": "Mystery",
+            "link": ""
+          }
+        },
+        "btn_7": {
+          "type": "button",
+          "settings": {
+            "label": "Clean Up",
+            "link": ""
+          }
+        },
+        "btn_8": {
+          "type": "button",
+          "settings": {
+            "label": "Sale",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "btn_1",
+        "btn_2",
+        "btn_3",
+        "btn_4",
+        "btn_5",
+        "btn_6",
+        "btn_7",
+        "btn_8"
+      ],
+      "settings": {
+        "title": "Looking for more?",
+        "heading_size": "h1",
+        "color_scheme": "scheme-1",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "family_rewards": {
+      "type": "family-rewards",
+      "settings": {
+        "join_label": "Join the",
+        "title": "Daxton Members",
+        "cta_text": "Join for free",
+        "cta_link": "",
+        "benefits_headline": "By joining our rewards program you'll get these exclusive benefits:",
+        "benefits_text": "Free Shipping on All Orders | Earn Points for Money Off | Early Access to Sales & Drops | Save Your Teams for Personalized Shopping",
+        "color_scheme": "scheme-2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "shop_by_team",
+    "image_banner_2",
+    "featured_collections",
+    "shop_by",
+    "looking_for_more",
+    "family_rewards"
+  ]
+}

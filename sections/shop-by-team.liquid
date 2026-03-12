@@ -1,0 +1,158 @@
+{{ 'section-shop-by-team.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="shop-by-team color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.title != blank -%}
+      <h2 class="shop-by-team__heading {{ section.settings.heading_size }}">
+        {{ section.settings.title | escape }}
+      </h2>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <ul class="shop-by-team__logos" role="list">
+        {%- for block in section.blocks -%}
+          <li class="shop-by-team__logo" {{ block.shopify_attributes }}>
+            {%- liquid
+              assign team_label = block.settings.label | default: block.settings.image.alt | default: 'Team'
+            -%}
+            {%- if block.settings.link != blank -%}
+              <a
+                href="{{ block.settings.link }}"
+                class="shop-by-team__logo-link focus-inset"
+                aria-label="{{ team_label | escape }}"
+              >
+            {%- endif -%}
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 200
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '80, 100, 120, 160, 200',
+                  sizes: '(min-width: 750px) 3.125rem, 2.5rem',
+                  alt: team_label | escape
+              }}
+            {%- else -%}
+              <span class="shop-by-team__logo-placeholder" style="width: 2.5rem; height: 1.5625rem; background: rgba(var(--color-foreground), 0.08); border-radius: 4px;" aria-hidden="true"></span>
+            {%- endif -%}
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop by Team",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop by Team"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team",
+      "name": "Team logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Accessibility label",
+          "info": "Describes the team (e.g. MLB, NFL). Used for screen readers and when no image is set."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Team",
+      "blocks": [
+        { "type": "team", "settings": { "label": "MLB" } },
+        { "type": "team", "settings": { "label": "NFL" } },
+        { "type": "team", "settings": { "label": "NCAA" } },
+        { "type": "team", "settings": { "label": "NHL" } },
+        { "type": "team", "settings": { "label": "NBA" } },
+        { "type": "team", "settings": { "label": "MiLB" } },
+        { "type": "team", "settings": { "label": "WNBA" } },
+        { "type": "team", "settings": { "label": "Soccer" } },
+        { "type": "team", "settings": { "label": "NASCAR" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

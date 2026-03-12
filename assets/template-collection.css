@@ -1,0 +1,210 @@
+/* Debug borders: hidden by default. Remove the block below to show colored borders again. */
+/* .border-yellow-500.border-4,
+.border-red-500.border-4,
+.border-green-500.border-4,
+.border-purple-500.border-4,
+.border-orange-500.border-4,
+.border-indigo-500.border-4, 
+.border-blue-500.border-4 {
+  border-width: 0 !important;
+  border-color: transparent !important;
+}  */
+
+/* Collection page grid: one grid, four cells
+   row 1 col 1: empty
+   row 1 col 2: banner
+   row 2 col 1: vertical filter
+   row 2 col 2: collection-grid-content
+   Use .collection-page-grid.facets-vertical so we override .facets-vertical { display: flex } from component-facets.css
+*/
+@media screen and (min-width: 990px) {
+  .collection-page-grid.facets-vertical {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+  }
+
+  .collection-page-grid__cell--empty {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .collection-page-grid__cell--banner {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .collection-page-grid__cell--filter {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .collection-page-grid__cell--content {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+  }
+}
+
+/* Horizontal padding so product cards don't touch viewport/section edges */
+.collection .product-grid-container > .collection.page-width {
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+}
+
+@media screen and (min-width: 750px) {
+  .collection .product-grid-container > .collection.page-width {
+    padding-left: 3.125rem;
+    padding-right: 3.125rem;
+  }
+}
+
+/* Gap between product cards on collection page.
+   The product grid <ul> doesn't use the .grid class, so base.css gap never applies.
+   We add flex layout and gap here so cards have space between them. */
+.collection .product-grid-container .product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.25rem;
+  column-gap: 1.25rem;
+  row-gap: 1.25rem;
+}
+
+.collection .product-grid-container .product-grid .grid__item {
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+/* 2 cols on tablet-down, 1 gap */
+.collection .product-grid-container .product-grid.grid--2-col-tablet-down .grid__item {
+  width: calc((100% - 0.9375rem) / 2);
+  max-width: none;
+}
+
+@media screen and (max-width: 749px) {
+  .collection .product-grid-container .product-grid {
+    column-gap: 0.9375rem;
+    row-gap: 1rem;
+  }
+}
+
+/* 3 cols on desktop, 2 gaps */
+@media screen and (min-width: 990px) {
+  .collection .product-grid-container .product-grid.grid--3-col-desktop .grid__item {
+    width: calc((100% - 2.5rem) / 3);
+    max-width: none;
+  }
+}
+
+/* Show full product image (no head/body crop) while keeping same card size */
+.collection .product-grid .card__media .media img {
+  object-fit: contain;
+  object-position: center center;
+  width: 100%;
+  height: 100%;
+
+  background-color: white;
+}
+
+@media screen and (max-width: 749px) {
+  .collection .grid__item:only-child {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .collection .slider.slider--tablet {
+    margin-bottom: 0.9375rem;
+  }
+}
+
+.collection .loading-overlay {
+  position: absolute;
+  z-index: 1;
+  width: 1.125rem;
+}
+
+@media screen and (max-width: 749px) {
+  .collection .loading-overlay {
+    top: 0;
+    right: 0;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .collection .loading-overlay {
+    left: 0;
+  }
+}
+
+.collection .loading-overlay {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  padding: 0 0.9375rem;
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 750px) {
+  .collection .loading-overlay {
+    padding-left: 3.125rem;
+    padding-right: 3.125rem;
+  }
+}
+
+.collection.loading .loading-overlay {
+  display: block;
+}
+
+.collection--empty .title-wrapper {
+  margin-top: 6.25rem;
+  margin-bottom: 9.375rem;
+}
+
+@media screen and (max-width: 989px) {
+  .collection .slider--tablet.product-grid {
+    scroll-padding-left: 0.9375rem;
+  }
+}
+
+.collection__description > * {
+  margin: 0;
+}
+
+.collection__title.title-wrapper {
+  margin-bottom: 1.5625rem;
+}
+
+.collection__title .title:not(:only-child) {
+  margin-bottom: 0.625rem;
+}
+
+@media screen and (min-width: 990px) {
+  .collection__title--desktop-slider .title {
+    margin-bottom: 1.5625rem;
+  }
+
+  .collection__title.title-wrapper--self-padded-tablet-down {
+    padding: 0 3.125rem;
+  }
+
+  .collection slider-component:not(.page-width-desktop) {
+    padding: 0;
+  }
+
+  .collection--full-width slider-component:not(.slider-component-desktop) {
+    padding: 0 0.9375rem;
+    max-width: none;
+  }
+}
+
+.collection__view-all a:not(.link) {
+  margin-top: 0.625rem;
+}

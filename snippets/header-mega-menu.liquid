@@ -1,0 +1,126 @@
+{% comment %}
+  Renders a megamenu for the header.
+  Usage: {% render 'header-mega-menu', menu: header_menu, section: section %}
+  Falls back to section.settings.menu when menu param is not passed.
+{% endcomment %}
+{%- assign menu = menu | default: section.settings.menu -%}
+{%- assign mega_featured_image = section.settings.headwear_featured_image -%}
+{%- assign mega_featured_heading = section.settings.headwear_featured_heading -%}
+{%- assign mega_featured_link = section.settings.headwear_featured_link -%}
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu mega-menu--hover-only">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+                aria-haspopup="true"
+                aria-expanded="false">
+                {%- if link.url != blank -%}
+                  <a href="{{ link.url }}" class="no-underline link focus-inset{% if link.child_active %} header__active-menu-item{% endif %}">
+                    {{- link.title | escape -}}
+                  </a>
+                {%- else -%}
+                  <span
+                    {% if link.child_active %}
+                    class="header__active-menu-item"
+                    {% endif %}>
+                    {{- link.title | escape -}}
+                  </span>
+                {%- endif -%}
+              </summary>
+              {%- assign is_headwear = false -%}
+              {%- assign link_title_lower = link.title | strip | downcase -%}
+              {%- if link_title_lower == 'headwear' or link.handle == 'headwear' -%}
+                {%- assign is_headwear = true -%}
+              {%- endif -%}
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup{% if is_headwear %} mega-menu__content--full-width{% endif %}"
+                tabindex="-1">
+                <div class="{% if is_headwear %}mega-menu__content-inner page-width{% endif %}">
+                  <div class="{% if is_headwear %}mega-menu__content-nav{% endif %}">
+                <ul class="mega-menu__list{% if is_headwear %} mega-menu__list--headwear{% elsif link.levels == 1 %} mega-menu__list--condensed{% endif %}{% if is_headwear == false %} page-width{% endif %}" role="list">
+                  {%- for childlink in link.links -%}
+                    <li>
+                      <a
+                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                        href="{{ childlink.url }}"
+                        class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                        {% if childlink.current %}
+                        aria-current="page"
+                        {% endif %}>
+                        {{ childlink.title | escape }}
+                      </a>
+                      {%- if childlink.links != blank -%}
+                        <ul class="list-unstyled" role="list">
+                          {%- for grandchildlink in childlink.links -%}
+                            <li>
+                              <a
+                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                href="{{ grandchildlink.url }}"
+                                class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                {% if grandchildlink.current %}
+                                aria-current="page"
+                                {% endif %}>
+                                {{ grandchildlink.title | escape }}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+                  </div>
+                  {%- if is_headwear and mega_featured_image != blank -%}
+                    <div class="mega-menu__content-featured">
+                      {%- if mega_featured_link != blank -%}
+                        <a href="{{ mega_featured_link }}" class="mega-menu__featured-link">
+                      {%- endif -%}
+                      <div class="mega-menu__featured-media media global-media-settings">
+                        {{
+                          mega_featured_image
+                          | image_url: width: 550
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '400, 550, 700',
+                            sizes: '(min-width: 990px) 40vw, 100vw',
+                            class: 'mega-menu__featured-image'
+                        }}
+                      </div>
+                      {%- if mega_featured_heading != blank -%}
+                        <p class="mega-menu__featured-heading">{{ mega_featured_heading | escape }}</p>
+                      {%- endif -%}
+                      {%- if mega_featured_link != blank -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+            aria-current="page"
+            {% endif %}>
+            <span
+              {%- if link.current %}
+              class="header__active-menu-item"
+              {% endif %}>
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

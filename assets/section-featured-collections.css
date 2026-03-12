@@ -1,0 +1,100 @@
+/* Header row: "Featured Collections" left, slide buttons right (buttons outside product container) */
+.featured-collections__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.9375rem;
+}
+
+.featured-collections__heading {
+  margin: 0;
+  flex: 1 1 auto;
+  order: 1;
+}
+
+.featured-collections__slider-component {
+  display: contents;
+}
+
+.featured-collections__nav {
+  flex: 0 0 auto;
+  order: 2;
+}
+
+.featured-collections__products {
+  flex: 1 1 100%;
+  width: 100%;
+  order: 3;
+  min-width: 0;
+}
+
+.featured-collections__top .slider-counter {
+  display: none;
+}
+
+/* Horizontal slider: single row, scroll - width 100% so content overflows */
+.featured-collections__slider {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+  padding: 0 0 0.625rem;
+  list-style: none;
+  gap: 0;
+}
+
+.featured-collections__slider.slider--everywhere {
+  flex-wrap: nowrap;
+}
+
+.featured-collections__slide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  margin: 0;
+  padding: 0 0 0 var(--grid-mobile-horizontal-spacing, 0.9375rem);
+  box-sizing: border-box;
+}
+
+.featured-collections__slide:first-child {
+  padding-left: 0;
+}
+
+/* Slide widths so ~1.2 visible on mobile, ~2 on tablet, ~3 on desktop */
+@media screen and (max-width: 749px) {
+  .featured-collections__slide {
+    width: 85%;
+    min-width: 260px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .featured-collections__slide {
+    width: 50%;
+    min-width: 280px;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .featured-collections__slide {
+    width: calc((100% - var(--grid-desktop-horizontal-spacing, 1.25rem) * 2) / 3);
+    min-width: 280px;
+  }
+}
+
+/* Card wrapper inside slide - full width of slide */
+.featured-collections__slide .card-wrapper,
+.featured-collections__slide .collection-card-wrapper {
+  width: 100%;
+}
+
+.featured-collections__slide .card {
+  width: 100%;
+}

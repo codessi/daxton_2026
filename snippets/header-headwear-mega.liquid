@@ -1,0 +1,74 @@
+{% comment %}
+  Renders Headwear mega menu from Navigation menu (section.settings.headwear_menu_handle).
+  47brand-style: full-width panel, content in page-width container; left 60% submenu, right 40% featured image.
+  Usage: {% render 'header-headwear-mega', section: section %}
+{% endcomment %}
+{%- assign headwear_menu_handle = section.settings.headwear_menu_handle | strip -%}
+{%- if headwear_menu_handle != blank -%}
+  {%- assign headwear_menu = linklists[headwear_menu_handle] -%}
+{%- else -%}
+  {%- assign headwear_menu = nil -%}
+{%- endif -%}
+{%- assign headwear_featured_image = section.settings.headwear_featured_image -%}
+<div
+  id="MegaMenu-Content-Headwear"
+  class="mega-menu__content mega-menu__content--full-width color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+  tabindex="-1"
+>
+  <div class="mega-menu__content-inner page-width">
+    <div class="mega-menu__content-nav">
+      <ul class="mega-menu__list mega-menu__list--headwear" role="list">
+        {%- if headwear_menu != blank and headwear_menu.links.size > 0 -%}
+          {%- for column in headwear_menu.links -%}
+            <li class="mega-menu__column">
+              <a href="{{ column.url }}" class="mega-menu__link mega-menu__link--level-2 link">{{ column.title | escape }}</a>
+              <ul class="list-unstyled" role="list">
+                {%- for child in column.links -%}
+                  {%- if child.links != blank -%}
+                    <li class="mega-menu__subhead-wrap">
+                      <a href="{{ child.url }}" class="mega-menu__link mega-menu__link--level-2 link mega-menu__link--subhead">{{ child.title | escape }}</a>
+                      <ul class="list-unstyled" role="list">
+                        {%- for grandchild in child.links -%}
+                          <li><a href="{{ grandchild.url }}" class="mega-menu__link mega-menu__link--level-3 link">{{ grandchild.title | escape }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    </li>
+                  {%- else -%}
+                    <li><a href="{{ child.url }}" class="mega-menu__link mega-menu__link--level-3 link">{{ child.title | escape }}</a></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+    {%- if headwear_featured_image != blank -%}
+      <div class="mega-menu__content-featured">
+        {%- if section.settings.headwear_featured_link != blank -%}
+          <a href="{{ section.settings.headwear_featured_link }}" class="mega-menu__featured-link">
+        {%- endif -%}
+        <div class="mega-menu__featured-media media global-media-settings">
+          <img
+            srcset="{{ headwear_featured_image | image_url: width: 400 }} 400w,
+                    {{ headwear_featured_image | image_url: width: 550 }} 550w,
+                    {{ headwear_featured_image | image_url: width: 700 }} 700w"
+            src="{{ headwear_featured_image | image_url: width: 550 }}"
+            sizes="(min-width: 990px) 40vw, 100vw"
+            alt="{{ headwear_featured_image.alt | escape }}"
+            loading="lazy"
+            width="{{ headwear_featured_image.width }}"
+            height="{{ headwear_featured_image.height }}"
+            class="mega-menu__featured-image"
+          >
+        </div>
+        {%- if section.settings.headwear_featured_heading != blank -%}
+          <p class="mega-menu__featured-heading">{{ section.settings.headwear_featured_heading | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.headwear_featured_link != blank -%}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
