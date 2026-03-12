@@ -39,12 +39,12 @@
   }
 {%- endstyle -%}
 
-<div class="border border-yellow-500 border-4 section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if section.settings.filter_type == 'vertical' %} collection-page-grid facets-vertical page-width{% endif %}">
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if section.settings.filter_type == 'vertical' %} collection-page-grid facets-vertical page-width{% endif %}">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {{ 'component-facets.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
     {%- if section.settings.filter_type == 'vertical' -%}
-      <div class="border-4 collection-page-grid__cell collection-page-grid__cell--empty" aria-hidden="true"></div>
+      <div class="collection-page-grid__cell collection-page-grid__cell--empty" aria-hidden="true"></div>
       <div class=" collection-page-grid__cell collection-page-grid__cell--banner">
         {% render 'collection-banner'
           , collection: collection
@@ -56,7 +56,7 @@
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
           aria-labelledby="verticalTitle"
-          class="border border-green-500 border-4 collection-page-grid__cell--filter facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}"
+          class="collection-page-grid__cell--filter facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}"
           id="main-collection-filters"
           data-id="{{ section.id }}">
           {% render 'facets'
@@ -70,7 +70,7 @@
       {%- else -%}
         <div class="collection-page-grid__cell--filter" aria-hidden="true"></div>
       {%- endif -%}
-      <div class="border border-purple-500 border-4 collection-page-grid__cell collection-page-grid__cell--content collection-grid-content">
+      <div class="collection-page-grid__cell collection-page-grid__cell--content collection-grid-content">
         {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
         {%- if section.settings.enable_sorting -%}
           <facet-filters-form class="facets  facets-vertical-sort page-width small-hide">
@@ -126,7 +126,7 @@
           </facet-filters-form>
         {%- endif -%}
 
-        <div class="border border-orange-500 border-4 product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" id="ProductGridContainer" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+        <div class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" id="ProductGridContainer" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
@@ -146,7 +146,7 @@
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {%- if forloop.index > 2 -%}{%- assign lazy_load = true -%}{%- endif -%}
-                <li class="border border-yellow-500 border-4 grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade style="--animation-order: {{ forloop.index }};"{% endif %}>
+                <li class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade style="--animation-order: {{ forloop.index }};"{% endif %}>
                   {% render 'card-product', card_product: product, media_aspect_ratio: section.settings.image_ratio, image_shape: section.settings.image_shape, show_secondary_image: section.settings.show_secondary_image, show_vendor: section.settings.show_vendor, show_rating: section.settings.show_rating, lazy_load: lazy_load, skip_styles: skip_card_product_styles, quick_add: section.settings.quick_add, section_id: section.id %}
                 </li>
                 {%- assign skip_card_product_styles = true -%}

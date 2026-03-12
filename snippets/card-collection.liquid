@@ -42,7 +42,7 @@
     " style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
     <div class="card__inner {% if card_style == 'standard' %}color-{{ card_color_scheme }} gradient{% endif %}{% if card_collection.featured_image or card_style == 'standard' %} ratio{% endif %}" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
       {%- if card_collection.featured_image -%}
-        <div class="border border-gray-200 p-6 border-4 bg-white card__media flex items-center justify-center ">
+        <div class="p-6 bg-white card__media flex items-center justify-center ">
           <div class="media--transparent media--hover-effect">
             {% comment %} <img
               src="{{ card_collection.featured_image | image_url: width: 1500 }}"
@@ -75,7 +75,7 @@
         </div>
       {%- endif -%}
       {%- if card_collection == blank -%}
-        <div class="border border-gray-200 border-6 card__media">
+        <div class="card__media">
           {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
       {%- else -%}

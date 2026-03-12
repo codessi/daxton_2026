@@ -1,15 +1,3 @@
-/* Debug borders: hidden by default. Remove the block below to show colored borders again. */
-/* .border-yellow-500.border-4,
-.border-red-500.border-4,
-.border-green-500.border-4,
-.border-purple-500.border-4,
-.border-orange-500.border-4,
-.border-indigo-500.border-4, 
-.border-blue-500.border-4 {
-  border-width: 0 !important;
-  border-color: transparent !important;
-}  */
-
 /* Collection page grid: one grid, four cells
    row 1 col 1: empty
    row 1 col 2: banner
