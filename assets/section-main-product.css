@@ -5,9 +5,11 @@ product-info {
 
 .product {
   margin: 0;
+  display: flex;
 }
 
 .product.grid {
+  display: flex;
   gap: 0;
 }
 
