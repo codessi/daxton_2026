@@ -7,13 +7,12 @@
   - block: {Object} block object.
   - picker_type: {String} type of picker to dispay
 
-
   Usage:
   {% render 'product-variant-options',
-    product: product,
-    option: option,
-    block: block
-    picker_type: picker_type
+  product: product,
+  option: option,
+  block: block
+  picker_type: picker_type
   %}
 {% endcomment %}
 {%- liquid
@@ -42,22 +41,18 @@
   {%- capture input_id -%}
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
   {%- endcapture -%}
-
   {%- capture input_name -%}
     {{ option.name }}-{{ option.position }}
   {%- endcapture -%}
-
   {%- capture input_dataset -%}
     data-product-url="{{ value.product_url }}"
     data-option-value-id="{{ value.id }}"
   {%- endcapture -%}
-
   {%- capture label_unavailable -%}
     <span class="visually-hidden label-unavailable">
       {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
     </span>
   {%- endcapture -%}
-
   {% assign escaped_value = value | escape %}
 
   {%- if picker_type == 'swatch' -%}
@@ -65,19 +60,18 @@
       <span class="visually-hidden">{{ escaped_value }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
-
     {%
-      render 'swatch-input',
-      id: input_id,
-      name: input_name,
-      value: escaped_value,
-      swatch: value.swatch,
-      product_form_id: product_form_id,
-      checked: value.selected,
-      visually_disabled: option_disabled,
-      shape: block.settings.swatch_shape,
-      help_text: help_text,
-      additional_props: input_dataset
+      render 'swatch-input'
+      , id: input_id
+      , name: input_name
+      , value: escaped_value
+      , swatch: value.swatch
+      , product_form_id: product_form_id
+      , checked: value.selected
+      , visually_disabled: option_disabled
+      , shape: block.settings.swatch_shape
+      , help_text: help_text
+      , additional_props: input_dataset
     %}
   {%- elsif picker_type == 'button' -%}
     {%- liquid
@@ -97,17 +91,16 @@
       data-option-value-id="{{ value.id }}"
       data-variant-title="{{ matching_variant.title | default: value | escape }}"
       {%- if matching_variant -%}
-        data-variant-id="{{ matching_variant.id }}"
+      data-variant-id="{{ matching_variant.id }}"
       {%- endif -%}
       {% if value.selected %}
-        aria-pressed="true"
+      aria-pressed="true"
       {% else %}
-        aria-pressed="false"
+      aria-pressed="false"
       {% endif %}
       {% if option_disabled %}
-        disabled
-      {% endif %}
-    >
+      disabled
+      {% endif %}>
       {%- if matching_variant and matching_variant.featured_media -%}
         <img
           src="{{ matching_variant.featured_media | image_url: width: 160 }}"
@@ -115,8 +108,7 @@
           class="product-variant-tile__image"
           loading="lazy"
           width="{{ matching_variant.featured_media.width }}"
-          height="{{ matching_variant.featured_media.height }}"
-        >
+          height="{{ matching_variant.featured_media.height }}">
       {%- else -%}
         <span class="product-variant-tile__label">
           {{ value }}
@@ -129,16 +121,15 @@
       id="{{ input_id }}"
       value="{{ escaped_value }}"
       {% if value.selected %}
-        selected="selected"
+      selected="selected"
       {% endif %}
       {% if swatch_value and picker_type == 'swatch_dropdown' %}
-        data-option-swatch-value="{{ swatch_value }}"
-        {% if swatch_focal_point %}
-          data-option-swatch-focal-point="{{ swatch_focal_point }}"
-        {% endif %}
+      data-option-swatch-value="{{ swatch_value }}"
+      {% if swatch_focal_point %}
+      data-option-swatch-focal-point="{{ swatch_focal_point }}"
       {% endif %}
-      {{ input_dataset }}
-    >
+      {% endif %}
+      {{ input_dataset }}>
       {% if option_disabled -%}
         {{- 'products.product.value_unavailable' | t: option_value: value -}}
       {%- else -%}
