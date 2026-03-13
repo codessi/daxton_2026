@@ -1078,6 +1078,42 @@ class VariantSelects extends HTMLElement {
         },
       });
     });
+
+    this.addEventListener('click', (event) => {
+      const button = event.target.closest('.product-variant-tile__button');
+      if (!button) return;
+
+      const valueId = button.dataset.optionValueId;
+      if (!valueId) return;
+
+      // Update pressed state
+      this.querySelectorAll('.product-variant-tile__button').forEach((b) => {
+        b.setAttribute('aria-pressed', b === button ? 'true' : 'false');
+      });
+
+      // Update current variant title label(s)
+      const title = button.dataset.variantTitle;
+      if (title) {
+        this.closest('.product__info-container')
+          ?.querySelectorAll('[data-variant-label-target]')
+          ?.forEach((el) => { el.textContent = title; });
+      }
+
+      // Publish selection change so existing variant logic runs
+      const optionValueId = valueId;
+      const selectedOptionValues = Array.from(
+        this.querySelectorAll('.product-variant-tile__button[aria-pressed="true"]')
+      ).map(({ dataset }) => dataset.optionValueId);
+
+      publish(PUB_SUB_EVENTS.optionValueSelectionChange, {
+        data: {
+          event,
+          target: button,
+          selectedOptionValues,
+          optionValueId,
+        },
+      });
+    });
   }
 
   updateSelectionMetadata({ target }) {

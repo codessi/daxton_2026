@@ -43,14 +43,19 @@
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
+        <fieldset class="js product-form__input product-form__input--tiles">
+          <legend class="form__label">
+            {{ option.name }}:
+            <span class="product-variant-tile__current" data-variant-label-target>{{ product.selected_or_first_available_variant.title }}</span>
+          </legend>
+          <div class="product-variant-tile-list" role="list">
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
         </fieldset>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">

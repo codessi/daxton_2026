@@ -80,24 +80,50 @@
       additional_props: input_dataset
     %}
   {%- elsif picker_type == 'button' -%}
-    <input
-      type="radio"
+    {%- liquid
+      assign option_index = option.position | minus: 1
+      assign matching_variant = nil
+      for v in product.variants
+        if v.options[option_index] == value
+          assign matching_variant = v
+          break
+        endif
+      endfor
+    -%}
+    <button
+      type="button"
       id="{{ input_id }}"
-      name="{{ input_name | escape }}"
-      value="{{ escaped_value }}"
-      form="{{ product_form_id }}"
+      class="product-variant-tile__button"
+      data-option-value-id="{{ value.id }}"
+      data-variant-title="{{ matching_variant.title | default: value | escape }}"
+      {%- if matching_variant -%}
+        data-variant-id="{{ matching_variant.id }}"
+      {%- endif -%}
       {% if value.selected %}
-        checked
+        aria-pressed="true"
+      {% else %}
+        aria-pressed="false"
       {% endif %}
       {% if option_disabled %}
-        class="disabled"
+        disabled
       {% endif %}
-      {{ input_dataset }}
     >
-    <label for="{{ input_id }}">
-      {{ value -}}
+      {%- if matching_variant and matching_variant.featured_media -%}
+        <img
+          src="{{ matching_variant.featured_media | image_url: width: 160 }}"
+          alt="{{ matching_variant.title | escape }}"
+          class="product-variant-tile__image"
+          loading="lazy"
+          width="{{ matching_variant.featured_media.width }}"
+          height="{{ matching_variant.featured_media.height }}"
+        >
+      {%- else -%}
+        <span class="product-variant-tile__label">
+          {{ value }}
+        </span>
+      {%- endif -%}
       {{ label_unavailable }}
-    </label>
+    </button>
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
     <option
       id="{{ input_id }}"
