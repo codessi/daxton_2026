@@ -63,6 +63,18 @@
   summary.list-menu__item {
     padding-right: 1.6875rem;
   }
+.header__menu-item, .header__menu-item> {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  font-family: "acumin-pro-extra-condensed", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+   /* Level-1 items with submenus (summary) match font size of level-1 links without submenus */
+  .header__inline-menu .list-menu--inline > li > details > summary.header__menu-item,
+  .header__inline-menu .list-menu--inline > li details.mega-menu > summary.header__menu-item {
+    font-size: 1.0625rem;
+  } 
 
   .list-menu__item {
     display: flex;
