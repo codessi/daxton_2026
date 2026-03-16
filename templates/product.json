@@ -27,6 +27,10 @@
           "type": "price",
           "settings": {}
         },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -60,6 +64,7 @@
         "vendor",
         "title",
         "price",
+        "rating",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
@@ -82,13 +87,23 @@
         "padding_bottom": 12
       }
     },
+    "product-reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "heading": "Customer reviews",
+        "heading_size": "h2",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
+        "products_to_show": 5,
+        "columns_desktop": 5,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "square",
@@ -99,10 +114,32 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "1773635756a882f2b5": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_JCHAt8": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "no_reviews",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_JCHAt8"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "product-reviews",
+    "related-products",
+    "1773635756a882f2b5"
   ]
 }

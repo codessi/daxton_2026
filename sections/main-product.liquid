@@ -486,8 +486,8 @@
                   show_pickup_availability: true
                 -%}
               {%- when 'rating' -%}
-                {%- if product.metafields.reviews.rating.value != blank -%}
-                  <div class="rating-wrapper">
+                <div class="rating-wrapper" {{ block.shopify_attributes }}>
+                  {%- if product.metafields.reviews.rating.value != blank -%}
                     {% liquid
                       assign rating_decimal = 0
                       assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
@@ -514,15 +514,9 @@
                         {{ product.metafields.reviews.rating.value.scale_max -}}
                       </span>
                     </p>
-                    <p class="rating-count caption">
-                      <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
-                      <span class="visually-hidden">
-                        {{- product.metafields.reviews.rating_count }}
-                        {{ 'accessibility.total_reviews' | t -}}
-                      </span>
-                    </p>
-                  </div>
-                {%- endif -%}
+                  {%- endif -%}
+              
+                </div>
               {%- when 'complementary' -%}
                 <product-recommendations
                   class="complementary-products quick-add-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
