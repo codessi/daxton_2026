@@ -14,6 +14,17 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Featured Collections heading: Helvetica Neue LT Pro 500 (from Typekit ifq8ltc).
+     To verify: DevTools → Inspect heading → Computed → font-family should show helvetica-neue-lt-pro. */
+  #SectionHeading-{{ section.id }}.featured-collections__heading.title.h0,
+  #SectionHeading-{{ section.id }}.featured-collections__heading.title.h1,
+  #SectionHeading-{{ section.id }}.featured-collections__heading.title.h2 {
+    font-family: "helvetica-neue-lt-pro", sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    color: black !important;
+  }
 {%- endstyle -%}
 
 <div class="featured-collections color-{{ section.settings.color_scheme }} gradient">

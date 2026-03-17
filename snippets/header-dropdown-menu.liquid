@@ -17,13 +17,11 @@
                 class="header__menu-item list-menu__item link focus-inset"
                 aria-haspopup="true"
                 aria-expanded="false"
-                aria-controls="HeaderMenu-MenuList-{{ forloop.index }}"
-              >
+                aria-controls="HeaderMenu-MenuList-{{ forloop.index }}">
                 <span
                   {%- if link.child_active %}
-                    class="header__active-menu-item"
-                  {% endif %}
-                >
+                  class="header__active-menu-item"
+                  {% endif %}>
                   {{- link.title | escape -}}
                 </span>
                 <span aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
@@ -33,8 +31,7 @@
                 class="header__submenu list-menu list-menu--disclosure color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup"
                 role="list"
                 tabindex="-1"
-                hidden
-              >
+                hidden>
                 {%- for childlink in link.links -%}
                   <li>
                     {%- if childlink.links == blank -%}
@@ -43,9 +40,8 @@
                         href="{{ childlink.url }}"
                         class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"
                         {% if childlink.current %}
-                          aria-current="page"
-                        {% endif %}
-                      >
+                        aria-current="page"
+                        {% endif %}>
                         {{ childlink.title | escape }}
                       </a>
                     {%- else -%}
@@ -56,16 +52,14 @@
                           class="header__menu-item link link--text list-menu__item focus-inset caption-large"
                           aria-haspopup="true"
                           aria-expanded="false"
-                          aria-controls="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}"
-                        >
+                          aria-controls="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}">
                           <span>{{ childlink.title | escape }}</span>
                           <span aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
                         </button>
                         <ul
                           id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}"
                           class="header__submenu list-menu motion-reduce"
-                          hidden
-                        >
+                          hidden>
                           {%- for grandchildlink in childlink.links -%}
                             <li>
                               <a
@@ -73,9 +67,8 @@
                                 href="{{ grandchildlink.url }}"
                                 class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"
                                 {% if grandchildlink.current %}
-                                  aria-current="page"
-                                {% endif %}
-                              >
+                                aria-current="page"
+                                {% endif %}>
                                 {{ grandchildlink.title | escape }}
                               </a>
                             </li>
@@ -94,14 +87,12 @@
             href="{{ link.url }}"
             class="header__menu-item list-menu__item link link--text focus-inset"
             {% if link.current %}
-              aria-current="page"
-            {% endif %}
-          >
+            aria-current="page"
+            {% endif %}>
             <span
               {%- if link.current %}
-                class="header__active-menu-item"
-              {% endif %}
-            >
+              class="header__active-menu-item"
+              {% endif %}>
               {{- link.title | escape -}}
             </span>
           </a>
