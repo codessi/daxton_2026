@@ -10,13 +10,13 @@
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
-      <li class="border-4 border-solid border-red-600">
+      <li class="">
 
           <header-menu>
             <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu mega-menu--hover-only">
               <summary
                 id="HeaderMenu-{{ link.handle }}"
-                class="border-4 border-solid border-blue-600 header__menu-item list-menu__item link focus-inset"
+                class="header__menu-item list-menu__item link focus-inset"
                 aria-haspopup="true"
                 aria-expanded="false">
                 {%- if link.url != blank -%}
