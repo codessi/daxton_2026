@@ -2364,18 +2364,11 @@ input[type='checkbox'] {
   transition: top 0.15s ease-out;
 }
 
-/* Single fixed wrapper so announcement + header stick together */
-.header-group-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 4;
-}
+
 
 /* Reserve space so content isn't hidden under fixed header group */
 body {
-  --header-group-height: 140px;
+  --header-group-height: 0px;
 }
 main#MainContent.content-for-layout {
   padding-top: var(--header-group-height);
