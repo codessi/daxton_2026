@@ -4,9 +4,6 @@
   Falls back to section.settings.menu when menu param is not passed.
 {% endcomment %}
 {%- assign menu = menu | default: section.settings.menu -%}
-{%- assign mega_featured_image = section.settings.headwear_featured_image -%}
-{%- assign mega_featured_heading = section.settings.headwear_featured_heading -%}
-{%- assign mega_featured_link = section.settings.headwear_featured_link -%}
 <nav class="header__inline-menu">
  
   <ul class="list-menu list-menu--inline" role="list">
@@ -35,10 +32,41 @@
                 id="MegaMenu-Content-{{ forloop.index }}"
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
                 tabindex="-1">
+                {%- liquid
+                  assign mega_promo = nil
+
+                  for block in section.blocks
+                    if block.type == 'mega_menu_promo'
+                      assign ph = block.settings.parent_handle | strip | downcase | replace: ' ', '-'
+                      assign ph = ph | replace: '--', '-'
+                      assign ph = ph | replace: '--', '-'
+                      assign ph = ph | replace: '--', '-'
+
+                      if ph != blank and ph == link.handle
+                        assign mega_promo = block
+                        break
+                      endif
+                    endif
+                  endfor
+
+                  assign mega_img = nil
+                  assign mega_heading = ''
+                  assign mega_link = blank
+
+                  if mega_promo != nil
+                    assign mega_img = mega_promo.settings.image
+                    assign mega_heading = mega_promo.settings.title
+                    assign mega_link = mega_promo.settings.link
+                  elsif link.handle == 'headwear'
+                    assign mega_img = section.settings.headwear_featured_image
+                    assign mega_heading = section.settings.headwear_featured_heading
+                    assign mega_link = section.settings.headwear_featured_link
+                  endif
+                -%}
                 <div class="mega-menu__content-inner page-width">
                   <div class="mega-menu__content-nav">
                     <ul
-                      class="mega-menu__list grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[2.5rem] gap-y-[1.125rem] list-none{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                      class="mega-menu__list{% if link.levels == 1 %} mega-menu__list--condensed list-none{% else %} grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[2.5rem] gap-y-[1.125rem] list-none{% endif %}"
                       role="list"
                     >
                       {%- for childlink in link.links -%}
@@ -74,16 +102,16 @@
                     </ul>
                   </div>
 
-                  {%- if mega_featured_image != blank or mega_featured_heading != blank or mega_featured_link != blank -%}
+                  {%- if mega_img != blank or mega_heading != blank or mega_link != blank -%}
                     <div class="mega-menu__content-featured">
-                      {%- if mega_featured_link != blank -%}
-                        <a href="{{ mega_featured_link }}" class="mega-menu__featured-link">
+                      {%- if mega_link != blank -%}
+                        <a href="{{ mega_link }}" class="mega-menu__featured-link">
                       {%- endif -%}
 
-                      {%- if mega_featured_image != blank -%}
+                      {%- if mega_img != blank -%}
                         <div class="mega-menu__featured-media media global-media-settings">
                           {{
-                            mega_featured_image
+                            mega_img
                             | image_url: width: 550
                             | image_tag:
                               loading: 'lazy',
@@ -94,11 +122,11 @@
                         </div>
                       {%- endif -%}
 
-                      {%- if mega_featured_heading != blank -%}
-                        <p class="mega-menu__featured-heading">{{ mega_featured_heading | escape }}</p>
+                      {%- if mega_heading != blank -%}
+                        <p class="mega-menu__featured-heading">{{ mega_heading | escape }}</p>
                       {%- endif -%}
 
-                      {%- if mega_featured_link != blank -%}
+                      {%- if mega_link != blank -%}
                         </a>
                       {%- endif -%}
                     </div>
