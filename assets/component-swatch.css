@@ -23,3 +23,9 @@
   border-style: dashed;
   border-color: rgba(var(--color-foreground), 0.5);
 }
+
+/* Shape “none”: image / color swatches with soft corners (not circle or sharp square) */
+.swatch--shape-none {
+  --swatch--border-radius: 0.25rem;
+  border-radius: var(--swatch--border-radius);
+}

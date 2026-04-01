@@ -1086,8 +1086,9 @@ class VariantSelects extends HTMLElement {
       const valueId = button.dataset.optionValueId;
       if (!valueId) return;
 
-      // Update pressed state
-      this.querySelectorAll('.product-variant-tile__button').forEach((b) => {
+      // Update pressed state (scope to this option row so other dimensions stay selected)
+      const optionGroup = button.closest('fieldset') || button.closest('.product-form__input');
+      (optionGroup || this).querySelectorAll('.product-variant-tile__button').forEach((b) => {
         b.setAttribute('aria-pressed', b === button ? 'true' : 'false');
       });
 
