@@ -69,7 +69,25 @@ class HeaderMenu extends HTMLElement {
         this.useButtonTrigger.addEventListener('focusout', this.onFocusOut.bind(this));
         this.initNestedDisclosures(this.content);
       }
+      if (this.useButtonTrigger.classList.contains('mega-menu')) {
+        this.addEventListener('mouseenter', this.onHoverEnter.bind(this));
+        this.addEventListener('mouseleave', this.onHoverLeave.bind(this));
+        if (this.content) {
+          this.content.addEventListener('mouseenter', this.onHoverEnter.bind(this));
+          this.content.addEventListener('mouseleave', this.onHoverLeave.bind(this));
+        }
+        this.addEventListener('focusin', this.onMegaFocusIn.bind(this));
+      }
     }
+  }
+
+  onMegaFocusIn() {
+    if (!this.useButtonTrigger || !this.useButtonTrigger.classList.contains('mega-menu')) return;
+    if (this.hoverCloseTimeout) {
+      clearTimeout(this.hoverCloseTimeout);
+      this.hoverCloseTimeout = null;
+    }
+    this.open();
   }
 
   initNestedDisclosures(container) {
@@ -93,6 +111,9 @@ class HeaderMenu extends HTMLElement {
 
   onButtonToggle() {
     if (!this.trigger || !this.content) return;
+    if (this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu--hover-only')) {
+      return;
+    }
     const open = this.content.hidden;
     this.content.hidden = !open;
     this.trigger.setAttribute('aria-expanded', open);
@@ -132,6 +153,12 @@ class HeaderMenu extends HTMLElement {
     } else if (this.trigger && this.content) {
       this.content.hidden = true;
       this.trigger.setAttribute('aria-expanded', false);
+      if (this.useButtonTrigger) {
+        this.useButtonTrigger.classList.remove('mega-menu--open');
+      }
+      if (this.header && this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu')) {
+        this.header.preventHide = false;
+      }
     }
   }
 
@@ -143,6 +170,16 @@ class HeaderMenu extends HTMLElement {
     } else if (this.trigger && this.content) {
       this.content.hidden = false;
       this.trigger.setAttribute('aria-expanded', true);
+      if (this.useButtonTrigger) {
+        this.useButtonTrigger.classList.add('mega-menu--open');
+      }
+      if (this.header && this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu')) {
+        document.documentElement.style.setProperty(
+          '--header-bottom-position-desktop',
+          `${Math.floor(this.header.getBoundingClientRect().bottom)}px`
+        );
+        this.header.preventHide = true;
+      }
     }
   }
 

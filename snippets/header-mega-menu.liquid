@@ -7,25 +7,39 @@
 {%- assign mega_featured_image = section.settings.headwear_featured_image -%}
 {%- assign mega_featured_heading = section.settings.headwear_featured_heading -%}
 {%- assign mega_featured_link = section.settings.headwear_featured_link -%}
-<nav class="header__inline-menu">
+<nav class="header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
-            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu mega-menu--hover-only">
-              <summary
-                id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
-                aria-haspopup="true"
-                aria-expanded="false">
-                <span
-                  {% if link.child_active %}
-                  class="header__active-menu-item"
-                  {% endif %}>
-                  {{- link.title | escape -}}
-                </span>
-              </summary>
+            <div id="Details-HeaderMenu-{{ forloop.index }}" class="header__disclosure mega-menu mega-menu--hover-only">
+              <div class="mega-menu__top">
+                <a
+                  id="HeaderMenu-{{ link.handle }}"
+                  href="{{ link.url }}"
+                  class="header__menu-item list-menu__item link link--text focus-inset"
+                  {% if link.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span
+                    {% if link.child_active %}
+                      class="header__active-menu-item"
+                    {% endif %}
+                  >
+                    {{- link.title | escape -}}
+                  </span>
+                </a>
+                <button
+                  type="button"
+                  class="mega-menu__toggle visually-hidden"
+                  aria-expanded="false"
+                  aria-controls="MegaMenu-Content-{{ forloop.index }}"
+                  aria-haspopup="true"
+                  aria-label="{{ 'sections.header.submenu_for' | t: title: link.title }}"
+                ></button>
+              </div>
               {%- assign is_headwear = false -%}
               {%- assign link_title_lower = link.title | strip | downcase -%}
               {%- if link_title_lower == 'headwear' or link.handle == 'headwear' -%}
@@ -34,7 +48,9 @@
               <div
                 id="MegaMenu-Content-{{ forloop.index }}"
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup{% if is_headwear %} mega-menu__content--full-width{% endif %}"
-                tabindex="-1">
+                tabindex="-1"
+                hidden
+              >
                 <div class="{% if is_headwear %}mega-menu__content-inner page-width{% endif %}">
                   <div class="{% if is_headwear %}mega-menu__content-nav{% endif %}">
                     <ul class="mega-menu__list{% if is_headwear %} mega-menu__list--headwear{% elsif link.levels == 1 %} mega-menu__list--condensed{% endif %}{% if is_headwear == false %} page-width{% endif %}" role="list">
@@ -90,7 +106,7 @@
                   {%- endif -%}
                 </div>
               </div>
-            </details>
+            </div>
           </header-menu>
         {%- else -%}
           <a

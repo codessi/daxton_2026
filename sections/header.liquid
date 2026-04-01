@@ -7,11 +7,15 @@
   media="print"
   onload="this.media='all'"
 >
-
+{% comment %}  {% endcomment %}
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
+{%- comment -%}
+  True if this header section has at least one "Nav link" block (nav_item).
+  Used below to load mega-menu CSS and choose nav rendering without looping blocks twice.
+{%- endcomment -%}
 {%- liquid
   assign has_nav_blocks_early = false
   for block in section.blocks
@@ -26,75 +30,76 @@
 {%- endif -%}
 
 <style>
-  header-drawer {
-    justify-self: start;
-    margin-left: -0.75rem;
-  }
-
-  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
-    .scrolled-past-header .header__heading-logo-wrapper {
-      width: 75%;
+    header-drawer {
+      justify-self: start;
+      margin-left: -0.75rem;
     }
-  {%- endif -%}
 
-  {%- if section.settings.menu_type_desktop != "drawer" -%}
-    @media screen and (min-width: 990px) {
-      header-drawer {
-        display: none;
+    {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
+      .scrolled-past-header .header__heading-logo-wrapper {
+        width: 75%;
+      }
+    {%- endif -%}
+
+    {%- if section.settings.menu_type_desktop != "drawer" -%}
+      @media screen and (min-width: 990px) {
+        header-drawer {
+          display: none;
+        }
+      }
+    {%- endif -%}
+
+    .menu-drawer-container {
+      display: flex;
+    }
+
+    .list-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list-menu--inline {
+      display: inline-flex;
+      flex-wrap: wrap;
+    }
+
+    summary.list-menu__item {
+      padding-right: 1.6875rem;
+    }
+  .header__menu-item {
+    font-size: 1.1625rem;
+    font-weight: 700;
+    font-family: "acumin-pro-extra-condensed", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+     /* Level-1 items with submenus match font size of level-1 links without submenus */
+    .header__inline-menu .list-menu--inline > li > details > summary.header__menu-item,
+    .header__inline-menu .list-menu--inline > li details.mega-menu > summary.header__menu-item,
+    .header__inline-menu .list-menu--inline > li .header__disclosure.mega-menu a.header__menu-item {
+      font-size: 1.1625rem;
+    }
+
+    .list-menu__item {
+      display: flex;
+      align-items: center;
+      line-height: calc(1 + 0.3 / var(--font-body-scale));
+    }
+
+    .list-menu__item--link {
+      text-decoration: none;
+      padding-bottom: 0.625rem;
+      padding-top: 0.625rem;
+      line-height: calc(1 + 0.8 / var(--font-body-scale));
+    }
+
+    @media screen and (min-width: 750px) {
+      .list-menu__item--link {
+        padding-bottom: 0.3125rem;
+        padding-top: 0.3125rem;
       }
     }
-  {%- endif -%}
-
-  .menu-drawer-container {
-    display: flex;
-  }
-
-  .list-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .list-menu--inline {
-    display: inline-flex;
-    flex-wrap: wrap;
-  }
-
-  summary.list-menu__item {
-    padding-right: 1.6875rem;
-  }
-.header__menu-item {
-  font-size: 1.1625rem;
-  font-weight: 700;
-  font-family: "acumin-pro-extra-condensed", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-   /* Level-1 items with submenus (summary) match font size of level-1 links without submenus */
-  .header__inline-menu .list-menu--inline > li > details > summary.header__menu-item,
-  .header__inline-menu .list-menu--inline > li details.mega-menu > summary.header__menu-item {
-    font-size: 1.1625rem;
-  } 
-
-  .list-menu__item {
-    display: flex;
-    align-items: center;
-    line-height: calc(1 + 0.3 / var(--font-body-scale));
-  }
-
-  .list-menu__item--link {
-    text-decoration: none;
-    padding-bottom: 0.625rem;
-    padding-top: 0.625rem;
-    line-height: calc(1 + 0.8 / var(--font-body-scale));
-  }
-
-  @media screen and (min-width: 750px) {
-    .list-menu__item--link {
-      padding-bottom: 0.3125rem;
-      padding-top: 0.3125rem;
-    }
-  }
 </style>
 
 {%- style -%}
@@ -127,6 +132,10 @@
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
 
+{%- comment -%}
+  App blocks (Judge.me, etc.) added in the theme editor render as block.type '@app'.
+  If any exist, set has_app_block so the header can add header--has-app for layout/CSS hooks.
+{%- endcomment -%}
 {%- liquid
   for block in section.blocks
     if block.type == '@app'
@@ -135,6 +144,8 @@
   endfor
 -%}
 
+{% comment %} Header section {% endcomment %}
+ {% comment %} Header tag section  {% endcomment %}
 {% liquid
   assign header_tag = 'div'
 
@@ -149,6 +160,7 @@
   {% endif %}
   class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
 >
+  {% comment %} Header wrapper content section {% endcomment %}
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -169,20 +181,37 @@
       endif
     endfor
   -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank or has_nav_blocks %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
-    {%- liquid
-      if section.settings.menu != blank or has_nav_blocks
-        render 'header-drawer', use_nav_blocks: has_nav_blocks
-      endif
+  <header {% comment %} Header section {% endcomment %}
+    class="
+      border-red-500 border-4
+      header
+      header--{{ section.settings.logo_position }}
+      header--mobile-{{ section.settings.mobile_logo_position }}
+      page-width
+      {% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}
+      {% if section.settings.menu != blank or has_nav_blocks %} header--has-menu{% endif %}
+      {% if has_app_block %} header--has-app{% endif %}
+      {% if social_links %} header--has-social{% endif %}
+      {% if shop.customer_accounts_enabled %} header--has-account{% endif %}
+      {% if localization_forms %} header--has-localizations{% endif %}
+    "
+  >
+    <div class="border-purple-500 border-4">
+      {% comment %} Header drawer section-mobile {% endcomment %}
+      {%- liquid
+        if section.settings.menu != blank or has_nav_blocks
+          render 'header-drawer', use_nav_blocks: has_nav_blocks
+        endif
 
-      if section.settings.logo_position == 'top-center'
-        render 'header-search', input_id: 'Search-In-Modal-1'
-      endif
-    -%}
-
+        if section.settings.logo_position == 'top-center'
+          render 'header-search', input_id: 'Search-In-Modal-1'
+        endif
+      -%}
+    </div>
+    {% comment %} Logo section {% endcomment %}
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
+        <h1 class="header__heading border-yellow-500 border-4">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
         {%- if settings.logo != blank -%}
@@ -223,18 +252,20 @@
       {%- endif -%}
     {%- endif -%}
 
+    {% comment %} Header menu section {% endcomment %}
+
     {%- liquid
       assign header_menu = section.settings.menu | default: linklists['main-menu']
       if header_menu != blank
         comment
-          Use admin menu (Content → Menus) so all items and submenus display.
-          Fallback to main-menu when Menu setting is blank (e.g. after pull overwrites config).
+          Online Store admin menu drives items; default link list is main-menu if unset.
         endcomment
         if section.settings.menu_type_desktop == 'dropdown'
           render 'header-dropdown-menu', menu: header_menu
         elsif section.settings.menu_type_desktop != 'drawer'
           render 'header-mega-menu', menu: header_menu, section: section
         endif
+
       elsif has_nav_blocks
         render 'header-nav-blocks', nav_blocks: section.blocks, section: section
       endif
@@ -283,7 +314,7 @@
       {%- endif -%}
     {%- endif -%}
 
-    <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
+    <div class="border-green-500 border-4 header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
       <div class="desktop-localization-wrapper">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form class="small-hide medium-hide" data-prevent-hide>
@@ -365,6 +396,7 @@
   </header>
 </{{ header_tag }}>
 
+{% comment %} Cart notification section {% endcomment %}
 {%- if settings.cart_type == 'notification' -%}
   {%- render 'cart-notification',
     color_scheme: section.settings.color_scheme,

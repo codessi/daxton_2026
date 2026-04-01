@@ -2987,6 +2987,7 @@ details[open] > .header__menu-item .icon-caret {
 }
 
 header-menu > details,
+header-menu > .header__disclosure.mega-menu,
 details-disclosure > details {
   position: relative;
 }
