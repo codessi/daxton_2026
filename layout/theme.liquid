@@ -293,8 +293,7 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    {% comment %} Tailwind utilities: run `npm install` then `npm run watch:css` (see package.json). {% endcomment %}
-    {{ 'tailwind.css' | asset_url | stylesheet_tag }}
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -350,10 +349,8 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    <div class="header-group-fixed ">
-   
+    <div class="header-group-fixed">
       {% sections 'header-group' %}
-    
     </div>
 
     <script>
@@ -369,8 +366,7 @@
       })();
     </script>
 
-    <main id="border-4 border-solid border-yellow-500 MainContent" class="content-for-layout focus-none{% if request.page_type == 'collection' %} main-content--collection{% endif %}" role="main" tabindex="-1">
-      this is the main content
+    <main id="MainContent" class="content-for-layout focus-none{% if request.page_type == 'collection' %} main-content--collection{% endif %}" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 

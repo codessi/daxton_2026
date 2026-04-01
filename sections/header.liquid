@@ -7,6 +7,7 @@
   media="print"
   onload="this.media='all'"
 >
+{% comment %}  {% endcomment %}
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -612,10 +613,6 @@
       "info": "Leave unset to use the custom nav blocks below (Headwear mega, hover open, underlines). When set, the theme uses that Navigation menu instead."
     },
     {
-      "type": "header",
-      "content": "Headwear mega settings"
-    },
-    {
       "type": "text",
       "id": "headwear_menu_handle",
       "label": "Headwear submenu menu handle",
@@ -801,32 +798,6 @@
           "type": "url",
           "id": "link",
           "label": "Link"
-        }
-      ]
-    },
-    {
-      "type": "mega_menu_promo",
-      "name": "Mega menu promo",
-      "settings": [
-        {
-          "type": "text",
-          "id": "parent_handle",
-          "label": "Parent nav handle"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Promo image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Promo title"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Promo link"
         }
       ]
     }

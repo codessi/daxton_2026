@@ -1,21 +1,23 @@
 {% comment %}
   Renders a megamenu for the header.
-  Top-level links with children: full-width panel (header__disclosure + hover; see details-disclosure.js).
-  Optional promo image from mega_menu_promo blocks or headwear section settings when link handle matches.
-  Leaf links: plain anchor, no submenu.
+  Every top-level link with children uses the same layout: full-viewport panel, grid of child links,
+  optional featured image + link on the right (section settings below).
   Usage: {% render 'header-mega-menu', menu: header_menu, section: section %}
 {% endcomment %}
 {%- assign menu = menu | default: section.settings.menu -%}
+{%- assign mega_featured_image = section.settings.headwear_featured_image -%}
+{%- assign mega_featured_heading = section.settings.headwear_featured_heading -%}
+{%- assign mega_featured_link = section.settings.headwear_featured_link -%}
 <nav class="header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
-      <li class="">
+      <li>
         {%- if link.links != blank -%}
           <header-menu>
-            {%- comment -%} header__disclosure: required by assets/details-disclosure.js (HeaderMenu). {%- endcomment -%}
+            {%- comment -%} header__disclosure: required by assets/details-disclosure.js (HeaderMenu). Also gets position:relative in base.css. Not replaceable with utilities alone without changing JS. {%- endcomment -%}
             <div
               id="Details-HeaderMenu-{{ forloop.index }}"
-              class="header__disclosure mega-menu mega-menu--hover-only"
+              class="header__disclosure mega-menu mega-menu--hover-only "
             >
               <div class="flex flex-wrap items-center gap-1">
                 <a
@@ -34,6 +36,7 @@
                     {{- link.title | escape -}}
                   </span>
                 </a>
+                {% comment %} Button section {% endcomment %}
                 <button
                   type="button"
                   class="sr-only"
@@ -43,45 +46,28 @@
                   aria-label="{{ 'sections.header.submenu_for' | t: title: link.title }}"
                 ></button>
               </div>
-              <div
+              <div 
                 id="MegaMenu-Content-{{ forloop.index }}"
-                class="absolute left-0 top-full z-10 box-border w-screen max-w-[100vw] max-h-[80vh] overflow-y-auto border-0 bg-[rgb(var(--color-background))] py-8 mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                class=" absolute left-0 top-full  mega-menu__content z-10 box-border  w-screen max-w-[100vw] max-h-[80vh] overflow-y-auto border-0 bg-[rgb(var(--color-background))] py-8"
                 tabindex="-1"
                 hidden
               >
-                {%- liquid
-                  assign mega_promo = nil
-                  for block in section.blocks
-                    if block.type == 'mega_menu_promo'
-                      assign ph = block.settings.parent_handle | strip | downcase | replace: ' ', '-'
-                      assign ph = ph | replace: '--', '-'
-                      assign ph = ph | replace: '--', '-'
-                      assign ph = ph | replace: '--', '-'
-                      if ph != blank and ph == link.handle
-                        assign mega_promo = block
-                        break
-                      endif
-                    endif
-                  endfor
-
-                  assign mega_img = nil
-                  assign mega_heading = ''
-                  assign mega_link = blank
-
-                  if mega_promo != nil
-                    assign mega_img = mega_promo.settings.image
-                    assign mega_heading = mega_promo.settings.title
-                    assign mega_link = mega_promo.settings.link
-                  elsif link.handle == 'headwear'
-                    assign mega_img = section.settings.headwear_featured_image
-                    assign mega_heading = section.settings.headwear_featured_heading
-                    assign mega_link = section.settings.headwear_featured_link
-                  endif
-                -%}
+                {% comment %} <div 
+                  id="MegaMenu-Content-{{ forloop.index }}"
+                  class=" border-amber-400 border-4 mega-menu__content z-10 color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup absolute left-0 top-full box-border ml-[calc(50%-50vw)] w-screen max-w-[100vw] max-h-[80vh] overflow-y-auto border-0 bg-[rgb(var(--color-background))] py-8"
+                  tabindex="-1"
+                  hidden
+                > {% endcomment %}
                 <div class="page-width box-border flex w-full flex-col items-start gap-10 lg:flex-row">
-                  <div class="min-w-0 {% if mega_img != blank %}shrink-0 basis-[60%]{% else %}w-full{% endif %}">
+                  <div class="min-w-0 {% if mega_featured_image != blank %}shrink-0 basis-[60%]{% else %}w-full{% endif %}">
                     <ul
-                      class="mega-menu__list list-none{% if link.levels == 1 %} mega-menu__list--condensed{% else %} grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[2.5rem] gap-y-[1.125rem]{% endif %}"
+                      class="mega-menu__list page-width list-none
+                        {% if link.levels == 1 %}
+                          !block [&_.mega-menu__link]:font-normal
+                        {% else %}
+                          !grid !grid-cols-3 gap-x-[1.875rem] gap-y-5
+                        {% endif %}
+                      "
                       role="list"
                     >
                       {%- for childlink in link.links -%}
@@ -118,30 +104,28 @@
                       {%- endfor -%}
                     </ul>
                   </div>
-                  {%- if mega_img != blank or mega_heading != blank or mega_link != blank -%}
-                    <div class="mega-menu__content-featured flex min-w-0 shrink-0 basis-[40%] flex-col gap-3">
-                      {%- if mega_link != blank -%}
-                        <a href="{{ mega_link }}" class="mega-menu__featured-link flex flex-col gap-3 text-inherit no-underline">
+                  {%- if mega_featured_image != blank -%}
+                    <div class="flex min-w-0 shrink-0 basis-[40%] flex-col gap-3">
+                      {%- if mega_featured_link != blank -%}
+                        <a href="{{ mega_featured_link }}" class="flex flex-col gap-3 text-inherit no-underline">
                       {%- endif -%}
-                      {%- if mega_img != blank -%}
-                        <div class="mega-menu__featured-media media global-media-settings relative min-h-[15rem] w-60 overflow-hidden rounded-md">
-                          {{
-                            mega_img
-                            | image_url: width: 550
-                            | image_tag:
-                              loading: 'lazy',
-                              widths: '400, 550, 700',
-                              sizes: '(min-width: 990px) 40vw, 100vw',
-                              class: 'mega-menu__featured-image block h-auto w-full object-cover align-middle'
-                          }}
-                        </div>
-                      {%- endif -%}
-                      {%- if mega_heading != blank -%}
-                        <p class="mega-menu__featured-heading m-0 text-[1.1em] font-bold uppercase tracking-wide">
-                          {{ mega_heading | escape }}
+                      <div class="relative min-h-[15rem] w-60 overflow-hidden rounded-md border border-[rgba(var(--color-foreground),0.12)] bg-[rgb(var(--color-background))]">
+                        {{
+                          mega_featured_image
+                          | image_url: width: 550
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '400, 550, 700',
+                            sizes: '(min-width: 990px) 40vw, 100vw',
+                            class: 'block h-auto w-full object-cover align-middle'
+                        }}
+                      </div>
+                      {%- if mega_featured_heading != blank -%}
+                        <p class="m-0 text-[1.1em] font-bold uppercase tracking-wide text-[rgb(var(--color-foreground))]">
+                          {{ mega_featured_heading | escape }}
                         </p>
                       {%- endif -%}
-                      {%- if mega_link != blank -%}
+                      {%- if mega_featured_link != blank -%}
                         </a>
                       {%- endif -%}
                     </div>
@@ -151,7 +135,10 @@
             </div>
           </header-menu>
         {%- else -%}
-          {%- comment -%} Leaf: no submenu — link only (no header-menu / panel). {%- endcomment -%}
+          {%- comment -%}
+            Same row + link styling as mega parents (lines 22–38), without header-menu, panel, or submenu button.
+            Leaf items stay a normal link only — no button (nothing to toggle).
+          {%- endcomment -%}
           <div class="flex flex-wrap items-center gap-1">
             <a
               id="HeaderMenu-{{ link.handle }}"

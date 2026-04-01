@@ -17,10 +17,7 @@
 >
   <div class="mega-menu__content-inner page-width box-border flex w-full flex-col items-start gap-10 lg:flex-row">
     <div class="mega-menu__content-nav min-w-0 shrink-0 basis-[60%]">
-      <ul
-        class="mega-menu__list mega-menu__list--headwear grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[2.5rem] gap-y-[1.125rem] list-none"
-        role="list"
-      >
+      <ul class="mega-menu__list mega-menu__list--headwear" role="list">
         {%- if headwear_menu != blank and headwear_menu.links.size > 0 -%}
           {%- for column in headwear_menu.links -%}
             <li class="mega-menu__column">
