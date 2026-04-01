@@ -9,7 +9,7 @@
  */
 {
   "sections": {
-    "main": {
+    "main-product": {
       "type": "main-product",
       "blocks": {
         "vendor": {
@@ -127,7 +127,7 @@
     }
   },
   "order": [
-    "main",
+    "main-product",
     "related-products",
     "1773635756a882f2b5"
   ]

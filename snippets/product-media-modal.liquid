@@ -9,9 +9,9 @@
   {% render 'product-media-modal' %}
 {% endcomment %}
 
-<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
+<product-modal id="ProductModal-{{ section.id }}" class="border-yellow-500 border-4 product-media-modal media-modal">
   <div
-    class="product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
+    class="border-green-500 border-4 product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
     role="dialog"
     aria-label="{{ 'products.modal.label' | t }}"
     aria-modal="true"
@@ -27,7 +27,7 @@
     </button>
 
     <div
-      class="product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
+      class="border-purple-500 border-4 product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
       role="document"
       aria-label="{{ 'products.modal.label' | t }}"
       tabindex="0"
