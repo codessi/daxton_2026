@@ -10,26 +10,28 @@
       <li>
         {%- if link.links != blank -%}
           <header-menu>
-            <details id="Details-HeaderMenu-{{ forloop.index }}">
-              <summary
+            <div class="header__disclosure" id="Details-HeaderMenu-{{ forloop.index }}">
+              <button
+                type="button"
                 id="HeaderMenu-{{ link.handle }}"
                 class="header__menu-item list-menu__item link focus-inset"
-              >
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="HeaderMenu-MenuList-{{ forloop.index }}">
                 <span
                   {%- if link.child_active %}
-                    class="header__active-menu-item"
-                  {% endif %}
-                >
+                  class="header__active-menu-item"
+                  {% endif %}>
                   {{- link.title | escape -}}
                 </span>
-                {{- 'icon-caret.svg' | inline_asset_content -}}
-              </summary>
+                <span aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+              </button>
               <ul
                 id="HeaderMenu-MenuList-{{ forloop.index }}"
                 class="header__submenu list-menu list-menu--disclosure color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup"
                 role="list"
                 tabindex="-1"
-              >
+                hidden>
                 {%- for childlink in link.links -%}
                   <li>
                     {%- if childlink.links == blank -%}
@@ -38,24 +40,26 @@
                         href="{{ childlink.url }}"
                         class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"
                         {% if childlink.current %}
-                          aria-current="page"
-                        {% endif %}
-                      >
+                        aria-current="page"
+                        {% endif %}>
                         {{ childlink.title | escape }}
                       </a>
                     {%- else -%}
-                      <details id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}">
-                        <summary
+                      <div class="header__disclosure header__disclosure--nested" id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}">
+                        <button
+                          type="button"
                           id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
                           class="header__menu-item link link--text list-menu__item focus-inset caption-large"
-                        >
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          aria-controls="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}">
                           <span>{{ childlink.title | escape }}</span>
-                          {{- 'icon-caret.svg' | inline_asset_content -}}
-                        </summary>
+                          <span aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+                        </button>
                         <ul
-                          id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                          id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}"
                           class="header__submenu list-menu motion-reduce"
-                        >
+                          hidden>
                           {%- for grandchildlink in childlink.links -%}
                             <li>
                               <a
@@ -63,20 +67,19 @@
                                 href="{{ grandchildlink.url }}"
                                 class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"
                                 {% if grandchildlink.current %}
-                                  aria-current="page"
-                                {% endif %}
-                              >
+                                aria-current="page"
+                                {% endif %}>
                                 {{ grandchildlink.title | escape }}
                               </a>
                             </li>
                           {%- endfor -%}
                         </ul>
-                      </details>
+                      </div>
                     {%- endif -%}
                   </li>
                 {%- endfor -%}
               </ul>
-            </details>
+            </div>
           </header-menu>
         {%- else -%}
           <a
@@ -84,14 +87,12 @@
             href="{{ link.url }}"
             class="header__menu-item list-menu__item link link--text focus-inset"
             {% if link.current %}
-              aria-current="page"
-            {% endif %}
-          >
+            aria-current="page"
+            {% endif %}>
             <span
               {%- if link.current %}
-                class="header__active-menu-item"
-              {% endif %}
-            >
+              class="header__active-menu-item"
+              {% endif %}>
               {{- link.title | escape -}}
             </span>
           </a>

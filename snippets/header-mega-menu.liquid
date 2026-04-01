@@ -1,47 +1,62 @@
 {% comment %}
   Renders a megamenu for the header.
+  Top-level links with children: full-width panel (header__disclosure + hover; see details-disclosure.js).
+  Optional promo image from mega_menu_promo blocks or headwear section settings when link handle matches.
+  Leaf links: plain anchor, no submenu.
   Usage: {% render 'header-mega-menu', menu: header_menu, section: section %}
-  Falls back to section.settings.menu when menu param is not passed.
 {% endcomment %}
 {%- assign menu = menu | default: section.settings.menu -%}
-<nav class="header__inline-menu">
- 
+<nav class="header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
       <li class="">
-
+        {%- if link.links != blank -%}
           <header-menu>
-
-            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu mega-menu--hover-only">
-              <summary
-                id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
-                aria-haspopup="true"
-                aria-expanded="false">
-          
-                {%- if link.url != blank -%}
-                  <a href="{{ link.url }}" class="no-underline link focus-inset ">
+            {%- comment -%} header__disclosure: required by assets/details-disclosure.js (HeaderMenu). {%- endcomment -%}
+            <div
+              id="Details-HeaderMenu-{{ forloop.index }}"
+              class="header__disclosure mega-menu mega-menu--hover-only"
+            >
+              <div class="flex flex-wrap items-center gap-1">
+                <a
+                  id="HeaderMenu-{{ link.handle }}"
+                  href="{{ link.url }}"
+                  class="header__menu-item inline-flex items-center no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-foreground))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-background))]"
+                  {% if link.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span
+                    {% if link.child_active %}
+                      class="header__active-menu-item"
+                    {% endif %}
+                  >
                     {{- link.title | escape -}}
-                  </a>
-             
-                {%- endif -%}
-              </summary>
-           
-         
+                  </span>
+                </a>
+                <button
+                  type="button"
+                  class="sr-only"
+                  aria-expanded="false"
+                  aria-controls="MegaMenu-Content-{{ forloop.index }}"
+                  aria-haspopup="true"
+                  aria-label="{{ 'sections.header.submenu_for' | t: title: link.title }}"
+                ></button>
+              </div>
               <div
                 id="MegaMenu-Content-{{ forloop.index }}"
-                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
-                tabindex="-1">
+                class="absolute left-0 top-full z-10 box-border w-screen max-w-[100vw] max-h-[80vh] overflow-y-auto border-0 bg-[rgb(var(--color-background))] py-8 mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+                hidden
+              >
                 {%- liquid
                   assign mega_promo = nil
-
                   for block in section.blocks
                     if block.type == 'mega_menu_promo'
                       assign ph = block.settings.parent_handle | strip | downcase | replace: ' ', '-'
                       assign ph = ph | replace: '--', '-'
                       assign ph = ph | replace: '--', '-'
                       assign ph = ph | replace: '--', '-'
-
                       if ph != blank and ph == link.handle
                         assign mega_promo = block
                         break
@@ -63,10 +78,10 @@
                     assign mega_link = section.settings.headwear_featured_link
                   endif
                 -%}
-                <div class="mega-menu__content-inner page-width">
-                  <div class="mega-menu__content-nav">
+                <div class="page-width box-border flex w-full flex-col items-start gap-10 lg:flex-row">
+                  <div class="min-w-0 {% if mega_img != blank %}shrink-0 basis-[60%]{% else %}w-full{% endif %}">
                     <ul
-                      class="mega-menu__list{% if link.levels == 1 %} mega-menu__list--condensed list-none{% else %} grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[2.5rem] gap-y-[1.125rem] list-none{% endif %}"
+                      class="mega-menu__list list-none{% if link.levels == 1 %} mega-menu__list--condensed{% else %} grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[2.5rem] gap-y-[1.125rem]{% endif %}"
                       role="list"
                     >
                       {%- for childlink in link.links -%}
@@ -76,12 +91,13 @@
                             href="{{ childlink.url }}"
                             class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
                             {% if childlink.current %}
-                            aria-current="page"
-                            {% endif %}>
+                              aria-current="page"
+                            {% endif %}
+                          >
                             {{ childlink.title | escape }}
                           </a>
                           {%- if childlink.links != blank -%}
-                            <ul class="list-unstyled" role="list">
+                            <ul class="m-0 list-none p-0" role="list">
                               {%- for grandchildlink in childlink.links -%}
                                 <li>
                                   <a
@@ -89,8 +105,9 @@
                                     href="{{ grandchildlink.url }}"
                                     class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
                                     {% if grandchildlink.current %}
-                                    aria-current="page"
-                                    {% endif %}>
+                                      aria-current="page"
+                                    {% endif %}
+                                  >
                                     {{ grandchildlink.title | escape }}
                                   </a>
                                 </li>
@@ -101,15 +118,13 @@
                       {%- endfor -%}
                     </ul>
                   </div>
-
                   {%- if mega_img != blank or mega_heading != blank or mega_link != blank -%}
-                    <div class="mega-menu__content-featured">
+                    <div class="mega-menu__content-featured flex min-w-0 shrink-0 basis-[40%] flex-col gap-3">
                       {%- if mega_link != blank -%}
-                        <a href="{{ mega_link }}" class="mega-menu__featured-link">
+                        <a href="{{ mega_link }}" class="mega-menu__featured-link flex flex-col gap-3 text-inherit no-underline">
                       {%- endif -%}
-
                       {%- if mega_img != blank -%}
-                        <div class="mega-menu__featured-media media global-media-settings">
+                        <div class="mega-menu__featured-media media global-media-settings relative min-h-[15rem] w-60 overflow-hidden rounded-md">
                           {{
                             mega_img
                             | image_url: width: 550
@@ -117,15 +132,15 @@
                               loading: 'lazy',
                               widths: '400, 550, 700',
                               sizes: '(min-width: 990px) 40vw, 100vw',
-                              class: 'mega-menu__featured-image'
+                              class: 'mega-menu__featured-image block h-auto w-full object-cover align-middle'
                           }}
                         </div>
                       {%- endif -%}
-
                       {%- if mega_heading != blank -%}
-                        <p class="mega-menu__featured-heading">{{ mega_heading | escape }}</p>
+                        <p class="mega-menu__featured-heading m-0 text-[1.1em] font-bold uppercase tracking-wide">
+                          {{ mega_heading | escape }}
+                        </p>
                       {%- endif -%}
-
                       {%- if mega_link != blank -%}
                         </a>
                       {%- endif -%}
@@ -133,9 +148,29 @@
                   {%- endif -%}
                 </div>
               </div>
-            </details>
+            </div>
           </header-menu>
-
+        {%- else -%}
+          {%- comment -%} Leaf: no submenu — link only (no header-menu / panel). {%- endcomment -%}
+          <div class="flex flex-wrap items-center gap-1">
+            <a
+              id="HeaderMenu-{{ link.handle }}"
+              href="{{ link.url }}"
+              class="header__menu-item inline-flex items-center no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-foreground))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-background))]"
+              {% if link.current %}
+                aria-current="page"
+              {% endif %}
+            >
+              <span
+                {% if link.current %}
+                  class="header__active-menu-item"
+                {% endif %}
+              >
+                {{- link.title | escape -}}
+              </span>
+            </a>
+          </div>
+        {%- endif -%}
       </li>
     {%- endfor -%}
   </ul>

@@ -2879,6 +2879,42 @@ details[open] > .header__menu-item .icon-caret {
   transform: rotate(180deg);
 }
 
+/* Button-triggered disclosure (no summary; avoids interactive-in-summary a11y issue) */
+.header__disclosure {
+  position: relative;
+}
+
+.header__disclosure button.header__menu-item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  width: 100%;
+  text-align: left;
+  padding-right: 1.6875rem;
+}
+
+.header__disclosure button.header__menu-item[aria-expanded="true"]::after {
+  width: 100%;
+}
+
+.header__disclosure button.header__menu-item[aria-expanded="true"] .icon-caret {
+  transform: rotate(180deg);
+}
+
+.header__disclosure .header__submenu:not([hidden]) {
+  animation: animateMenuOpen var(--duration-default) ease;
+  animation-fill-mode: forwards;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion) {
+  .header__disclosure .header__submenu:not([hidden]) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .header__active-menu-item {
   transition: text-decoration-thickness var(--duration-short) ease;
   color: rgb(var(--color-foreground));
@@ -2946,10 +2982,11 @@ details[open] > .header__menu-item .icon-caret {
   position: static;
 }
 
-header-menu > details,
+/* header-menu > details,
+header-menu > .header__disclosure.mega-menu,
 details-disclosure > details {
   position: relative;
-}
+} */
 
 @keyframes animateMenuOpen {
   0% {

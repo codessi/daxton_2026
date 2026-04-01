@@ -53,6 +53,10 @@
   margin: 0;
 }
 
+.rating-count .rating-write-review {
+  margin-left: 0.5rem;
+}
+
 @media (forced-colors: active) {
   .rating {
     display: none;

@@ -229,7 +229,7 @@
       ],
       "settings": {
         "title": "Featured Collections",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "image_ratio": "square",
         "color_scheme": "scheme-1",
         "padding_top": 44,

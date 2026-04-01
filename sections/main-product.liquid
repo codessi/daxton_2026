@@ -21,10 +21,11 @@
     {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
     {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
   {% endunless %}
+{% comment %} Style section {% endcomment %}
   {%- if product.quantity_price_breaks_configured? -%}
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
-
+{% comment %} Style section {% endcomment %}
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -38,21 +39,22 @@
       }
     }
   {%- endstyle -%}
-
+{% comment %} Script section {% endcomment %}
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
-
+{% comment %} Script section {% endcomment %}
   {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
   {% endif %}
+{% comment %} Script section {% endcomment %}
   {%- if request.design_mode -%}
     <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
-
+{% comment %} Script section {% endcomment %}
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
   {%- if first_3d_model -%}
     {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
@@ -71,11 +73,11 @@
       onload="this.media='all'"
     >
   {%- endif -%}
-
+{% comment %} Script section {% endcomment %} {% comment %} Product media section {% endcomment %}
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="page-width">
+  <div class="page-width border-blue-500 border-4">{% comment %} Product media wrapper section {% endcomment %}
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-      <div class="grid__item product__media-wrapper">
+      <div class="border-orange-500 border-4 grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -486,8 +488,8 @@
                   show_pickup_availability: true
                 -%}
               {%- when 'rating' -%}
-                {%- if product.metafields.reviews.rating.value != blank -%}
-                  <div class="rating-wrapper">
+                <div class="rating-wrapper" {{ block.shopify_attributes }}>
+                  {%- if product.metafields.reviews.rating.value != blank -%}
                     {% liquid
                       assign rating_decimal = 0
                       assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
@@ -514,15 +516,9 @@
                         {{ product.metafields.reviews.rating.value.scale_max -}}
                       </span>
                     </p>
-                    <p class="rating-count caption">
-                      <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
-                      <span class="visually-hidden">
-                        {{- product.metafields.reviews.rating_count }}
-                        {{ 'accessibility.total_reviews' | t -}}
-                      </span>
-                    </p>
-                  </div>
-                {%- endif -%}
+                  {%- endif -%}
+              
+                </div>
               {%- when 'complementary' -%}
                 <product-recommendations
                   class="complementary-products quick-add-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"

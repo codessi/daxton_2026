@@ -36,6 +36,16 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Override heading size classes (.h0–.h4) from theme editor so this font always applies */
+  #collection-{{ section.id }} .featured-collection__heading.title.h0,
+  #collection-{{ section.id }} .featured-collection__heading.title.h1,
+  #collection-{{ section.id }} .featured-collection__heading.title.h2,
+  #collection-{{ section.id }} .featured-collection__heading.title.h3,
+  #collection-{{ section.id }} .featured-collection__heading.title.h4 {
+    font-family: "helvetica-neue-lt-pro", sans-serif !important;
+    font-weight: 500 !important;
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -71,7 +81,7 @@
     data-id="{{ section.id }}">
     <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %}">
       {%- if section.settings.title != blank -%}
-        <h2 class="title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <h2 class="title boder border-red-500 border-4 featured-collection__heading inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           {{ section.settings.title }}
         </h2>
       {%- endif -%}

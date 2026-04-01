@@ -16,7 +16,6 @@
 }
 
 .mega-menu__content {
-  border: 4px solid red;
   background-color: rgb(var(--color-background));
   border-left: 0;
   border-radius: 0;
@@ -39,7 +38,6 @@
   box-sizing: border-box;
 }
 .mega-menu__content-inner {
-
   display: flex;
   align-items: flex-start;
   gap: 2.5rem;
@@ -82,8 +80,10 @@
   text-transform: uppercase;
 }
 
+/* Panel shell + layout: additional positioning via Tailwind in header-mega-menu.liquid & header-headwear-mega.liquid */
+
 .shopify-section-header-sticky .mega-menu__content {
-  max-height: calc(100vh - var(--header-bottom-position-desktop, 12.5rem) - 2.5rem);
+  max-height: min(80vh, calc(100vh - var(--header-bottom-position-desktop, 5rem) - 0.5rem));
 }
 
 .header-wrapper--border-bottom .mega-menu__content {
@@ -95,17 +95,21 @@
   transform: translateY(-0.9375rem);
 }
 
-.js .mega-menu__content--full-width {
-  transform: translate(-50%, -0.9375rem);
-}
-
-.mega-menu[open] .mega-menu__content {
+.mega-menu[open] .mega-menu__content,
+.mega-menu.mega-menu--open .mega-menu__content {
   opacity: 1;
   transform: translateY(0);
 }
 
 .mega-menu[open] .mega-menu__content--full-width {
   transform: translate(-50%, 0);
+}
+
+.mega-menu__list {
+  display: grid;
+  gap: 1.125rem 2.5rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  list-style: none;
 }
 
 .mega-menu__link {
@@ -169,8 +173,9 @@
   font-weight: normal;
 }
 
-/* 47brand-style Headwear mega: 3 columns (STYLE, TYPE, LEAGUE) */
-.mega-menu__list--headwear {
+/* 3-column grid for mega submenu (used for all multi-level parents; alias kept for nav blocks / headwear snippet) */
+.mega-menu__list--headwear,
+.mega-menu__list--columns-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem 1.875rem;
 }

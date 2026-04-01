@@ -240,7 +240,13 @@ if (!customElements.get('product-info')) {
       }
 
       updateMedia(html, variantFeaturedMediaId) {
-        if (!variantFeaturedMediaId) return;
+        const activeMediaFullId =
+          variantFeaturedMediaId != null && variantFeaturedMediaId !== ''
+            ? `${this.dataset.section}-${variantFeaturedMediaId}`
+            : html.querySelector('media-gallery li.is-active[data-media-id]')?.dataset?.mediaId ||
+              html.querySelector('media-gallery ul li[data-media-id]')?.dataset?.mediaId;
+
+        if (!activeMediaFullId) return;
 
         const mediaGallerySource = this.querySelector('media-gallery ul');
         const mediaGalleryDestination = html.querySelector(`media-gallery ul`);
@@ -299,10 +305,7 @@ if (!customElements.get('product-info')) {
         }
 
         // set featured media as active in the media gallery
-        this.querySelector(`media-gallery`)?.setActiveMedia?.(
-          `${this.dataset.section}-${variantFeaturedMediaId}`,
-          true
-        );
+        this.querySelector(`media-gallery`)?.setActiveMedia?.(activeMediaFullId, true);
 
         // update media modal
         const modalContent = this.productModal?.querySelector(`.product-media-modal__content`);

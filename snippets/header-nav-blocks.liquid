@@ -17,22 +17,15 @@
                   id="HeaderMenu-Headwear-{{ block.id }}"
                   class="header__menu-item list-menu__item link focus-inset uppercase tracking-wide hover:opacity-80"
                   aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {%- if block.settings.link != blank -%}
-                    <a href="{{ block.settings.link }}" class="link focus-inset uppercase tracking-wide hover:opacity-80">{{ block.settings.title | escape }}</a>
-                  {%- else -%}
-                    <span>{{ block.settings.title | escape }}</span>
-                  {%- endif -%}
+                  aria-expanded="false">
+                  <span>{{ block.settings.title | escape }}</span>
                 </summary>
-                {% render 'header-headwear-mega', section: section %}
+                {% render 'header-headwear-mega'
+                  , section: section %}
               </details>
             </header-menu>
           {%- else -%}
-            <a
-              href="{{ block.settings.link | default: '#' }}"
-              class="header__menu-item  list-menu__item link link--text focus-inset uppercase tracking-wide hover:opacity-80"
-            >
+            <a href="{{ block.settings.link | default: '#' }}" class="header__menu-item list-menu__item link link--text focus-inset uppercase tracking-wide hover:opacity-80">
               {{ block.settings.title | escape }}
             </a>
           {%- endif -%}
