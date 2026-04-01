@@ -8,7 +8,7 @@
 {%- assign mega_featured_image = section.settings.headwear_featured_image -%}
 {%- assign mega_featured_heading = section.settings.headwear_featured_heading -%}
 {%- assign mega_featured_link = section.settings.headwear_featured_link -%}
-<nav class="header__inline-menu static">
+<nav class="header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
       <li>
@@ -135,22 +135,28 @@
             </div>
           </header-menu>
         {%- else -%}
-          <a
-            id="HeaderMenu-{{ link.handle }}"
-            href="{{ link.url }}"
-            class="header__menu-item list-menu__item link link--text focus-inset"
-            {% if link.current %}
-              aria-current="page"
-            {% endif %}
-          >
-            <span
-              {%- if link.current %}
-                class="header__active-menu-item"
+          {%- comment -%}
+            Same row + link styling as mega parents (lines 22–38), without header-menu, panel, or submenu button.
+            Leaf items stay a normal link only — no button (nothing to toggle).
+          {%- endcomment -%}
+          <div class="flex flex-wrap items-center gap-1">
+            <a
+              id="HeaderMenu-{{ link.handle }}"
+              href="{{ link.url }}"
+              class="header__menu-item inline-flex items-center no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-foreground))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-background))]"
+              {% if link.current %}
+                aria-current="page"
               {% endif %}
             >
-              {{- link.title | escape -}}
-            </span>
-          </a>
+              <span
+                {% if link.current %}
+                  class="header__active-menu-item"
+                {% endif %}
+              >
+                {{- link.title | escape -}}
+              </span>
+            </a>
+          </div>
         {%- endif -%}
       </li>
     {%- endfor -%}
