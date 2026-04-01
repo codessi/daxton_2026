@@ -15,81 +15,10 @@
   padding-right: 0 !important;
 }
 
-.mega-menu--hover-only .mega-menu__top {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-}
-
-.mega-menu__content {
-  background-color: rgb(var(--color-background));
-  border-left: 0;
-  border-radius: 0;
-  border-right: 0;
-  left: 0;
-  overflow-y: auto;
-  padding-bottom: 1.875rem;
-  padding-top: 1.875rem;
-  position: absolute;
-  right: 0;
-  top: 100%;
-}
-
-/* 47brand-style: full-width panel, content same width as nav */
-.mega-menu__content--full-width {
-  width: 100vw;
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%);
-  box-sizing: border-box;
-}
-.mega-menu__content-inner {
-  display: flex;
-  align-items: flex-start;
-  gap: 2.5rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-.mega-menu__content-nav {
-  flex: 0 0 60%;
-  min-width: 0;
-}
-.mega-menu__content-featured {
-  flex: 0 0 40%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.mega-menu__featured-link {
-  text-decoration: none;
-  color: inherit;
-}
-.mega-menu__featured-media {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.25rem;
-  min-height: 15rem;
-  width: 15rem;
-}
-.mega-menu__featured-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
-  vertical-align: middle;
-}
-.mega-menu__featured-heading {
-  margin: 0;
-  font-weight: 700;
-  font-size: 1.1em;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
+/* Panel shell + layout: Tailwind utilities in header-mega-menu.liquid & header-headwear-mega.liquid */
 
 .shopify-section-header-sticky .mega-menu__content {
-  max-height: calc(100vh - var(--header-bottom-position-desktop, 12.5rem) - 2.5rem);
+  max-height: min(80vh, calc(100vh - var(--header-bottom-position-desktop, 5rem) - 0.5rem));
 }
 
 .header-wrapper--border-bottom .mega-menu__content {
@@ -101,19 +30,10 @@
   transform: translateY(-0.9375rem);
 }
 
-.js .mega-menu__content--full-width {
-  transform: translate(-50%, -0.9375rem);
-}
-
 .mega-menu[open] .mega-menu__content,
 .mega-menu.mega-menu--open .mega-menu__content {
   opacity: 1;
   transform: translateY(0);
-}
-
-.mega-menu[open] .mega-menu__content--full-width,
-.mega-menu.mega-menu--open .mega-menu__content--full-width {
-  transform: translate(-50%, 0);
 }
 
 .mega-menu__list {
@@ -184,8 +104,9 @@
   font-weight: normal;
 }
 
-/* 47brand-style Headwear mega: 3 columns (STYLE, TYPE, LEAGUE) */
-.mega-menu__list--headwear {
+/* 3-column grid for mega submenu (used for all multi-level parents; alias kept for nav blocks / headwear snippet) */
+.mega-menu__list--headwear,
+.mega-menu__list--columns-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem 1.875rem;
 }

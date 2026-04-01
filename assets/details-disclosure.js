@@ -38,6 +38,18 @@ function isMegaMenuDebug() {
 }
 
 class HeaderMenu extends HTMLElement {
+  connectedCallback() {
+    if (!isMegaMenuDebug() || this._megaDebugAutoOpened) return;
+    const disclosure = this.querySelector('.header__disclosure.mega-menu');
+    if (!disclosure) return;
+    const firstMegaInHeader = document.querySelector(
+      '.section-header header .header__disclosure.mega-menu, header.header .header__disclosure.mega-menu, header .header__disclosure.mega-menu'
+    );
+    if (!firstMegaInHeader || disclosure !== firstMegaInHeader) return;
+    this._megaDebugAutoOpened = true;
+    setTimeout(() => this.open(), 0);
+  }
+
   constructor() {
     super();
     this.header = document.querySelector('.header-wrapper');
@@ -126,6 +138,13 @@ class HeaderMenu extends HTMLElement {
   }
 
   onFocusOut() {
+    if (
+      isMegaMenuDebug() &&
+      ((this.mainDetailsToggle && this.mainDetailsToggle.classList.contains('mega-menu')) ||
+        (this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu')))
+    ) {
+      return;
+    }
     setTimeout(() => {
       if (!this.contains(document.activeElement)) this.close();
     });
@@ -143,7 +162,11 @@ class HeaderMenu extends HTMLElement {
   }
 
   close() {
-    if (isMegaMenuDebug() && this.mainDetailsToggle && this.mainDetailsToggle.classList.contains('mega-menu')) {
+    if (
+      isMegaMenuDebug() &&
+      ((this.mainDetailsToggle && this.mainDetailsToggle.classList.contains('mega-menu')) ||
+        (this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu')))
+    ) {
       return;
     }
     if (this.mainDetailsToggle) {

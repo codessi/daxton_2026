@@ -183,7 +183,7 @@
   -%}
   <header {% comment %} Header section {% endcomment %}
     class="
-      border-red-500 border-4
+     
       header
       header--{{ section.settings.logo_position }}
       header--mobile-{{ section.settings.mobile_logo_position }}
@@ -196,7 +196,7 @@
       {% if localization_forms %} header--has-localizations{% endif %}
     "
   >
-    <div class="border-purple-500 border-4">
+    <div >
       {% comment %} Header drawer section-mobile {% endcomment %}
       {%- liquid
         if section.settings.menu != blank or has_nav_blocks
@@ -211,7 +211,7 @@
     {% comment %} Logo section {% endcomment %}
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading border-yellow-500 border-4">
+        <h1 class="header__heading">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
         {%- if settings.logo != blank -%}
@@ -620,12 +620,13 @@
     },
     {
       "type": "header",
-      "content": "Headwear mega: featured collection (right side)"
+      "content": "Mega menu: featured promo (right column)"
     },
     {
       "type": "image_picker",
       "id": "headwear_featured_image",
-      "label": "Featured image"
+      "label": "Featured image",
+      "info": "Shown on the right of every desktop mega menu that has sub-links. Leave blank to use the full width for links only."
     },
     {
       "type": "text",
@@ -636,7 +637,8 @@
     {
       "type": "url",
       "id": "headwear_featured_link",
-      "label": "Link"
+      "label": "Featured link",
+      "info": "Optional. Wraps image and heading when set."
     },
     {
       "type": "select",

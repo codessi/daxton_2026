@@ -2986,11 +2986,11 @@ details[open] > .header__menu-item .icon-caret {
   position: static;
 }
 
-header-menu > details,
+/* header-menu > details,
 header-menu > .header__disclosure.mega-menu,
 details-disclosure > details {
   position: relative;
-}
+} */
 
 @keyframes animateMenuOpen {
   0% {
