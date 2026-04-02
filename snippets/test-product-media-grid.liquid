@@ -1,0 +1,92 @@
+{% comment %}
+  Featured image + variant metafield gallery (grid: 1 col mobile, 2 cols md+).
+  Metafield: custom.variant_gallery (List of files / images) on Variants.
+{% endcomment %}
+
+{% liquid
+  assign featured = variant.featured_image | default: product.featured_image
+  assign gallery = variant.metafields.custom.variant_gallery.value
+%}
+
+<div class="relative" data-test-product-carousel>
+  <div
+    class="
+      test-product-media-grid
+      flex flex-row gap-0 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]
+      snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0
+      lg:grid lg:grid-cols-2 lg:gap-3 lg:overflow-visible lg:snap-none
+    "
+    data-test-product-media-grid
+    data-product-title="{{ product.title | escape }}"
+  >
+  {% if featured %}
+    <div class="w-full p-10  shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
+      {{
+        featured
+        | image_url: width: 1200
+        | image_tag:
+          alt: product.title,
+          class: 'test-product-main-image__img h-auto w-full object-cover',
+          loading: 'lazy'
+      }}
+    </div>
+  {% endif %}
+  {% if gallery != blank %}
+    {% for file in gallery %}
+      <div class="min-w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
+        {% if file.preview_image %}
+          {{
+            file.preview_image
+            | image_url: width: 1200
+            | image_tag:
+              alt: product.title,
+              class: 'test-product-main-image__img h-auto w-full object-cover',
+              loading: 'lazy'
+          }}
+        {% else %}
+          {{
+            file
+            | image_url: width: 1200
+            | image_tag:
+              alt: product.title,
+              class: 'test-product-main-image__img h-auto w-full object-cover',
+              loading: 'lazy'
+          }}
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% if featured == blank and gallery == blank %}
+    <div class="col-span-full flex w-full shrink-0 snap-start lg:min-w-0 h-72 items-center justify-center rounded-lg bg-gray-100 text-sm text-gray-500">
+      No image available
+    </div>
+  {% endif %}
+  </div>
+
+  {% comment %} Mobile-only prev/next over bottom of gallery {% endcomment %}
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-between px-8 gap-4 lg:hidden"
+    data-test-carousel-nav
+  >
+    <button
+      type="button"
+      class="test-product-carousel__btn pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-gray-900 shadow-md ring-1 ring-black/10 transition hover:bg-white disabled:pointer-events-none disabled:opacity-35"
+      data-test-carousel-prev
+      aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true" focusable="false">
+        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1-.02 1.06L8.832 10l3.938 3.71a.75.75 0 1 1-1.04 1.08l-4.5-4.25a.75.75 0 0 1 0-1.08l4.5-4.25a.75.75 0 0 1 1.06.02Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="test-product-carousel__btn pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-gray-900 shadow-md ring-1 ring-black/10 transition hover:bg-white disabled:pointer-events-none disabled:opacity-35"
+      data-test-carousel-next
+      aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true" focusable="false">
+        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "name": "daxton-2026-build",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --watch",
+    "theme:dev": "shopify theme dev --store daksten",
+    "theme:push": "shopify theme push --store daksten"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  }
+}

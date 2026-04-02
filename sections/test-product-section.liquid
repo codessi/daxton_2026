@@ -1,0 +1,420 @@
+{% comment %}
+  * on click on variant picker, the image should change to the variant image ✅
+  * should be able to add mulitple variant images on the product page 
+  * on click on add to cart button, the cart should add the variant to the cart
+  * on click on payment button, the payment should be processed
+  * on click on review button, the review should be added
+  * on click on share button, the share should be shared
+  * on click on related products button, the related products should be shown
+  * on click on related products carousel button, the related products carousel should be shown
+{% endcomment %}
+
+{% liquid
+  assign current_product = product
+  assign selected_variant = current_product.selected_or_first_available_variant
+  assign review_rating = current_product.metafields.reviews.rating.value | default: current_product.metafields.reviews.rating
+%}
+
+{% if current_product %}
+  <section class="w-full px-4 py-4">
+    <div class="mx-auto flex gap-5 max-w-[1700px]">
+      <div class="desktop-only flex-1 flex flex-col gap-3 max-[80rem]:hidden">
+
+        {% comment %} main image section: featured + variant metafield gallery (see snippet) {% endcomment %}
+        <div class="test-product-main-image__wrap mx-5 ">
+          {% render 'test-product-media-grid', variant: selected_variant, product: current_product %}
+        </div>
+        {% comment %} sku section {% endcomment %}
+        <div class="text-sm text-gray-600">
+          <span class="font-medium text-gray-900">SKU:</span>
+          <span>{{ selected_variant.sku | default: 'N/A' }}</span>
+        </div>
+        {% comment %} description section {% endcomment %}
+        {% if current_product.description != blank %}
+          <div class="prose prose-sm max-w-none text-gray-800">
+            {{ current_product.description }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="section-right min-w-0 self-start xl:w-[34%] sticky top-[var(--header-group-height)]">
+        {% comment %} bread crumb section {% endcomment %}
+        <nav class="text-xs text-gray-500">
+          <a href="{{ routes.root_url }}" class="hover:text-black">Home</a>
+          <span class="mx-1">/</span>
+          {% if collection %}
+            <a href="{{ collection.url }}" class="hover:text-black">{{ collection.title }}</a>
+          {% else %}
+            <a href="{{ routes.all_products_collection_url }}" class="hover:text-black">Products</a>
+          {% endif %}
+          <span class="mx-1">/</span>
+          <span class="text-gray-800">{{ current_product.title }}</span>
+        </nav>
+        {% comment %} title section {% endcomment %}
+        <h1 class="text-2xl font-bold tracking-tight text-black">{{ current_product.title }}</h1>
+        <div class="flex justify-between">
+          {% comment %} price section {% endcomment %}
+          <div class="text-xl font-semibold text-black">
+            {{ selected_variant.price | money }}
+          </div>
+          {% comment %} review rating section {% endcomment %}
+          <div class="flex items-center gap-2 text-sm text-gray-700">
+            <span class="text-black">★★★★★</span>
+            {% if review_rating != blank %}
+              <span>{{ review_rating }} / 5</span>
+            {% else %}
+              <span>No reviews yet</span>
+            {% endif %}
+          </div>
+        </div>
+        {% comment %} main image section (mobile): same grid as desktop {% endcomment %}
+        <div class="mobile-only xl:hidden">
+          <div class="test-product-main-image__wrap mx-5 ">
+            {% render 'test-product-media-grid', variant: selected_variant, product: current_product %}
+          </div>
+        </div>
+
+
+        {% comment %} variant data section {% endcomment %}
+        <script type="application/json" id="test-product-variant-data">
+          {
+            "variants": [
+              {%- for variant in current_product.variants -%}
+                {
+                  "id": {{ variant.id }},
+                  "option1": {{ variant.option1 | json }},
+                  "option2": {{ variant.option2 | json }},
+                  "option3": {{ variant.option3 | json }},
+                  "image": {% assign v_img = variant.featured_image | default: current_product.featured_image %}{% if v_img %}{{ v_img | image_url: width: 1200 | json }}{% else %}null{% endif %},
+                  "images": [
+                    {%- liquid
+                      assign v_img = variant.featured_image | default: current_product.featured_image
+                      assign need_comma = false
+                      if v_img
+                        echo v_img | image_url: width: 1200 | json
+                        assign need_comma = true
+                      endif
+                      assign gal = variant.metafields.custom.variant_gallery.value
+                      if gal
+                        for file in gal
+                          if need_comma
+                            echo ','
+                          endif
+                          if file.preview_image
+                            echo file.preview_image | image_url: width: 1200 | json
+                          else
+                            echo file | image_url: width: 1200 | json
+                          endif
+                          assign need_comma = true
+                        endfor
+                      endif
+                    -%}
+                  ]
+                }{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            ]
+          }
+        </script>
+
+        {% comment %} form section {% endcomment %}
+        {%- form 'product',
+          current_product,
+          id: 'test-product-form',
+          class: 'flex flex-col gap-4 rounded-lg border border-gray-200 p-4'
+        -%}
+          {% unless current_product.has_only_default_variant %}
+            <div class="flex flex-col gap-4">
+              {% for option in current_product.options_with_values %}
+                <fieldset class="flex flex-col gap-2">
+                  <legend class="text-sm font-medium text-gray-900">{{ option.name }}</legend>
+                  <div class="flex flex-wrap gap-2">
+                    {% for value in option.values %}
+                      <label class="cursor-pointer rounded border border-gray-300 px-3 py-1 text-sm text-gray-800 transition hover:border-black">
+                        <input
+                          class="sr-only"
+                          type="radio"
+                          name="options[{{ option.name | escape }}]"
+                          value="{{ value | escape }}"
+                          {% if option.selected_value == value %}
+                            checked
+                          {% endif %}
+                        >
+                        <span>{{ value }}</span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                </fieldset>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          <input id="test-product-variant-id" type="hidden" name="id" value="{{ selected_variant.id }}">
+
+          <button
+            type="submit"
+            name="add"
+            class="w-full rounded bg-black px-4 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            {% unless selected_variant.available %}
+              disabled
+            {% endunless %}
+          >
+            {% if selected_variant.available %}
+              Add to cart
+            {% else %}
+              Sold out
+            {% endif %}
+          </button>
+
+          <div class="*:w-full">
+            {{ form | payment_button }}
+          </div>
+        {%- endform -%}
+        {% comment %} shipping information section {% endcomment %}
+        <div class="rounded border border-dashed border-gray-300 p-3 text-sm text-gray-700">
+          <p class="font-medium text-gray-900">Shipping information</p>
+          {% if selected_variant.available %}
+            <p>In stock. Ships in 1-3 business days.</p>
+          {% else %}
+            <p>Out of stock. Check back soon for restock updates.</p>
+          {% endif %}
+        </div>
+
+        <div class="mobile-only xl:hidden flex flex-col gap-3">
+          {% comment %} sku section {% endcomment %}
+          <div class="text-sm text-gray-600">
+            <span class="font-medium text-gray-900">SKU:</span>
+            <span>{{ selected_variant.sku | default: 'N/A' }}</span>
+          </div>
+          {% comment %} description section {% endcomment %}
+          {% if current_product.description != blank %}
+            <div class="prose prose-sm max-w-none text-gray-800">
+              {{ current_product.description }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% comment %} share section {% endcomment %}
+        <div class="flex items-center gap-3 text-sm">
+          <span class="font-medium text-gray-900">Share:</span>
+          <a
+            href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: current_product.url | url_encode }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-600 hover:underline"
+          >
+            Facebook
+          </a>
+          <a
+            href="https://twitter.com/intent/tweet?url={{ shop.url | append: current_product.url | url_encode }}&text={{ current_product.title | url_encode }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sky-500 hover:underline"
+          >
+            X
+          </a>
+          <a
+            href="mailto:?subject={{ current_product.title | escape }}&body={{ shop.url | append: current_product.url }}"
+            class="text-gray-700 hover:underline"
+          >
+            Email
+          </a>
+        </div>
+
+        {% comment %} related products section {% endcomment %}
+        {% if collection and collection.products_count > 1 %}
+          <div class="flex flex-col gap-3">
+            <h2 class="text-lg font-semibold text-gray-900">Related products</h2>
+            <div class="flex gap-3 overflow-x-auto pb-2">
+              {% for related_product in collection.products limit: 8 %}
+                {% if related_product.id != current_product.id %}
+                  <a href="{{ related_product.url }}" class="min-w-[180px] rounded border border-gray-200 p-2">
+                    {% if related_product.featured_image %}
+                      {{
+                        related_product.featured_image
+                        | image_url: width: 500
+                        | image_tag: alt: related_product.title, class: 'mb-2 h-40 w-full rounded object-cover'
+                      }}
+                    {% endif %}
+                    <p class="line-clamp-2 text-sm font-medium text-gray-900">{{ related_product.title }}</p>
+                    <p class="mt-1 text-sm text-gray-700">{{ related_product.price | money }}</p>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% comment %} reviews section {% endcomment %}
+        <div class="flex flex-col gap-3 rounded-lg bg-gray-50 p-4">
+          <h2 class="text-lg font-semibold text-gray-900">Reviews</h2>
+          <p class="text-sm text-gray-700">Customer reviews will appear here.</p>
+          <button
+            type="button"
+            class="w-full rounded border border-black px-4 py-2 text-sm font-semibold uppercase tracking-wide text-black transition hover:bg-black hover:text-white"
+          >
+            Add a review
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+{% else %}
+  <section class="px-4 py-8 text-sm text-gray-600">Product data is unavailable in this context.</section>
+{% endif %}
+
+<script>
+  (function () {
+    function refreshCarouselNav(carousel) {
+      if (!carousel) return;
+      var track = carousel.querySelector('[data-test-product-media-grid]');
+      var nav = carousel.querySelector('[data-test-carousel-nav]');
+      var prev = carousel.querySelector('[data-test-carousel-prev]');
+      var next = carousel.querySelector('[data-test-carousel-next]');
+      if (!track || !prev || !next) return;
+      var n = track.children.length;
+      if (nav) nav.classList.toggle('hidden', n <= 1);
+      if (n <= 1) {
+        prev.disabled = true;
+        next.disabled = true;
+        return;
+      }
+      var maxScroll = Math.max(0, track.scrollWidth - track.clientWidth - 1);
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= maxScroll;
+    }
+
+    function bindCarousels() {
+      document.querySelectorAll('[data-test-product-carousel]').forEach(function (carousel) {
+        if (carousel.dataset.carouselBound === '1') return;
+        carousel.dataset.carouselBound = '1';
+        var track = carousel.querySelector('[data-test-product-media-grid]');
+        var prev = carousel.querySelector('[data-test-carousel-prev]');
+        var next = carousel.querySelector('[data-test-carousel-next]');
+        if (!track || !prev || !next) return;
+
+        function slideDelta() {
+          return track.clientWidth || 1;
+        }
+
+        prev.addEventListener('click', function () {
+          track.scrollBy({ left: -slideDelta(), behavior: 'smooth' });
+        });
+        next.addEventListener('click', function () {
+          track.scrollBy({ left: slideDelta(), behavior: 'smooth' });
+        });
+        track.addEventListener(
+          'scroll',
+          function () {
+            refreshCarouselNav(carousel);
+          },
+          { passive: true }
+        );
+        window.addEventListener('resize', function () {
+          refreshCarouselNav(carousel);
+        });
+        refreshCarouselNav(carousel);
+      });
+    }
+
+    bindCarousels();
+
+    var form = document.getElementById('test-product-form');
+    var dataEl = document.getElementById('test-product-variant-data');
+    var wraps = document.querySelectorAll('.test-product-main-image__wrap');
+    if (!form || !dataEl || wraps.length === 0) return;
+
+    var data;
+    try {
+      data = JSON.parse(dataEl.textContent);
+    } catch (e) {
+      return;
+    }
+
+    var variants = data.variants || [];
+
+    function getSelectedOptions() {
+      var fieldsets = form.querySelectorAll('fieldset');
+      var result = [];
+      fieldsets.forEach(function (fs) {
+        var checked = fs.querySelector('input[type="radio"]:checked');
+        result.push(checked ? checked.value : null);
+      });
+      return result;
+    }
+
+    function findVariant(selected) {
+      return variants.find(function (v) {
+        var o1 = selected[0] == null || v.option1 === selected[0];
+        var o2 = selected[1] == null || v.option2 === selected[1];
+        var o3 = selected[2] == null || v.option3 === selected[2];
+        return o1 && o2 && o3;
+      });
+    }
+
+    function updateImageAndVariant() {
+      var selected = getSelectedOptions();
+      var variant = findVariant(selected);
+      if (!variant) return;
+
+      var idInput = document.getElementById('test-product-variant-id');
+      if (idInput) idInput.value = String(variant.id);
+
+      var images = variant.images;
+      if (!images || !images.length) {
+        images = variant.image ? [variant.image] : [];
+      }
+
+      var title = '';
+      var titleEl = document.querySelector('[data-test-product-media-grid][data-product-title]');
+      if (titleEl) title = titleEl.getAttribute('data-product-title') || '';
+
+      wraps.forEach(function (wrap) {
+        var grid = wrap.querySelector('[data-test-product-media-grid]');
+        if (!grid) return;
+        if (!images.length) {
+          grid.innerHTML =
+            '<div class="col-span-full flex min-w-full shrink-0 snap-start lg:min-w-0 h-72 items-center justify-center rounded-lg bg-gray-100 text-sm text-gray-500">No image available</div>';
+          grid.scrollLeft = 0;
+          var carouselEmpty = wrap.querySelector('[data-test-product-carousel]');
+          if (carouselEmpty) refreshCarouselNav(carouselEmpty);
+          return;
+        }
+        var safeAlt = title.replace(/"/g, '&quot;');
+        grid.innerHTML = images
+          .map(function (url) {
+            return (
+              '<div class="min-w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">' +
+              '<img src="' +
+              url +
+              '" alt="' +
+              safeAlt +
+              '" class="test-product-main-image__img h-auto w-full object-cover" loading="lazy" />' +
+              '</div>'
+            );
+          })
+          .join('');
+        grid.scrollLeft = 0;
+        var carousel = wrap.querySelector('[data-test-product-carousel]');
+        if (carousel) refreshCarouselNav(carousel);
+      });
+    }
+
+    form.addEventListener('change', function (e) {
+      if (e.target && e.target.name && e.target.name.indexOf('options[') === 0) {
+        updateImageAndVariant();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Test product section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Test product section"
+    }
+  ]
+}
+{% endschema %}
