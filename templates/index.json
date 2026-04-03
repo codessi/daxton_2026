@@ -192,7 +192,8 @@
         "col_1": {
           "type": "featured_collection",
           "settings": {
-            "collection": "snapbacks"
+            "collection": "snapbacks",
+            "image": "shopify://shop_images/ROYAL-F.jpg"
           }
         },
         "col_2": {
