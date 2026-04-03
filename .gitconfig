@@ -1,0 +1,2 @@
+# Example aliases to speed things up
+git config --global alias.done '!f() { git checkout main && git merge "$1" && git push; }; f'
