@@ -1,0 +1,72 @@
+{% comment %}
+  One option value as an image swatch (radio + thumbnail).
+  Accepts: product, option, value, selected_variant
+{% endcomment %}
+{%- liquid
+  assign swatch_variant = nil
+  for v in product.variants
+    if option.position == 1
+      if v.option1 == value and v.option2 == selected_variant.option2 and v.option3 == selected_variant.option3
+        assign swatch_variant = v
+        break
+      endif
+    elsif option.position == 2
+      if v.option2 == value and v.option1 == selected_variant.option1 and v.option3 == selected_variant.option3
+        assign swatch_variant = v
+        break
+      endif
+    elsif option.position == 3
+      if v.option3 == value and v.option1 == selected_variant.option1 and v.option2 == selected_variant.option2
+        assign swatch_variant = v
+        break
+      endif
+    endif
+  endfor
+  if swatch_variant == nil
+    for v in product.variants
+      if option.position == 1 and v.option1 == value
+        assign swatch_variant = v
+        break
+      elsif option.position == 2 and v.option2 == value
+        assign swatch_variant = v
+        break
+      elsif option.position == 3 and v.option3 == value
+        assign swatch_variant = v
+        break
+      endif
+    endfor
+  endif
+  if swatch_variant == nil
+    assign swatch_image = product.featured_image
+  else
+    assign swatch_image = swatch_variant.featured_image | default: product.featured_image
+  endif
+  assign swatch_alt = value | escape
+-%}
+<label class="group cursor-pointer">
+  <input
+    class="peer sr-only"
+    type="radio"
+    name="options[{{ option.name | escape }}]"
+    value="{{ value | escape }}"
+    {% if option.selected_value == value %}
+      checked
+    {% endif %}
+    aria-label="{{ option.name | escape }}: {{ value | escape }}"
+  >
+  <span class="flex h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 border-gray-200 bg-gray-50 transition hover:border-gray-400 peer-checked:border-black peer-checked:ring-2 peer-checked:ring-black peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black md:h-16 md:w-16">
+    {%- if swatch_image != blank -%}
+      {{
+        swatch_image
+        | image_url: width: 128
+        | image_tag:
+          loading: 'lazy',
+          class: 'h-full w-full object-cover',
+          alt: swatch_alt,
+          widths: '64, 96, 128'
+      }}
+    {%- else -%}
+      <span class="flex h-full w-full items-center justify-center p-1 text-center text-[10px] font-semibold uppercase leading-tight text-gray-700">{{ value | escape }}</span>
+    {%- endif -%}
+  </span>
+</label>

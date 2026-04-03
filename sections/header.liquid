@@ -255,10 +255,10 @@
     {% comment %} Header menu section {% endcomment %}
 
     {%- liquid
-      assign header_menu = section.settings.menu | default: linklists['minimal-main-menu']
+      assign header_menu = section.settings.menu | default: linklists['main-menu']
       if header_menu != blank
         comment
-          Online Store admin menu drives items; default link list is minimal-main-menu if unset.
+          Online Store admin menu drives items; default link list is main-menu if unset.
         endcomment
         if section.settings.menu_type_desktop == 'dropdown'
           render 'header-dropdown-menu', menu: header_menu
@@ -608,7 +608,7 @@
     {
       "type": "link_list",
       "id": "menu",
-      "default": "minimal-main-menu",
+      "default": "main-menu",
       "label": "t:sections.header.settings.menu.label",
       "info": "Leave unset to use the custom nav blocks below (Headwear mega, hover open, underlines). When set, the theme uses that Navigation menu instead."
     },
