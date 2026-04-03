@@ -77,14 +77,21 @@
               endif
             -%}
             {%- for block in section.blocks -%}
+              {%- liquid
+                assign block_card_image = block.settings.image
+                if block_card_image == blank
+                  assign block_card_image = block.settings.collection.featured_image
+                endif
+              -%}
               <li
                 id="Slide-{{ section.id }}-{{ forloop.index }}"
-                class="featured-collections__slide slider__slide{% if block.settings.collection.featured_image == nil %} featured-collections__slide--no-media{% endif %}"
+                class="featured-collections__slide slider__slide{% if block_card_image == nil %} featured-collections__slide--no-media{% endif %}"
                 {{ block.shopify_attributes }}>
                 {%- assign placeholder_image_index = forloop.index0 | modulo: 4 | plus: 1 -%}
                 {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_image_index -%}
                 {% render 'card-collection'
                   , card_collection: block.settings.collection
+                  , card_image: block.settings.image
                   , media_aspect_ratio: section.settings.image_ratio
                   , columns: columns
                   , placeholder_image: placeholder_image
@@ -186,6 +193,12 @@
             "type": "collection",
             "id": "collection",
             "label": "Collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Custom image",
+            "info": "Optional. Shows instead of the collection’s featured image on this card."
           }
         ]
       }

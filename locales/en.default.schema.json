@@ -584,6 +584,10 @@
           "settings": {
             "collection": {
               "label": "Collection"
+            },
+            "image": {
+              "label": "Custom image",
+              "info": "Optional. Replaces the collection's featured image on this card."
             }
           }
         },
@@ -661,6 +665,10 @@
           "settings": {
             "collection": {
               "label": "Collection"
+            },
+            "image": {
+              "label": "Custom image",
+              "info": "Optional. Replaces the collection's featured image on this card."
             }
           }
         }
