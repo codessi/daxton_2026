@@ -20,39 +20,64 @@
     data-product-title="{{ product.title | escape }}"
   >
   {% if featured %}
-    <div class="w-full  shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
-      {{
-        featured
-        | image_url: width: 1200
-        | image_tag:
-          alt: product.title,
-          class: 'test-product-main-image__img h-auto w-full object-cover',
-          loading: 'lazy'
-      }}
+    {%- assign zoom_src_featured = featured | image_url: width: 2048 -%}
+    <div class="min-w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
+      <button
+        type="button"
+        class="block border-4 border-red-500 w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+        data-test-product-zoom-trigger
+        data-zoom-src="{{ zoom_src_featured }}"
+        data-zoom-alt="{{ product.title | escape }}"
+        aria-label="{{ 'products.product.media.open_media' | t: index: 1 }}"
+      >
+        {{
+          featured
+          | image_url: width: 1200
+          | image_tag:
+            alt: product.title,
+            class: 'test-product-main-image__img pointer-events-none h-auto w-full object-cover',
+            loading: 'lazy'
+        }}
+      </button>
     </div>
   {% endif %}
   {% if gallery != blank %}
     {% for file in gallery %}
       <div class="min-w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
         {% if file.preview_image %}
-          {{
-            file.preview_image
-            | image_url: width: 1200
-            | image_tag:
-              alt: product.title,
-              class: 'test-product-main-image__img h-auto w-full object-cover',
-              loading: 'lazy'
-          }}
+          {%- assign zoom_file = file.preview_image -%}
         {% else %}
-          {{
-            file
-            | image_url: width: 1200
-            | image_tag:
-              alt: product.title,
-              class: 'test-product-main-image__img h-auto w-full object-cover',
-              loading: 'lazy'
-          }}
+          {%- assign zoom_file = file -%}
         {% endif %}
+        {%- assign zoom_src_gallery = zoom_file | image_url: width: 2048 -%}
+        <button
+          type="button"
+          class="block h-full w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          data-test-product-zoom-trigger
+          data-zoom-src="{{ zoom_src_gallery }}"
+          data-zoom-alt="{{ product.title | escape }}"
+          aria-label="{{ 'products.product.media.open_media' | t: index: forloop.index }}"
+        >
+          {% if file.preview_image %}
+            {{
+              file.preview_image
+              | image_url: width: 1200
+              | image_tag:
+                alt: product.title,
+                class: 'test-product-main-image__img pointer-events-none h-auto w-full object-cover',
+                loading: 'lazy'
+            }}
+          {% else %}
+            {{
+              file
+              | image_url: width: 1200
+              | image_tag:
+                alt: product.title,
+                class: 'test-product-main-image__img pointer-events-none h-auto w-full object-cover',
+                loading: 'lazy'
+            }}
+          {% endif %}
+        </button>
       </div>
     {% endfor %}
   {% endif %}
@@ -88,5 +113,51 @@
         <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z" clip-rule="evenodd" />
       </svg>
     </button>
+  </div>
+
+  {% comment %} Full-screen zoom (one per carousel; JS opens with data-test-product-zoom-trigger) {% endcomment %}
+  <div
+    class="test-product-lightbox fixed inset-0 z-[100] hidden h-full w-full max-w-none flex flex-col bg-black/85 p-0"
+    data-test-product-lightbox
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
+  >
+    {% comment %} Backdrop {% endcomment %}
+    <button
+      type="button"
+      class="absolute inset-0 cursor-default border-0 bg-transparent"
+      data-test-product-lightbox-backdrop
+      aria-label="{{ 'accessibility.close' | t }}"
+    ></button>
+    {% comment %} Close button {% endcomment %}
+    <button
+      type="button"
+      class="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-gray-900 shadow-md ring-1 ring-black/10 transition hover:bg-white"
+      data-test-product-lightbox-close
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+        <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/>
+      </svg>
+    </button>
+    {% comment %} Tall images: scroll vertically; object-contain keeps full photo visible while scrolling (object-cover crops and cannot reveal the rest by scrolling). {% endcomment %}
+    <div class="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden pt-14" data-test-product-lightbox-scroll>
+      <div
+        class="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain px-2 pb-6 [-webkit-overflow-scrolling:touch] sm:px-4"
+        tabindex="0"
+      >
+        <img
+          src=""
+          alt=""
+          width="2048"
+          height="2048"
+          class="test-product-lightbox__img mx-auto box-border block h-auto w-full max-w-none object-contain"
+          data-test-product-lightbox-img
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+    </div>
   </div>
 </div>
