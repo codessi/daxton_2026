@@ -20,8 +20,7 @@
                   aria-expanded="false">
                   <span>{{ block.settings.title | escape }}</span>
                 </summary>
-                {% render 'header-headwear-mega'
-                  , section: section %}
+                {% render 'header-headwear-mega', section: section, block: block %}
               </details>
             </header-menu>
           {%- else -%}

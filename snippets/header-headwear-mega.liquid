@@ -1,17 +1,28 @@
 {% comment %}
   Renders Headwear mega menu from Navigation menu (section.settings.headwear_menu_handle).
   47brand-style: full-width panel, content in page-width container; left 60% submenu, right 40% featured image.
-  Usage: {% render 'header-headwear-mega', section: section %}
+  Featured image/heading/link: Nav link block settings, with section mega promo as fallback.
+  Usage: {% render 'header-headwear-mega', section: section, block: block %}
 {% endcomment %}
-{%- assign headwear_menu_handle = section.settings.headwear_menu_handle | strip -%}
+{%- liquid
+  assign headwear_menu_handle = section.settings.headwear_menu_handle | strip
+  if block != blank
+    assign headwear_featured_image = block.settings.featured_image | default: section.settings.headwear_featured_image
+    assign mega_featured_heading = block.settings.featured_heading | default: section.settings.headwear_featured_heading
+    assign mega_featured_link = block.settings.featured_link | default: section.settings.headwear_featured_link
+  else
+    assign headwear_featured_image = section.settings.headwear_featured_image
+    assign mega_featured_heading = section.settings.headwear_featured_heading
+    assign mega_featured_link = section.settings.headwear_featured_link
+  endif
+-%}
 {%- if headwear_menu_handle != blank -%}
   {%- assign headwear_menu = linklists[headwear_menu_handle] -%}
 {%- else -%}
   {%- assign headwear_menu = nil -%}
 {%- endif -%}
-{%- assign headwear_featured_image = section.settings.headwear_featured_image -%}
 <div
-  id="MegaMenu-Content-Headwear"
+  id="MegaMenu-Content-Headwear{% if block != blank %}-{{ block.id }}{% endif %}"
   class="mega-menu__content mega-menu__content--full-width color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup absolute left-0 top-full z-10 box-border ml-[calc(50%-50vw)] w-screen max-w-[100vw] max-h-[80vh] overflow-y-auto border-0 bg-[rgb(var(--color-background))] py-8"
   tabindex="-1"
 >
@@ -45,27 +56,26 @@
     </div>
     {%- if headwear_featured_image != blank -%}
       <div class="mega-menu__content-featured flex min-w-0 shrink-0 basis-[40%] flex-col gap-3">
-        {%- if section.settings.headwear_featured_link != blank -%}
-          <a href="{{ section.settings.headwear_featured_link }}" class="mega-menu__featured-link text-inherit no-underline">
+        {%- if mega_featured_link != blank -%}
+          <a href="{{ mega_featured_link }}" class="mega-menu__featured-link text-inherit no-underline">
         {%- endif -%}
         <div class="mega-menu__featured-media media global-media-settings relative min-h-[15rem] w-60 overflow-hidden rounded">
-          <img
-            srcset="{{ headwear_featured_image | image_url: width: 400 }} 400w,
-                    {{ headwear_featured_image | image_url: width: 550 }} 550w,
-                    {{ headwear_featured_image | image_url: width: 700 }} 700w"
-            src="{{ headwear_featured_image | image_url: width: 550 }}"
-            sizes="(min-width: 990px) 40vw, 100vw"
-            alt="{{ headwear_featured_image.alt | escape }}"
-            loading="lazy"
-            width="{{ headwear_featured_image.width }}"
-            height="{{ headwear_featured_image.height }}"
-            class="mega-menu__featured-image block h-auto w-full object-cover align-middle"
-          >
+          {%- assign featured_alt = headwear_featured_image.alt | default: mega_featured_heading | escape -%}
+          {{
+            headwear_featured_image
+            | image_url: width: 700
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 550, 700',
+              sizes: '(min-width: 990px) 40vw, 100vw',
+              class: 'mega-menu__featured-image block h-auto w-full object-cover align-middle',
+              alt: featured_alt
+          }}
         </div>
-        {%- if section.settings.headwear_featured_heading != blank -%}
-          <p class="mega-menu__featured-heading m-0 text-[1.1em] font-bold uppercase tracking-wide">{{ section.settings.headwear_featured_heading | escape }}</p>
+        {%- if mega_featured_heading != blank -%}
+          <p class="mega-menu__featured-heading m-0 text-[1.1em] font-bold uppercase tracking-wide">{{ mega_featured_heading | escape }}</p>
         {%- endif -%}
-        {%- if section.settings.headwear_featured_link != blank -%}
+        {%- if mega_featured_link != blank -%}
           </a>
         {%- endif -%}
       </div>

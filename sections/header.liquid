@@ -620,24 +620,28 @@
     },
     {
       "type": "header",
-      "content": "Mega menu: featured promo (right column)"
+      "content": "Mega menu: default featured promo"
+    },
+    {
+      "type": "paragraph",
+      "content": "Used as fallback when a Nav link block leaves its own featured promo empty. Also used for menu-driven mega menus (when a Navigation menu is selected above)."
     },
     {
       "type": "image_picker",
       "id": "headwear_featured_image",
-      "label": "Featured image",
-      "info": "Shown on the right of every desktop mega menu that has sub-links. Leave blank to use the full width for links only."
+      "label": "Default featured image",
+      "info": "Fallback and menu-driven megas. Nav link blocks can override per item."
     },
     {
       "type": "text",
       "id": "headwear_featured_heading",
-      "label": "Heading",
+      "label": "Default heading",
       "default": "Spring Training Collection"
     },
     {
       "type": "url",
       "id": "headwear_featured_link",
-      "label": "Featured link",
+      "label": "Default featured link",
       "info": "Optional. Wraps image and heading when set."
     },
     {
@@ -798,6 +802,31 @@
           "type": "url",
           "id": "link",
           "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Featured promo (this link)"
+        },
+        {
+          "type": "paragraph",
+          "content": "For mega menus (e.g. Headwear), set a unique image, heading, and link. Leave blank to use the section defaults under “Mega menu: default featured promo”."
+        },
+        {
+          "type": "image_picker",
+          "id": "featured_image",
+          "label": "Featured image"
+        },
+        {
+          "type": "text",
+          "id": "featured_heading",
+          "label": "Featured heading",
+          "info": "Optional. Falls back to the section default heading if empty."
+        },
+        {
+          "type": "url",
+          "id": "featured_link",
+          "label": "Featured link",
+          "info": "Optional. Wraps image and heading when set. Falls back to the section default link if empty."
         }
       ]
     }
