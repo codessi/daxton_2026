@@ -138,7 +138,7 @@
         "team_9"
       ],
       "settings": {
-        "title": "Shop by Team",
+        "title": "Shop by",
         "heading_size": "h1",
         "color_scheme": "scheme-1",
         "padding_top": 44,
@@ -253,7 +253,7 @@
           "settings": {
             "image": "shopify://shop_images/5-panel-hat.png",
             "label": "5 Panel",
-            "link": ""
+            "link": "https://www.daxtonapparel.com/collections/headwear?filter.v.price.gte=&filter.v.price.lte=&filter.p.m.custom.style=5+Panel&sort_by=best-selling"
           }
         },
         "style_3": {
