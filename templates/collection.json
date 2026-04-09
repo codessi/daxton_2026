@@ -23,6 +23,7 @@
         "show_rating": false,
         "quick_add": "none",
         "enable_filtering": true,
+        "clear_filters_target_collection": "all-headwear",
         "filter_type": "vertical",
         "show_collection_description": true,
         "show_collection_image": false,

@@ -41,11 +41,17 @@
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if section.settings.filter_type == 'vertical' %} collection-page-grid facets-vertical page-width{% endif %}">
   {%- paginate collection.products by section.settings.products_per_page -%}
+    {%- liquid
+      assign empty_state_clear_filters_url = collection.url
+      if section.settings.clear_filters_target_collection != blank
+        assign empty_state_clear_filters_url = section.settings.clear_filters_target_collection.url
+      endif
+    -%}
     {{ 'component-facets.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
     {%- if section.settings.filter_type == 'vertical' -%}
       <div class="collection-page-grid__cell collection-page-grid__cell--empty" aria-hidden="true"></div>
-      <div class=" collection-page-grid__cell collection-page-grid__cell--banner">
+      <div class="collection-page-grid__cell collection-page-grid__cell--banner">
         {% render 'collection-banner'
           , collection: collection
           , show_collection_description: section.settings.show_collection_description
@@ -134,7 +140,7 @@
               <h2 class="title title--primary">
                 {{ 'sections.collection_template.empty' | t -}}
                 <br>
-                {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: 'underlined-link link' }}
+                {{ 'sections.collection_template.use_fewer_filters_html' | t: link: empty_state_clear_filters_url, class: 'underlined-link link' }}
               </h2>
             </div>
           </div>
@@ -191,7 +197,7 @@
                 <h2 class="title title--primary">
                   {{ 'sections.collection_template.empty' | t -}}
                   <br>
-                  {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: 'underlined-link link' }}
+                  {{ 'sections.collection_template.use_fewer_filters_html' | t: link: empty_state_clear_filters_url, class: 'underlined-link link' }}
                 </h2>
               </div>
             </div>
@@ -386,6 +392,11 @@
         "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
         "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
       }, {
+        "type": "collection",
+        "id": "clear_filters_target_collection",
+        "label": "t:sections.main-collection-product-grid.settings.clear_filters_target_collection.label",
+        "info": "t:sections.main-collection-product-grid.settings.clear_filters_target_collection.info"
+      }, {
         "type": "select",
         "id": "filter_type",
         "options": [
@@ -418,7 +429,7 @@
       }, {
         "type": "color_scheme",
         "id": "banner_color_scheme",
-        "label": "t:sections.main-collection-banner.settings.color_scheme.label",
+        "label": "t:sections.all.colors.label",
         "default": "scheme-1"
       }, {
         "type": "checkbox",
