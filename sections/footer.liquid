@@ -68,7 +68,7 @@
        mx-auto px-8 md:px-12 box-border pb-20 block">
         {%- if section.blocks.size > 0 -%}
           <div
-            class="footer__blocks-wrapper max-w-[1074px]  mx-auto footer__blocks-grid flex flex-row flex-wrap justify-between items-stretch w-full gap-y-8 gap-x-8 mb-0 md:[&_.footer-block]:flex-[1_1_0] md:[&_.footer-block]:min-w-0"
+            class="footer__blocks-wrapper max-w-[1074px] mx-auto footer__blocks-grid flex flex-row flex-wrap justify-between items-stretch w-full gap-y-8 gap-x-8 mb-0 md:[&_.footer-block]:flex-[1_1_0] md:[&_.footer-block]:min-w-0"
           >
             {%- for block in section.blocks -%}
               <div
@@ -88,22 +88,22 @@
                     </div>
                   {%- when 'link_list' -%}
                     {%- if block.settings.menu != blank -%}
-                      <ul class="flex justify-between gap-2 w-full list-unstyled">
+                      <ul class="flex justify-between uppercase  gap-2 w-full list-unstyled">
                         {%- for link in block.settings.menu.links -%}
                           <li class="flex flex-col gap-1">
                             <a
                               href="{{ link.url }}"
-                              class="link link--text list-menu__item list-menu__item--link !text-white !no-underline hover:!text-white hover:!no-underline focus:!text-white focus:!no-underline active:!no-underline{% if link.active %} list-menu__item--active{% endif %}"
+                              class="link link--text list-menu__item list-menu__item--link text-white! no-underline! hover:text-white! hover:no-underline! focus:text-white! focus:no-underline! active:no-underline!{% if link.active %} list-menu__item--active{% endif %}"
                             >
                               {{ link.title | escape }}
                             </a>
                             {%- if link.links != blank -%}
-                              <ul class="flex flex-col gap-1 list-unstyled pl-4 mt-0">
+                              <ul class="flex flex-col gap-1 normal-case  font-light list-unstyled mt-0">
                                 {%- for child in link.links -%}
                                   <li>
                                     <a
                                       href="{{ child.url }}"
-                                      class="link link--text !text-white !no-underline hover:!text-white hover:!no-underline focus:!text-white focus:!no-underline active:!no-underline text-sm opacity-90{% if child.active %} list-menu__item--active{% endif %}"
+                                      class="link link--text text-white! no-underline! hover:text-white! hover:no-underline! focus:text-white! focus:no-underline! active:no-underline! text-sm opacity-90{% if child.active %} list-menu__item--active{% endif %}"
                                     >
                                       {{ child.title | escape }}
                                     </a>
@@ -113,7 +113,7 @@
                                           <li>
                                             <a
                                               href="{{ grandchild.url }}"
-                                              class="link !text-white !no-underline hover:!text-white hover:!no-underline text-sm opacity-80"
+                                              class="link text-white! no-underline! hover:text-white! hover:no-underline! text-sm opacity-80"
                                             >
                                               {{ grandchild.title | escape }}
                                             </a>
@@ -273,9 +273,9 @@
     {%- endunless -%}
   {%- endif -%}
 
-  <div class="footer__content-bottom border-t border-white/15 pt-12">
+  <div class="footer__content-bottom border-t  border-white/15 pt-12">
     <div class="footer__content-bottom-wrapper page-width">
-      <div class="footer__column footer__localization isolate">
+      <div class="footer__column footer__localization isolate ">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form>
             {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}

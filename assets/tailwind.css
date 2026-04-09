@@ -44,6 +44,7 @@
   --text-2xl--line-height: calc(2 / 1.5);
   --text-4xl: 2.25rem;
   --text-4xl--line-height: calc(2.5 / 2.25);
+  --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -532,6 +533,9 @@
 .rounded-lg {
   border-radius: var(--radius-lg);
 }
+.rounded-lg\! {
+  border-radius: var(--radius-lg) !important;
+}
 .rounded-md {
   border-radius: var(--radius-md);
 }
@@ -611,6 +615,9 @@
 }
 .border-gray-300 {
   border-color: var(--color-gray-300);
+}
+.border-gray-400 {
+  border-color: var(--color-gray-400);
 }
 .border-green-500 {
   border-color: var(--color-green-500);
@@ -821,6 +828,10 @@
   --tw-font-weight: var(--font-weight-bold);
   font-weight: var(--font-weight-bold);
 }
+.font-light {
+  --tw-font-weight: var(--font-weight-light);
+  font-weight: var(--font-weight-light);
+}
 .font-medium {
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
@@ -889,11 +900,17 @@
 .text-white {
   color: var(--color-white);
 }
+.text-white\! {
+  color: var(--color-white) !important;
+}
 .text-yellow-500 {
   color: var(--color-yellow-500);
 }
 .capitalize {
   text-transform: capitalize;
+}
+.normal-case {
+  text-transform: none;
 }
 .uppercase {
   text-transform: uppercase;
@@ -909,6 +926,9 @@
 }
 .no-underline {
   text-decoration-line: none;
+}
+.no-underline\! {
+  text-decoration-line: none !important;
 }
 .underline {
   text-decoration-line: underline;
@@ -1080,6 +1100,13 @@
     }
   }
 }
+.hover\:text-white\! {
+  &:hover {
+    @media (hover: hover) {
+      color: var(--color-white) !important;
+    }
+  }
+}
 .hover\:\!no-underline {
   &:hover {
     @media (hover: hover) {
@@ -1091,6 +1118,13 @@
   &:hover {
     @media (hover: hover) {
       text-decoration-line: none;
+    }
+  }
+}
+.hover\:no-underline\! {
+  &:hover {
+    @media (hover: hover) {
+      text-decoration-line: none !important;
     }
   }
 }
@@ -1125,6 +1159,11 @@
     color: var(--color-white);
   }
 }
+.focus\:text-white\! {
+  &:focus {
+    color: var(--color-white) !important;
+  }
+}
 .focus\:\!no-underline {
   &:focus {
     text-decoration-line: none !important;
@@ -1133,6 +1172,11 @@
 .focus\:no-underline {
   &:focus {
     text-decoration-line: none;
+  }
+}
+.focus\:no-underline\! {
+  &:focus {
+    text-decoration-line: none !important;
   }
 }
 .focus\:outline-none {
@@ -1169,6 +1213,11 @@
   }
 }
 .active\:\!no-underline {
+  &:active {
+    text-decoration-line: none !important;
+  }
+}
+.active\:no-underline\! {
   &:active {
     text-decoration-line: none !important;
   }
