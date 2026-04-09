@@ -1792,6 +1792,10 @@
           "label": "Filters",
           "info": "Customize filters with the [Search & Discovery app](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
         },
+        "clear_filters_target_collection": {
+          "label": "Empty grid: remove-all-filters link",
+          "info": "When no products match filters, the link goes to this collection (no query params). Leave blank to use the current collection URL."
+        },
         "filter_type": {
           "label": "Filter layout",
           "options__1": {
