@@ -191,7 +191,7 @@
   text-align: left;
 }
 
-@media screen and (min-width: 990px) {
+@media (hover: hover) {
   .grid--6-col-desktop .card__content quick-add-bulk .quantity {
     width: auto;
   }
