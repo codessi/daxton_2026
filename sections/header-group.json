@@ -46,6 +46,8 @@
         "headwear_featured_heading": "Spring Training Collection",
         "headwear_featured_link": "shopify://collections/headwear",
         "menu_type_desktop": "mega",
+        "pin_mega_menu_open": false,
+        "mega_menu_debug_borders": false,
         "menu_item_spacing": 24,
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
