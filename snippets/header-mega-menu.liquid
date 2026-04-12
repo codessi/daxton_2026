@@ -8,7 +8,20 @@
 {%- assign mega_featured_image = section.settings.headwear_featured_image -%}
 {%- assign mega_featured_heading = section.settings.headwear_featured_heading -%}
 {%- assign mega_featured_link = section.settings.headwear_featured_link -%}
-<nav class="header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
+{%- assign mega_debug_borders = section.settings.mega_menu_debug_borders -%}
+{%- style -%}
+  /* Menu-driven mega only: nav always includes .block (dropdown nav does not). */
+  nav.header__inline-menu.block .mega-menu__content .mega-menu__link {
+    white-space: nowrap;
+  }
+  {%- if mega_debug_borders -%}
+    .header__inline-menu .mega-menu__content.border-4,
+    .header__inline-menu .mega-menu__content .border-4 {
+      border-style: solid;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+<nav class="block header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
       <li>
@@ -19,7 +32,7 @@
               id="Details-HeaderMenu-{{ forloop.index }}"
               class="header__disclosure mega-menu mega-menu--hover-only "
             >
-              <div class="flex flex-wrap items-center gap-1">
+              <div class="flex  flex-wrap items-center gap-1">
                 <a
                   id="HeaderMenu-{{ link.handle }}"
                   href="{{ link.url }}"
@@ -46,9 +59,9 @@
                   aria-label="{{ 'sections.header.submenu_for' | t: title: link.title }}"
                 ></button>
               </div>
-              <div 
+              <div
                 id="MegaMenu-Content-{{ forloop.index }}"
-                class=" absolute left-0 top-full  mega-menu__content z-10 box-border  w-screen max-w-[100vw] max-h-[80vh] overflow-y-auto border-0 bg-[rgb(var(--color-background))] py-8"
+                class="absolute left-0 top-full mega-menu__content z-10 box-border w-screen max-w-[100vw] h-[100vh] overflow-y-auto bg-[rgb(var(--color-background))] py-8{% if mega_debug_borders %} border-4 border-blue-500{% else %} border-0{% endif %}"
                 tabindex="-1"
                 hidden
               >
@@ -58,12 +71,12 @@
                   tabindex="-1"
                   hidden
                 > {% endcomment %}
-                <div class="page-width box-border flex w-full flex-col items-start gap-10 lg:flex-row">
-                  <div class="min-w-0 {% if mega_featured_image != blank %}shrink-0 basis-[60%]{% else %}w-full{% endif %}">
+                <div class="page-width box-border flex w-full flex-col gap-10 lg:flex-row{% if mega_debug_borders %} border-4 border-orange-500{% endif %}">
+                  <div class="min-w-0 w-full md:w-[50%] {% if mega_debug_borders %} border-4 border-green-500{% endif %} {% if mega_featured_image != blank %}shrink-0 {% else %}w-full{% endif %}">
                     <ul
                       class="mega-menu__list page-width list-none
                         {% if link.levels == 1 %}
-                          !block [&_.mega-menu__link]:font-normal
+                          flex [&_.mega-menu__link]:font-normal
                         {% else %}
                           !grid !grid-cols-3 gap-x-[1.875rem] gap-y-5
                         {% endif %}
@@ -75,7 +88,7 @@
                           <a
                             id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
                             href="{{ childlink.url }}"
-                            class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                            class=" mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
                             {% if childlink.current %}
                               aria-current="page"
                             {% endif %}
@@ -105,21 +118,21 @@
                     </ul>
                   </div>
                   {%- if mega_featured_image != blank -%}
-                    <div class="flex min-w-0 shrink-0 basis-[40%] flex-col gap-3">
-                      {%- if mega_featured_link != blank -%}
-                        <a href="{{ mega_featured_link }}" class="flex flex-col gap-3 text-inherit no-underline">
-                      {%- endif -%}
-                      <div class="relative min-h-[15rem] w-60 overflow-hidden rounded-md border border-[rgba(var(--color-foreground),0.12)] bg-[rgb(var(--color-background))]">
-                        {{
-                          mega_featured_image
-                          | image_url: width: 550
-                          | image_tag:
-                            loading: 'lazy',
-                            widths: '400, 550, 700',
-                            sizes: '(min-width: 990px) 40vw, 100vw',
-                            class: 'block h-auto w-full object-cover align-middle'
-                        }}
-                      </div>
+                  <div class="flex min-w-0 w-full md:w-[50%] shrink-0 h-full flex-col gap-3{% if mega_debug_borders %} border-4 border-yellow-500{% endif %}">
+                    {%- if mega_featured_link != blank -%}
+                      <a href="{{ mega_featured_link }}" class="flex flex-col gap-3 text-inherit no-underline">
+                    {%- endif -%}
+                    <div class=" relative min-h-[15rem] w-80 overflow-hidden rounded-md  bg-[rgb(var(--color-background))]">
+                      {{
+                        mega_featured_image
+                        | image_url: width: 550
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '400, 550, 700',
+                          sizes: '(min-width: 990px) 40vw, 100vw',
+                          class: 'block h-auto w-full object-cover align-middle'
+                      }}
+                    </div>
                       {%- if mega_featured_heading != blank -%}
                         <p class="m-0 text-[1.1em] font-bold uppercase tracking-wide text-[rgb(var(--color-foreground))]">
                           {{ mega_featured_heading | escape }}

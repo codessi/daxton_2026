@@ -1115,6 +1115,14 @@
             "label": "Drawer"
           }
         },
+        "pin_mega_menu_open": {
+          "label": "Pin mega menu open (development)",
+          "info": "Opens the first desktop mega panel on load and keeps it from closing on hover/focus loss. For styling or QA only—turn off before publishing. You can also add ?debug_mega=1 to any store URL."
+        },
+        "mega_menu_debug_borders": {
+          "label": "Mega menu debug borders",
+          "info": "Shows colored Tailwind borders on menu-driven mega panels (header-mega-menu) for layout debugging. Turn off for production."
+        },
         "show_line_separator": {
           "label": "Separator line"
         },

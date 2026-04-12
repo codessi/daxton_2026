@@ -34,6 +34,9 @@ customElements.define('details-disclosure', DetailsDisclosure);
 
 function isMegaMenuDebug() {
   if (typeof window === 'undefined') return false;
+  if (document.documentElement && document.documentElement.dataset.megaMenuDebug === 'true') {
+    return true;
+  }
   return new URLSearchParams(window.location.search).get('debug_mega') === '1';
 }
 
