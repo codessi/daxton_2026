@@ -18,7 +18,7 @@
           "type": "announcement",
           "settings": {
             "text": "Free Shipping On All Orders. Join the Family.",
-            "link": "https://www.daxtonapparel.com/pages/join-our-list?view=__DEFAULT__"
+            "link": "shopify://pages/join-our-list"
           }
         }
       },
