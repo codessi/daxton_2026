@@ -14,8 +14,8 @@
       "disabled": true,
       "name": "About page",
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "padding_top": 100,
+        "padding_bottom": 100
       }
     },
     "newsletter_nMxWAr": {
