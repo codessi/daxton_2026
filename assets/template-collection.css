@@ -33,6 +33,31 @@
     grid-row: 2;
     min-width: 0;
   }
+
+  /* Vertical layout: no filter sidebar (custom filter list empty) — full-width banner + grid */
+  .collection-page-grid.facets-vertical.collection-page-grid--no-filter-column {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .collection-page-grid--no-filter-column .collection-page-grid__cell--empty {
+    display: none;
+  }
+
+  .collection-page-grid--no-filter-column .collection-page-grid__cell--banner {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .collection-page-grid--no-filter-column .collection-page-grid__cell--filter {
+    display: none;
+  }
+
+  .collection-page-grid--no-filter-column .collection-page-grid__cell--content {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
 }
 
 /* Horizontal padding so product cards don't touch viewport/section edges */

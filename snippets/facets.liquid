@@ -10,6 +10,10 @@
 
   Usage:
   {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true, filter_type: 'vertical', paginate: paginate %}
+
+  Optional (main-collection-product-grid):
+  - customize_collection_filters: {Boolean} when true, only filters listed in facet_visibility_allowlist are shown.
+  - facet_visibility_allowlist: {String} tokens joined by ||| (full filter.param_name and/or exact filter label; see facet-filter-in-allowlist snippet).
 {% endcomment %}
 
 {{ 'component-show-more.css' | asset_url | stylesheet_tag }}
@@ -25,6 +29,11 @@
   else
     assign terms = results.terms | escape
     assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+  endif
+
+  assign use_facet_allowlist = false
+  if customize_collection_filters == true and facet_visibility_allowlist != blank
+    assign use_facet_allowlist = true
   endif
 -%}
 
@@ -85,6 +94,12 @@
                   </facet-remove>
                 </div>
                 {%- for filter in results.filters -%}
+                  {%- if use_facet_allowlist -%}
+                    {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                    {%- unless _facet_in_list contains 'y' -%}
+                      {%- continue -%}
+                    {%- endunless -%}
+                  {%- endif -%}
                   {%- for value in filter.active_values -%}
                     <facet-remove>
                       <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
@@ -122,6 +137,12 @@
             <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
             {% comment %} Filters for both horizontal and vertical filter {% endcomment %}
             {%- for filter in results.filters -%}
+              {%- if use_facet_allowlist -%}
+                {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                {%- unless _facet_in_list contains 'y' -%}
+                  {%- continue -%}
+                {%- endunless -%}
+              {%- endif -%}
               {% liquid
                 assign total_active_values = total_active_values | plus: filter.active_values.size
                 assign presentation = filter.presentation | default: default_presentation
@@ -357,6 +378,12 @@
           {%- if filter_type == 'horizontal' -%}
             <div class="active-facets active-facets-desktop">
               {%- for filter in results.filters -%}
+                {%- if use_facet_allowlist -%}
+                  {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                  {%- unless _facet_in_list contains 'y' -%}
+                    {%- continue -%}
+                  {%- endunless -%}
+                {%- endif -%}
                 {%- for value in filter.active_values -%}
                   <facet-remove>
                     <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
@@ -528,6 +555,12 @@
             <div id="FacetsWrapperMobile" class="mobile-facets__main has-submenu gradient">
               {%- if enable_filtering -%}
                 {%- for filter in results.filters -%}
+                  {%- if use_facet_allowlist -%}
+                    {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                    {%- unless _facet_in_list contains 'y' -%}
+                      {%- continue -%}
+                    {%- endunless -%}
+                  {%- endif -%}
                   {% liquid
                     assign presentation = filter.presentation | default: default_presentation
                     if presentation == 'image'
@@ -813,6 +846,12 @@
 
   <div class="active-facets active-facets-mobile medium-hide large-up-hide">
     {%- for filter in results.filters -%}
+      {%- if use_facet_allowlist -%}
+        {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+        {%- unless _facet_in_list contains 'y' -%}
+          {%- continue -%}
+        {%- endunless -%}
+      {%- endif -%}
       {%- for value in filter.active_values -%}
         <facet-remove>
           <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
@@ -934,6 +973,12 @@
       <form id="FacetFiltersPillsForm" class="facets__form">
         <div class="active-facets active-facets-desktop">
           {%- for filter in results.filters -%}
+            {%- if use_facet_allowlist -%}
+              {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+              {%- unless _facet_in_list contains 'y' -%}
+                {%- continue -%}
+              {%- endunless -%}
+            {%- endif -%}
             {%- for value in filter.active_values -%}
               <facet-remove>
                 <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
