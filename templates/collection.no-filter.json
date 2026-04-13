@@ -11,18 +11,6 @@
   "sections": {
     "product-grid": {
       "type": "main-collection-product-grid",
-      "blocks": {
-        "collection_filter_A9kjDm": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Profile"
-          }
-        }
-      },
-      "block_order": [
-        "collection_filter_A9kjDm"
-      ],
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 3,
