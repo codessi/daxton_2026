@@ -39,14 +39,36 @@
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if section.settings.filter_type == 'vertical' %} collection-page-grid facets-vertical page-width{% endif %}">
-  {%- paginate collection.products by section.settings.products_per_page -%}
-    {%- liquid
-      assign empty_state_clear_filters_url = collection.url
-      if section.settings.clear_filters_target_collection != blank
-        assign empty_state_clear_filters_url = section.settings.clear_filters_target_collection.url
+{%- liquid
+  assign empty_state_clear_filters_url = collection.url
+  if section.settings.clear_filters_target_collection != blank
+    assign empty_state_clear_filters_url = section.settings.clear_filters_target_collection.url
+  endif
+
+  assign facet_visibility_allowlist = ''
+  assign facet_allowlist_count = 0
+  if section.settings.customize_collection_filters
+    for block in section.blocks
+      if block.type == 'collection_filter' and block.settings.show and block.settings.filter_param_name != blank
+        assign facet_visibility_allowlist = facet_visibility_allowlist | append: block.settings.filter_param_name | strip | append: '|||'
+        assign facet_allowlist_count = facet_allowlist_count | plus: 1
       endif
-    -%}
+    endfor
+  endif
+
+  assign effective_enable_filtering = section.settings.enable_filtering
+  if section.settings.enable_filtering and section.settings.customize_collection_filters and facet_allowlist_count == 0
+    assign effective_enable_filtering = false
+  endif
+
+  assign hide_desktop_filter_column = false
+  if section.settings.filter_type == 'vertical' and section.settings.enable_filtering and section.settings.customize_collection_filters and facet_allowlist_count == 0
+    assign hide_desktop_filter_column = true
+  endif
+-%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if section.settings.filter_type == 'vertical' %} collection-page-grid facets-vertical page-width{% endif %}{% if hide_desktop_filter_column %} collection-page-grid--no-filter-column{% endif %}">
+  {%- paginate collection.products by section.settings.products_per_page -%}
     {{ 'component-facets.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
     {%- if section.settings.filter_type == 'vertical' -%}
@@ -62,15 +84,17 @@
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
           aria-labelledby="verticalTitle"
-          class="collection-page-grid__cell--filter facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}"
+          class="collection-page-grid__cell--filter facets-wrapper{% unless effective_enable_filtering %} facets-wrapper--no-filters{% endunless %}"
           id="main-collection-filters"
           data-id="{{ section.id }}">
           {% render 'facets'
             , results: collection
-            , enable_filtering: section.settings.enable_filtering
+            , enable_filtering: effective_enable_filtering
             , enable_sorting: section.settings.enable_sorting
             , filter_type: section.settings.filter_type
             , paginate: paginate
+            , customize_collection_filters: section.settings.customize_collection_filters
+            , facet_visibility_allowlist: facet_visibility_allowlist
           %}
         </aside>
       {%- else -%}
@@ -171,15 +195,18 @@
         {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
           <aside
             aria-labelledby="verticalTitle"
-            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %} page-width"
+            class="facets-wrapper{% unless effective_enable_filtering %} facets-wrapper--no-filters{% endunless %} page-width"
             id="main-collection-filters"
             data-id="{{ section.id }}">
             {% render 'facets'
               , results: collection
-              , enable_filtering: section.settings.enable_filtering
+              , enable_filtering: effective_enable_filtering
               , enable_sorting: section.settings.enable_sorting
               , filter_type: section.settings.filter_type
-              , paginate: paginate %}
+              , paginate: paginate
+              , customize_collection_filters: section.settings.customize_collection_filters
+              , facet_visibility_allowlist: facet_visibility_allowlist
+            %}
           </aside>
         {%- endif -%}
         <div
@@ -397,6 +424,12 @@
         "label": "t:sections.main-collection-product-grid.settings.clear_filters_target_collection.label",
         "info": "t:sections.main-collection-product-grid.settings.clear_filters_target_collection.info"
       }, {
+        "type": "checkbox",
+        "id": "customize_collection_filters",
+        "default": false,
+        "label": "Pick which filters show (per template)",
+        "info": "Add Filter blocks below. Only checked filters with a param name appear. If on and no blocks qualify, filters hide and the grid uses full width (vertical layout). Turn off to show all store filters."
+      }, {
         "type": "select",
         "id": "filter_type",
         "options": [
@@ -458,6 +491,27 @@
         "label": "t:sections.all.padding.padding_bottom",
         "default": 36
       }
-    ]
+    ],
+    "blocks": [
+      {
+        "type": "collection_filter",
+        "name": "Filter",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show",
+            "default": true,
+            "label": "Show this filter"
+          },
+          {
+            "type": "text",
+            "id": "filter_param_name",
+            "label": "Filter param name",
+            "info": "Inspect the collection page: each filter uses id Details-PARAM-sectionId. Enter PARAM exactly (e.g. filter.p.m.custom.profile)."
+          }
+        ]
+      }
+    ],
+    "max_blocks": 30
   }
 {% endschema %}
