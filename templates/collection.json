@@ -11,6 +11,82 @@
   "sections": {
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "collection_filter_3hLfwW": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Price"
+          }
+        },
+        "collection_filter_iXH7C4": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Color"
+          }
+        },
+        "collection_filter_Vw7Hmy": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Composition"
+          }
+        },
+        "collection_filter_kGYRXx": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Style"
+          }
+        },
+        "collection_filter_XezRx9": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Fit"
+          }
+        },
+        "collection_filter_GHah8p": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Closure"
+          }
+        },
+        "collection_filter_8hd9Af": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Bill"
+          }
+        },
+        "collection_filter_yMxNRh": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Size"
+          }
+        },
+        "collection_filter_YhBmyD": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Profile"
+          }
+        }
+      },
+      "block_order": [
+        "collection_filter_3hLfwW",
+        "collection_filter_iXH7C4",
+        "collection_filter_Vw7Hmy",
+        "collection_filter_kGYRXx",
+        "collection_filter_XezRx9",
+        "collection_filter_GHah8p",
+        "collection_filter_8hd9Af",
+        "collection_filter_yMxNRh",
+        "collection_filter_YhBmyD"
+      ],
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 3,
@@ -24,6 +100,7 @@
         "quick_add": "none",
         "enable_filtering": true,
         "clear_filters_target_collection": "all-headwear",
+        "customize_collection_filters": true,
         "filter_type": "vertical",
         "show_collection_description": true,
         "show_collection_image": false,
