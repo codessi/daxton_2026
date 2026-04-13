@@ -16,7 +16,7 @@
           "type": "collection_filter",
           "settings": {
             "show": true,
-            "filter_param_name": "Profile"
+            "filter_param_name": "Beanie"
           }
         }
       },
