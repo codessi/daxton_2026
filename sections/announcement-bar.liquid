@@ -36,14 +36,11 @@
           {%- if section.blocks.first.settings.link != blank -%}
             <a
               href="{{ section.blocks.first.settings.link }}"
-              class="announcement-bar__link link link--text focus-inset animate-arrow"
+              class="link link--text focus-inset flex h-full w-full cursor-pointer items-center justify-center no-underline hover:cursor-pointer hover:no-underline"
             >
           {%- endif -%}
           <p class="announcement-bar__message h5">
             <span>{{ section.blocks.first.settings.text | escape }}</span>
-            {%- if section.blocks.first.settings.link != blank -%}
-              {{- 'icon-arrow.svg' | inline_asset_content -}}
-            {%- endif -%}
           </p>
           {%- if section.blocks.first.settings.link != blank -%}
             </a>
@@ -96,7 +93,7 @@
                     {%- if block.settings.link != blank -%}
                       <a
                         href="{{ block.settings.link }}"
-                        class="announcement-bar__link link link--text focus-inset animate-arrow"
+                        class="link link--text focus-inset animate-arrow flex h-full w-full cursor-pointer items-center justify-center no-underline hover:cursor-pointer hover:no-underline [&_.icon-arrow]:pointer-events-none [&_.icon-arrow]:ml-2 [&_.icon-arrow]:mb-0.5 [&_.icon-arrow]:inline-block [&_.icon-arrow]:align-middle"
                       >
                     {%- endif -%}
                     <p class="announcement-bar__message h5">

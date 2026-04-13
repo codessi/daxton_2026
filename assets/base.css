@@ -2170,7 +2170,7 @@ input[type='checkbox'] {
   }
 
   .announcement-bar.announcement-bar--one-announcement,
-  .announcement-bar--one-announcement .announcement-bar__link {
+  .announcement-bar--one-announcement > a {
     width: fit-content;
     margin: auto;
   }
@@ -2252,27 +2252,6 @@ input[type='checkbox'] {
   .announcement-bar .slider-button {
     height: 2.375rem;
   }
-}
-
-.announcement-bar__link {
-  display: flex;
-  width: 100%;
-  text-decoration: none;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.announcement-bar__link:hover {
-  text-decoration: underline;
-}
-
-.announcement-bar__link .icon-arrow {
-  display: inline-block;
-  pointer-events: none;
-  margin-left: 0.5rem;
-  vertical-align: middle;
-  margin-bottom: 0.125rem;
 }
 
 .announcement-bar__message {

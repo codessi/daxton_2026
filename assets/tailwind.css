@@ -285,6 +285,15 @@
 .h-72 {
   height: calc(var(--spacing) * 72);
 }
+.h-80 {
+  height: calc(var(--spacing) * 80);
+}
+.h-\[80\] {
+  height: 80;
+}
+.h-\[80vh\] {
+  height: 80vh;
+}
 .h-\[100vh\] {
   height: 100vh;
 }
@@ -823,11 +832,17 @@
 .pb-2 {
   padding-bottom: calc(var(--spacing) * 2);
 }
+.pb-4 {
+  padding-bottom: calc(var(--spacing) * 4);
+}
 .pb-6 {
   padding-bottom: calc(var(--spacing) * 6);
 }
 .pb-20 {
   padding-bottom: calc(var(--spacing) * 20);
+}
+.pb-40 {
+  padding-bottom: calc(var(--spacing) * 40);
 }
 .pl-4 {
   padding-left: calc(var(--spacing) * 4);
@@ -1094,6 +1109,13 @@
 .peer-focus-visible\:outline-black {
   &:is(:where(.peer):focus-visible ~ *) {
     outline-color: var(--color-black);
+  }
+}
+.hover\:cursor-pointer {
+  &:hover {
+    @media (hover: hover) {
+      cursor: pointer;
+    }
   }
 }
 .hover\:border-gray-400 {
@@ -1476,6 +1498,31 @@
 .\[\&_\.footer-block__heading\]\:text-white {
   & .footer-block  heading {
     color: var(--color-white);
+  }
+}
+.\[\&_\.icon-arrow\]\:pointer-events-none {
+  & .icon-arrow {
+    pointer-events: none;
+  }
+}
+.\[\&_\.icon-arrow\]\:mb-0\.5 {
+  & .icon-arrow {
+    margin-bottom: calc(var(--spacing) * 0.5);
+  }
+}
+.\[\&_\.icon-arrow\]\:ml-2 {
+  & .icon-arrow {
+    margin-left: calc(var(--spacing) * 2);
+  }
+}
+.\[\&_\.icon-arrow\]\:inline-block {
+  & .icon-arrow {
+    display: inline-block;
+  }
+}
+.\[\&_\.icon-arrow\]\:align-middle {
+  & .icon-arrow {
+    vertical-align: middle;
   }
 }
 .\[\&_\.mega-menu__link\]\:font-normal {
