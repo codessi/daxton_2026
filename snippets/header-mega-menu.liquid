@@ -10,8 +10,8 @@
 {%- assign mega_featured_link = section.settings.headwear_featured_link -%}
 {%- assign mega_debug_borders = section.settings.mega_menu_debug_borders -%}
 {%- style -%}
-  /* Menu-driven mega only: nav always includes .block (dropdown nav does not). */
-  nav.header__inline-menu.block .mega-menu__content .mega-menu__link {
+  /* Mega menu only (not dropdown nav). */
+  nav.header__inline-menu .mega-menu__content .mega-menu__link {
     white-space: nowrap;
   }
   {%- if mega_debug_borders -%}
@@ -21,7 +21,7 @@
     }
   {%- endif -%}
 {%- endstyle -%}
-<nav class="block header__inline-menu{% if nav_class != blank %} {{ nav_class }}{% endif %}">
+<nav class="header__inline-menu max-[989px]:hidden min-[990px]:block{% if nav_class != blank %} {{ nav_class }}{% endif %}">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in menu.links -%}
       <li>
@@ -71,7 +71,7 @@
                   tabindex="-1"
                   hidden
                 > {% endcomment %}
-                <div class="page-width box-border flex w-full flex-col gap-10 lg:flex-row{% if mega_debug_borders %} border-4 border-orange-500{% endif %}">
+                <div class="page-width box-border flex w-full flex-col  gap-10 lg:flex-row{% if mega_debug_borders %} border-4 border-orange-500{% endif %}">
                   <div class="min-w-0 w-full md:w-[50%] {% if mega_debug_borders %} border-4 border-green-500{% endif %} {% if mega_featured_image != blank %}shrink-0 {% else %}w-full{% endif %}">
                     <ul
                       class="mega-menu__list page-width list-none
@@ -148,10 +148,7 @@
             </div>
           </header-menu>
         {%- else -%}
-          {%- comment -%}
-            Same row + link styling as mega parents (lines 22–38), without header-menu, panel, or submenu button.
-            Leaf items stay a normal link only — no button (nothing to toggle).
-          {%- endcomment -%}
+  
           <div class="flex flex-wrap items-center gap-1">
             <a
               id="HeaderMenu-{{ link.handle }}"
