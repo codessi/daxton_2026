@@ -13,9 +13,6 @@ block w-full border-0 bg-transparent px-[1.875rem] py-[0.6875rem] text-left text
 {%- capture drawer_summary -%}
 relative cursor-pointer list-none pr-[3.25rem] {{ drawer_item | strip }}
 {%- endcapture -%}
-{%- capture drawer_active -%}
-bg-[rgba(var(--color-foreground),0.04)] hover:bg-[rgba(var(--color-foreground),0.08)]
-{%- endcapture -%}
 {%- capture drawer_chevron -%}
 svg-wrapper absolute right-[1.875rem] top-1/2 w-[15px] -translate-y-1/2
 {%- endcapture -%}
@@ -63,7 +60,7 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                       <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
                         <summary
                           id="HeaderDrawer-{{ link.handle }}"
-                          class="{{ drawer_summary | strip }} list-menu__item{% if link.child_active %} {{ drawer_active | strip }}{% endif %}"
+                          class="{{ drawer_summary | strip }} list-menu__item"
                         >
                           {{ link.title | escape }}
                           <span class="{{ drawer_chevron | strip }}">
@@ -96,7 +93,7 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                                     <a
                                       id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
                                       href="{{ childlink.url }}"
-                                      class="{{ drawer_item | strip }} list-menu__item{% if childlink.current %} {{ drawer_active | strip }}{% endif %}"
+                                      class="{{ drawer_item | strip }} list-menu__item"
                                       {% if childlink.current %}
                                         aria-current="page"
                                       {% endif %}
@@ -138,7 +135,7 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                                               <a
                                                 id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
                                                 href="{{ grandchildlink.url }}"
-                                                class="{{ drawer_item | strip }} list-menu__item{% if grandchildlink.current %} {{ drawer_active | strip }}{% endif %}"
+                                                class="{{ drawer_item | strip }} list-menu__item"
                                                 {% if grandchildlink.current %}
                                                   aria-current="page"
                                                 {% endif %}
@@ -162,7 +159,7 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                       <a
                         id="HeaderDrawer-{{ link.handle }}"
                         href="{{ link.url }}"
-                        class="{{ drawer_item | strip }} list-menu__item{% if link.current %} {{ drawer_active | strip }}{% endif %}"
+                        class="{{ drawer_item | strip }} list-menu__item"
                         {% if link.current %}
                           aria-current="page"
                         {% endif %}
