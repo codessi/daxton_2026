@@ -13,7 +13,7 @@
 
   Optional (main-collection-product-grid):
   - customize_collection_filters: {Boolean} when true, only filters listed in facet_visibility_allowlist are shown.
-  - facet_visibility_allowlist: {String} filter.param_name values joined by ||| (built from section blocks).
+  - facet_visibility_allowlist: {String} tokens joined by ||| (full filter.param_name and/or exact filter label; see facet-filter-in-allowlist snippet).
 {% endcomment %}
 
 {{ 'component-show-more.css' | asset_url | stylesheet_tag }}
@@ -32,10 +32,8 @@
   endif
 
   assign use_facet_allowlist = false
-  assign _facet_allow_tokens = '' | split: '|||'
   if customize_collection_filters == true and facet_visibility_allowlist != blank
     assign use_facet_allowlist = true
-    assign _facet_allow_tokens = facet_visibility_allowlist | split: '|||'
   endif
 -%}
 
@@ -97,15 +95,8 @@
                 </div>
                 {%- for filter in results.filters -%}
                   {%- if use_facet_allowlist -%}
-                    {%- assign _fp = filter.param_name | strip -%}
-                    {%- assign _allowed_fp = false -%}
-                    {%- for _t in _facet_allow_tokens -%}
-                      {%- assign _tt = _t | strip -%}
-                      {%- if _tt != '' and _fp == _tt -%}
-                        {%- assign _allowed_fp = true -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                    {%- unless _allowed_fp -%}
+                    {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                    {%- unless _facet_in_list contains 'y' -%}
                       {%- continue -%}
                     {%- endunless -%}
                   {%- endif -%}
@@ -147,15 +138,8 @@
             {% comment %} Filters for both horizontal and vertical filter {% endcomment %}
             {%- for filter in results.filters -%}
               {%- if use_facet_allowlist -%}
-                {%- assign _fp = filter.param_name | strip -%}
-                {%- assign _allowed_fp = false -%}
-                {%- for _t in _facet_allow_tokens -%}
-                  {%- assign _tt = _t | strip -%}
-                  {%- if _tt != '' and _fp == _tt -%}
-                    {%- assign _allowed_fp = true -%}
-                  {%- endif -%}
-                {%- endfor -%}
-                {%- unless _allowed_fp -%}
+                {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                {%- unless _facet_in_list contains 'y' -%}
                   {%- continue -%}
                 {%- endunless -%}
               {%- endif -%}
@@ -395,15 +379,8 @@
             <div class="active-facets active-facets-desktop">
               {%- for filter in results.filters -%}
                 {%- if use_facet_allowlist -%}
-                  {%- assign _fp = filter.param_name | strip -%}
-                  {%- assign _allowed_fp = false -%}
-                  {%- for _t in _facet_allow_tokens -%}
-                    {%- assign _tt = _t | strip -%}
-                    {%- if _tt != '' and _fp == _tt -%}
-                      {%- assign _allowed_fp = true -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                  {%- unless _allowed_fp -%}
+                  {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                  {%- unless _facet_in_list contains 'y' -%}
                     {%- continue -%}
                   {%- endunless -%}
                 {%- endif -%}
@@ -579,15 +556,8 @@
               {%- if enable_filtering -%}
                 {%- for filter in results.filters -%}
                   {%- if use_facet_allowlist -%}
-                    {%- assign _fp = filter.param_name | strip -%}
-                    {%- assign _allowed_fp = false -%}
-                    {%- for _t in _facet_allow_tokens -%}
-                      {%- assign _tt = _t | strip -%}
-                      {%- if _tt != '' and _fp == _tt -%}
-                        {%- assign _allowed_fp = true -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                    {%- unless _allowed_fp -%}
+                    {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+                    {%- unless _facet_in_list contains 'y' -%}
                       {%- continue -%}
                     {%- endunless -%}
                   {%- endif -%}
@@ -877,15 +847,8 @@
   <div class="active-facets active-facets-mobile medium-hide large-up-hide">
     {%- for filter in results.filters -%}
       {%- if use_facet_allowlist -%}
-        {%- assign _fp = filter.param_name | strip -%}
-        {%- assign _allowed_fp = false -%}
-        {%- for _t in _facet_allow_tokens -%}
-          {%- assign _tt = _t | strip -%}
-          {%- if _tt != '' and _fp == _tt -%}
-            {%- assign _allowed_fp = true -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- unless _allowed_fp -%}
+        {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+        {%- unless _facet_in_list contains 'y' -%}
           {%- continue -%}
         {%- endunless -%}
       {%- endif -%}
@@ -1011,15 +974,8 @@
         <div class="active-facets active-facets-desktop">
           {%- for filter in results.filters -%}
             {%- if use_facet_allowlist -%}
-              {%- assign _fp = filter.param_name | strip -%}
-              {%- assign _allowed_fp = false -%}
-              {%- for _t in _facet_allow_tokens -%}
-                {%- assign _tt = _t | strip -%}
-                {%- if _tt != '' and _fp == _tt -%}
-                  {%- assign _allowed_fp = true -%}
-                {%- endif -%}
-              {%- endfor -%}
-              {%- unless _allowed_fp -%}
+              {%- capture _facet_in_list -%}{%- render 'facet-filter-in-allowlist', filter: filter, facet_visibility_allowlist: facet_visibility_allowlist -%}{%- endcapture -%}
+              {%- unless _facet_in_list contains 'y' -%}
                 {%- continue -%}
               {%- endunless -%}
             {%- endif -%}

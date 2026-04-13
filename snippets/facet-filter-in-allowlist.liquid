@@ -1,0 +1,34 @@
+{% comment %}
+  Returns whether a collection filter matches any allowlist token (outputs "y" or blank).
+  @param filter {Object} storefront filter from results.filters
+  @param facet_visibility_allowlist {String} tokens joined by |||
+
+  Matching rules per token:
+  - Exact param: filter.param_name equals token (case-insensitive).
+  - If token does not contain "filter.", also allow exact filter.label match (case-insensitive),
+    so "Profile" or "profile" works without typing filter.p.m.custom.profile.
+{% endcomment %}
+{%- liquid
+  assign tokens = facet_visibility_allowlist | split: '|||'
+  assign match = false
+  for t in tokens
+    assign tt = t | strip
+    if tt == ''
+      continue
+    endif
+    assign tt_down = tt | downcase
+    assign fp = filter.param_name | strip | downcase
+    assign fl = filter.label | strip | downcase
+    if fp == tt_down
+      assign match = true
+      break
+    endif
+    unless tt contains 'filter.'
+      if fl == tt_down
+        assign match = true
+        break
+      endif
+    endunless
+  endfor
+-%}
+{%- if match -%}y{%- endif -%}
