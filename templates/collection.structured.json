@@ -11,6 +11,18 @@
   "sections": {
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "collection_filter_A9kjDm": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Profile"
+          }
+        }
+      },
+      "block_order": [
+        "collection_filter_A9kjDm"
+      ],
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 3,
@@ -24,6 +36,7 @@
         "quick_add": "none",
         "enable_filtering": true,
         "clear_filters_target_collection": "all-headwear",
+        "customize_collection_filters": true,
         "filter_type": "vertical",
         "show_collection_description": true,
         "show_collection_image": false,
