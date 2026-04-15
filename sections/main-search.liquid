@@ -147,7 +147,7 @@
       {%- endif -%}
     </div>
     {%- if search.performed -%}
-      {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+      {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' and search.results_count > 0 -%}
         <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
           <form class="facets-vertical-form" id="FacetSortForm">
             <div class="facet-filters sorting caption">
@@ -206,23 +206,25 @@
           class="facets-vertical page-width"
         {% endif %}
       >
-        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-          <aside
-            aria-labelledby="verticalTitle"
-            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-            id="main-search-filters"
-            data-id="{{ section.id }}"
-          >
-            {% render 'facets',
-              results: search,
-              enable_filtering: section.settings.enable_filtering,
-              enable_sorting: section.settings.enable_sorting,
-              filter_type: section.settings.filter_type,
-              paginate: paginate,
-              show_zero_count_filter_options: section.settings.show_zero_count_filter_options,
-              expand_all_filters: section.settings.expand_all_filters
-            %}
-          </aside>
+        {%- if search.results_count > 0 -%}
+          {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+            <aside
+              aria-labelledby="verticalTitle"
+              class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+              id="main-search-filters"
+              data-id="{{ section.id }}"
+            >
+              {% render 'facets',
+                results: search,
+                enable_filtering: section.settings.enable_filtering,
+                enable_sorting: section.settings.enable_sorting,
+                filter_type: section.settings.filter_type,
+                paginate: paginate,
+                show_zero_count_filter_options: section.settings.show_zero_count_filter_options,
+                expand_all_filters: section.settings.expand_all_filters
+              %}
+            </aside>
+          {%- endif -%}
         {%- endif -%}
         <div class="product-grid-container" id="ProductGridContainer">
           {%- if search.results.size == 0 and search.filters != empty -%}

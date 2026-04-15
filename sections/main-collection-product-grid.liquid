@@ -65,6 +65,9 @@
   if section.settings.filter_type == 'vertical' and section.settings.enable_filtering and section.settings.customize_collection_filters and facet_allowlist_count == 0
     assign hide_desktop_filter_column = true
   endif
+  if section.settings.filter_type == 'vertical' and collection.products_count == 0
+    assign hide_desktop_filter_column = true
+  endif
 -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if section.settings.filter_type == 'vertical' %} collection-page-grid facets-vertical page-width{% endif %}{% if hide_desktop_filter_column %} collection-page-grid--no-filter-column{% endif %}">
@@ -81,30 +84,34 @@
           , color_scheme: section.settings.banner_color_scheme
         %}
       </div>
-      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-        <aside
-          aria-labelledby="verticalTitle"
-          class="collection-page-grid__cell--filter facets-wrapper{% unless effective_enable_filtering %} facets-wrapper--no-filters{% endunless %}"
-          id="main-collection-filters"
-          data-id="{{ section.id }}">
-          {% render 'facets'
-            , results: collection
-            , enable_filtering: effective_enable_filtering
-            , enable_sorting: section.settings.enable_sorting
-            , filter_type: section.settings.filter_type
-            , paginate: paginate
-            , customize_collection_filters: section.settings.customize_collection_filters
-            , facet_visibility_allowlist: facet_visibility_allowlist
-            , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
-            , expand_all_filters: section.settings.expand_all_filters
-          %}
-        </aside>
+      {%- if collection.products_count > 0 -%}
+        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+          <aside
+            aria-labelledby="verticalTitle"
+            class="collection-page-grid__cell--filter facets-wrapper{% unless effective_enable_filtering %} facets-wrapper--no-filters{% endunless %}"
+            id="main-collection-filters"
+            data-id="{{ section.id }}">
+            {% render 'facets'
+              , results: collection
+              , enable_filtering: effective_enable_filtering
+              , enable_sorting: section.settings.enable_sorting
+              , filter_type: section.settings.filter_type
+              , paginate: paginate
+              , customize_collection_filters: section.settings.customize_collection_filters
+              , facet_visibility_allowlist: facet_visibility_allowlist
+              , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
+              , expand_all_filters: section.settings.expand_all_filters
+            %}
+          </aside>
+        {%- else -%}
+          <div class="collection-page-grid__cell--filter" aria-hidden="true"></div>
+        {%- endif -%}
       {%- else -%}
         <div class="collection-page-grid__cell--filter" aria-hidden="true"></div>
       {%- endif -%}
       <div class="collection-page-grid__cell collection-page-grid__cell--content collection-grid-content">
         {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
-        {%- if section.settings.enable_sorting -%}
+        {%- if section.settings.enable_sorting and collection.products_count > 0 -%}
           <facet-filters-form class="facets  facets-vertical-sort page-width small-hide">
             <form class="facets-vertical-form" id="FacetSortForm">
               <div class="product-count-vertical light" role="status">
@@ -194,24 +201,26 @@
     {%- else -%}
       {% comment %} Horizontal / drawer filter: original structure {% endcomment %}
       <div class="page-width">
-        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-          <aside
-            aria-labelledby="verticalTitle"
-            class="facets-wrapper{% unless effective_enable_filtering %} facets-wrapper--no-filters{% endunless %} page-width"
-            id="main-collection-filters"
-            data-id="{{ section.id }}">
-            {% render 'facets'
-              , results: collection
-              , enable_filtering: effective_enable_filtering
-              , enable_sorting: section.settings.enable_sorting
-              , filter_type: section.settings.filter_type
-              , paginate: paginate
-              , customize_collection_filters: section.settings.customize_collection_filters
-              , facet_visibility_allowlist: facet_visibility_allowlist
-              , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
-              , expand_all_filters: section.settings.expand_all_filters
-            %}
-          </aside>
+        {%- if collection.products_count > 0 -%}
+          {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+            <aside
+              aria-labelledby="verticalTitle"
+              class="facets-wrapper{% unless effective_enable_filtering %} facets-wrapper--no-filters{% endunless %} page-width"
+              id="main-collection-filters"
+              data-id="{{ section.id }}">
+              {% render 'facets'
+                , results: collection
+                , enable_filtering: effective_enable_filtering
+                , enable_sorting: section.settings.enable_sorting
+                , filter_type: section.settings.filter_type
+                , paginate: paginate
+                , customize_collection_filters: section.settings.customize_collection_filters
+                , facet_visibility_allowlist: facet_visibility_allowlist
+                , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
+                , expand_all_filters: section.settings.expand_all_filters
+              %}
+            </aside>
+          {%- endif -%}
         {%- endif -%}
         <div
           class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
