@@ -31,6 +31,14 @@ class FacetFiltersForm extends HTMLElement {
         panel.style.opacity = '0';
       }
     }, true);
+
+    // Ensure server-rendered open vertical facets are visible on initial page load.
+    requestAnimationFrame(() => {
+      this.querySelectorAll('.facets__disclosure-vertical[open] .facets__display-vertical').forEach((panel) => {
+        panel.style.gridTemplateRows = '1fr';
+        panel.style.opacity = '1';
+      });
+    });
   }
 
   static setListeners() {
