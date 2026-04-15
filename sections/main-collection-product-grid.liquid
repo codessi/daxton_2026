@@ -95,6 +95,8 @@
             , paginate: paginate
             , customize_collection_filters: section.settings.customize_collection_filters
             , facet_visibility_allowlist: facet_visibility_allowlist
+            , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
+            , expand_all_filters: section.settings.expand_all_filters
           %}
         </aside>
       {%- else -%}
@@ -206,6 +208,8 @@
               , paginate: paginate
               , customize_collection_filters: section.settings.customize_collection_filters
               , facet_visibility_allowlist: facet_visibility_allowlist
+              , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
+              , expand_all_filters: section.settings.expand_all_filters
             %}
           </aside>
         {%- endif -%}
@@ -418,6 +422,18 @@
         "default": true,
         "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
         "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+      }, {
+        "type": "checkbox",
+        "id": "show_zero_count_filter_options",
+        "default": false,
+        "label": "Show out-of-stock / zero-count filter options",
+        "info": "When enabled, filter choices with (0) products stay selectable (e.g. Availability: Out of stock). Default Dawn behavior grays them out. Options must still appear in Shopify’s filter list; the theme cannot invent missing values."
+      }, {
+        "type": "checkbox",
+        "id": "expand_all_filters",
+        "default": false,
+        "label": "Expand all filter groups by default",
+        "info": "When enabled, all filter sections start open on desktop and mobile."
       }, {
         "type": "collection",
         "id": "clear_filters_target_collection",

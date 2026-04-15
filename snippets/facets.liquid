@@ -11,9 +11,10 @@
   Usage:
   {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true, filter_type: 'vertical', paginate: paginate %}
 
-  Optional (main-collection-product-grid):
+  Optional (main-collection-product-grid / main-search):
   - customize_collection_filters: {Boolean} when true, only filters listed in facet_visibility_allowlist are shown.
   - facet_visibility_allowlist: {String} tokens joined by ||| (full filter.param_name and/or exact filter label; see facet-filter-in-allowlist snippet).
+  - show_zero_count_filter_options: {Boolean} when true, facet values with count 0 stay clickable (e.g. out of stock in Availability).
 {% endcomment %}
 
 {{ 'component-show-more.css' | asset_url | stylesheet_tag }}
@@ -24,11 +25,13 @@
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
   assign default_presentation = 'text'
+  assign show_zero_count_filter_options = show_zero_count_filter_options | default: false
+  assign expand_all_filters = expand_all_filters | default: false
   if results.url
     assign results_url = results.url
   else
     assign terms = results.terms | escape
-    assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+    assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&type=product&sort_by=' | append: sort_by
   endif
 
   assign use_facet_allowlist = false
@@ -56,6 +59,9 @@
             value="last"
           >
         {%- endif -%}
+        {%- unless results.url -%}
+          <input type="hidden" name="type" value="product">
+        {%- endunless -%}
 
         {% if enable_filtering %}
           {% comment %} Heading is the first tabbable element on filter type horizontal {% endcomment %}
@@ -78,15 +84,13 @@
             {%- if filter_type == 'vertical' -%}
               <div class="active-facets active-facets-desktop">
                 <div class="active-facets-vertical-filter">
-                  {%- unless results.filters == empty -%}
-                    <h2
-                      class="facets__heading facets__heading--vertical caption-large text-body"
-                      id="verticalTitle"
-                      tabindex="-1"
-                    >
-                      {{ 'products.facets.filter_by_label' | t }}
-                    </h2>
-                  {%- endunless -%}
+                  <h2
+                    class="facets__heading facets__heading--vertical caption-large text-body"
+                    id="verticalTitle"
+                    tabindex="-1"
+                  >
+                    {{ 'products.facets.filter_by_label' | t }}
+                  </h2>
                   <facet-remove class="active-facets__button-wrapper">
                     <a href="{{ results_url }}" class="active-facets__button-remove underlined-link">
                       <span>{{ 'products.facets.clear_all' | t }}</span>
@@ -162,6 +166,7 @@
                     id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
                     class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %} facets__disclosure-vertical{% endif %} js-filter"
                     data-index="{{ forloop.index }}"
+                    {% if expand_all_filters %}open{% endif %}
                   >
                     <summary
                       class="facets__summary caption-large focus-offset"
@@ -229,7 +234,7 @@
                             {% liquid
                               assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
                               assign is_disabled = false
-                              if value.count == 0 and value.active == false
+                              if value.count == 0 and value.active == false and show_zero_count_filter_options != true
                                 assign is_disabled = true
                               endif
                             %}
@@ -336,6 +341,7 @@
                     id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
                     class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %} facets__disclosure-vertical{% endif %} js-filter"
                     data-index="{{ forloop.index }}"
+                    {% if expand_all_filters %}open{% endif %}
                   >
                     <summary class="facets__summary caption-large focus-offset">
                       <div>
@@ -576,6 +582,7 @@
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
                         class="mobile-facets__details js-filter"
                         data-index="mobile-{{ forloop.index }}"
+                        {% if expand_all_filters %}open{% endif %}
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
@@ -616,7 +623,7 @@
                               {% liquid
                                 assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-mobile-' | append: forloop.index
                                 assign is_disabled = false
-                                if value.count == 0 and value.active == false
+                                if value.count == 0 and value.active == false and show_zero_count_filter_options != true
                                   assign is_disabled = true
                                 endif
                               %}
@@ -716,6 +723,7 @@
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
                         class="mobile-facets__details js-filter"
                         data-index="mobile-{{ forloop.index }}"
+                        {% if expand_all_filters %}open{% endif %}
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
@@ -838,6 +846,9 @@
                 value="last"
               >
             {%- endif -%}
+            {%- unless results.url -%}
+              <input type="hidden" name="type" value="product">
+            {%- endunless -%}
           </div>
         </form>
       </facet-filters-form>
@@ -945,6 +956,9 @@
             value="last"
           >
         {%- endif -%}
+        {%- unless results.url -%}
+          <input type="hidden" name="type" value="product">
+        {%- endunless -%}
       </form>
     </facet-filters-form>
   {%- endif -%}

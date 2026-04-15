@@ -46,7 +46,7 @@
 {%- liquid
   assign sort_by = search.sort_by | default: search.default_sort_by
   assign terms = search.terms | escape
-  assign search_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+  assign search_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&type=product&sort_by=' | append: sort_by
 -%}
 
 {%- style -%}
@@ -102,6 +102,7 @@
               >
               <label class="field__label" for="Search-In-Template">{{ 'general.search.search' | t }}</label>
               <input name="options[prefix]" type="hidden" value="last">
+              <input type="hidden" name="type" value="product">
 
               {%- if settings.predictive_search_enabled -%}
                 <div class="predictive-search predictive-search--search-template" tabindex="-1" data-predictive-search>
@@ -146,10 +147,7 @@
       {%- endif -%}
     </div>
     {%- if search.performed -%}
-      {%- if section.settings.enable_sorting
-        and section.settings.filter_type == 'vertical'
-        and search.filters != empty
-      -%}
+      {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
         <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
           <form class="facets-vertical-form" id="FacetSortForm">
             <div class="facet-filters sorting caption">
@@ -208,23 +206,23 @@
           class="facets-vertical page-width"
         {% endif %}
       >
-        {%- if search.filters != empty -%}
-          {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-            <aside
-              aria-labelledby="verticalTitle"
-              class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-              id="main-search-filters"
-              data-id="{{ section.id }}"
-            >
-              {% render 'facets',
-                results: search,
-                enable_filtering: section.settings.enable_filtering,
-                enable_sorting: section.settings.enable_sorting,
-                filter_type: section.settings.filter_type,
-                paginate: paginate
-              %}
-            </aside>
-          {%- endif -%}
+        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+          <aside
+            aria-labelledby="verticalTitle"
+            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+            id="main-search-filters"
+            data-id="{{ section.id }}"
+          >
+            {% render 'facets',
+              results: search,
+              enable_filtering: section.settings.enable_filtering,
+              enable_sorting: section.settings.enable_sorting,
+              filter_type: section.settings.filter_type,
+              paginate: paginate,
+              show_zero_count_filter_options: section.settings.show_zero_count_filter_options,
+              expand_all_filters: section.settings.expand_all_filters
+            %}
+          </aside>
         {%- endif -%}
         <div class="product-grid-container" id="ProductGridContainer">
           {%- if search.results.size == 0 and search.filters != empty -%}
@@ -457,6 +455,20 @@
       "default": true,
       "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
       "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_zero_count_filter_options",
+      "default": false,
+      "label": "Show out-of-stock / zero-count filter options",
+      "info": "When enabled, filter choices with (0) products stay selectable. Default Dawn behavior grays them out. Options must still appear in Shopify’s filter list."
+    },
+    {
+      "type": "checkbox",
+      "id": "expand_all_filters",
+      "default": false,
+      "label": "Expand all filter groups by default",
+      "info": "When enabled, all filter sections start open on desktop and mobile."
     },
     {
       "type": "select",
