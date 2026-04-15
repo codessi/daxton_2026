@@ -11,6 +11,18 @@
   "sections": {
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "collection_filter_rpTzQp": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "bill"
+          }
+        }
+      },
+      "block_order": [
+        "collection_filter_rpTzQp"
+      ],
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 3,
@@ -23,6 +35,8 @@
         "show_rating": false,
         "quick_add": "none",
         "enable_filtering": true,
+        "show_zero_count_filter_options": true,
+        "expand_all_filters": true,
         "clear_filters_target_collection": "all-headwear",
         "customize_collection_filters": true,
         "filter_type": "vertical",
