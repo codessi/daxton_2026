@@ -15,22 +15,22 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Spring 2027",
-            "heading_size": "h0"
+            "heading": "The Science of the Perfect Fit",
+            "heading_size": "h1"
           }
         },
         "text_Ka6M3e": {
           "type": "text",
           "settings": {
-            "text": "Three new collections merge through Daxton and craftsmanship",
+            "text": "Essential basics engineered for comfort, curated for character. Find the Daxton fit that feels like it was made for you",
             "text_style": "body",
-            "text_width": "full"
+            "text_width": "narrow"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
+            "button_label_1": "Shop The Core Collection",
             "button_link_1": "shopify://collections/all",
             "button_style_secondary_1": true,
             "button_label_2": "",
@@ -67,6 +67,20 @@
           "settings": {
             "link": "",
             "label": "MLB"
+          }
+        },
+        "team_jUjHHF": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": ""
+          }
+        },
+        "team_4BzBBC": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": ""
           }
         },
         "team_2": {
@@ -128,6 +142,8 @@
       },
       "block_order": [
         "team_1",
+        "team_jUjHHF",
+        "team_4BzBBC",
         "team_2",
         "team_3",
         "team_4",
@@ -138,7 +154,7 @@
         "team_9"
       ],
       "settings": {
-        "title": "Shop by",
+        "title": "Original Classics",
         "heading_size": "h1",
         "color_scheme": "scheme-1",
         "padding_top": 44,
