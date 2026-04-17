@@ -14,7 +14,7 @@ block w-full border-0 bg-transparent px-[1.875rem] py-[0.6875rem] text-left text
 relative cursor-pointer list-none pr-[3.25rem] {{ drawer_item | strip }}
 {%- endcapture -%}
 {%- capture drawer_chevron -%}
-svg-wrapper absolute right-[1.875rem] top-1/2 w-[15px] -translate-y-1/2
+menu-drawer__menu-chevron svg-wrapper absolute right-[1.875rem] top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center origin-center scale-125 transition-transform duration-200 ease-out
 {%- endcapture -%}
 {%- capture drawer_close -%}
 mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.625rem] text-left text-sm no-underline text-[rgb(var(--color-foreground))] transition-colors hover:bg-[rgba(var(--color-foreground),0.04)] link link--text focus-inset [&_.svg-wrapper]:mr-2.5 [&_.svg-wrapper]:w-[15px] [&_.svg-wrapper]:rotate-180
@@ -64,9 +64,6 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                         >
                           {{ link.title | escape }}
                           <span class="{{ drawer_chevron | strip }}">
-                            {{- 'icon-arrow.svg' | inline_asset_content -}}
-                          </span>
-                          <span class="{{ drawer_chevron | strip }}">
                             {{- 'icon-caret.svg' | inline_asset_content -}}
                           </span>
                         </summary>
@@ -82,7 +79,7 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                               aria-expanded="true"
                             >
                               <span class="svg-wrapper">
-                                {{- 'icon-arrow.svg' | inline_asset_content -}}
+                                {{- 'icon-caret.svg' | inline_asset_content -}}
                               </span>
                               {{ link.title | escape }}
                             </button>
@@ -108,9 +105,6 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                                       >
                                         {{ childlink.title | escape }}
                                         <span class="{{ drawer_chevron | strip }}">
-                                          {{- 'icon-arrow.svg' | inline_asset_content -}}
-                                        </span>
-                                        <span class="{{ drawer_chevron | strip }}">
                                           {{- 'icon-caret.svg' | inline_asset_content -}}
                                         </span>
                                       </summary>
@@ -125,7 +119,7 @@ mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.
                               aria-expanded="true"
                             >
                               <span class="svg-wrapper">
-                                {{- 'icon-arrow.svg' | inline_asset_content -}}
+                                {{- 'icon-caret.svg' | inline_asset_content -}}
                               </span>
                               {{ childlink.title | escape }}
                             </button>
