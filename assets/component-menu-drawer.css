@@ -71,8 +71,23 @@ details[open].menu-opening > .menu-drawer__submenu {
   }
 }
 
-.js .menu-drawer .icon-caret {
-  display: none;
+/* Mobile nav: chevron (caret) for submenus — was arrow + hidden caret in Dawn */
+.js .menu-drawer nav .menu-drawer__menu-chevron .icon-caret {
+  display: block;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+[dir='rtl'] .js .menu-drawer nav .menu-drawer__menu-chevron .icon-caret {
+  transform: rotate(90deg);
+}
+
+.js .menu-drawer nav details[open] > summary > .menu-drawer__menu-chevron .icon-caret {
+  transform: rotate(0deg);
+}
+
+[dir='rtl'] .js .menu-drawer nav details[open] > summary > .menu-drawer__menu-chevron .icon-caret {
+  transform: rotate(0deg);
 }
 
 .js .menu-drawer__submenu {
