@@ -307,6 +307,53 @@ function fetchConfig(type = 'json') {
   };
 }
 
+function onProductCardVariantThumbnailClick(event) {
+  const variantThumbButton = event.target.closest('[data-card-variant-thumb]');
+  if (!variantThumbButton) return;
+  event.preventDefault();
+  event.stopPropagation();
+
+  const cardWrapper = variantThumbButton.closest('.card-wrapper');
+  if (!cardWrapper) return;
+
+  cardWrapper.querySelectorAll('[data-card-variant-thumb]').forEach((button) => {
+    const isSelected = button === variantThumbButton;
+    button.classList.toggle('ring-1', isSelected);
+    button.classList.toggle('ring-black', isSelected);
+    button.classList.toggle('border-black', isSelected);
+    button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+  });
+
+  const variantImageSrc = variantThumbButton.dataset.variantImageSrc;
+  const variantImageSrcset = variantThumbButton.dataset.variantImageSrcset;
+  const variantImageAlt = variantThumbButton.dataset.variantImageAlt;
+
+  const cardImages = cardWrapper.querySelectorAll('.media.media--hover-effect > img');
+  cardImages.forEach((image) => {
+    if (variantImageSrc) image.src = variantImageSrc;
+    image.removeAttribute('srcset');
+    if (variantImageSrcset) image.setAttribute('srcset', variantImageSrcset);
+    if (variantImageAlt) image.alt = variantImageAlt;
+  });
+
+  const productImage = cardWrapper.querySelector('[data-card-product-image]');
+  if (productImage && cardImages.length === 0) {
+    if (variantImageSrc) productImage.src = variantImageSrc;
+    productImage.removeAttribute('srcset');
+    if (variantImageSrcset) productImage.setAttribute('srcset', variantImageSrcset);
+    if (variantImageAlt) productImage.alt = variantImageAlt;
+  }
+
+  const variantUrl = variantThumbButton.dataset.variantUrl;
+  if (variantUrl) {
+    cardWrapper.querySelectorAll('[data-card-product-link]').forEach((link) => {
+      link.href = variantUrl;
+    });
+  }
+}
+
+document.addEventListener('click', onProductCardVariantThumbnailClick);
+
 /*
  * Shopify Common JS
  *

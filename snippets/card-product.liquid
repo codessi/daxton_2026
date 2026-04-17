@@ -31,6 +31,42 @@
 {%- if card_product and card_product != empty -%}
   {%- liquid
     assign ratio = 1
+    assign selected_variant = card_product.selected_or_first_available_variant
+    assign color_option_index = nil
+    for option in card_product.options_with_values
+      assign option_name = option.name | downcase
+      if option_name contains 'color' or option_name contains 'colour'
+        assign color_option_index = forloop.index0
+        break
+      endif
+    endfor
+
+    assign unique_variant_keys = '|'
+    assign unique_variant_count = 0
+    for variant in card_product.variants
+      if variant.featured_media == blank
+        continue
+      endif
+
+      assign variant_key = variant.id
+      if color_option_index != nil
+        assign variant_key = variant.options[color_option_index]
+      endif
+
+      assign variant_key_token = '|' | append: variant_key | append: '|'
+      unless unique_variant_keys contains variant_key_token
+        assign unique_variant_keys = unique_variant_keys | append: variant_key | append: '|'
+        assign unique_variant_count = unique_variant_count | plus: 1
+      endunless
+    endfor
+
+    assign selected_variant_key = selected_variant.id
+    if color_option_index != nil
+      assign selected_variant_key = selected_variant.options[color_option_index]
+    endif
+
+    assign max_variant_thumbnails = 6
+
     if card_product.featured_media and media_aspect_ratio == 'portrait'
       assign ratio = 0.8
     elsif card_product.featured_media and media_aspect_ratio == 'adapt'
@@ -80,6 +116,7 @@
                 {% endunless %}
                 width="{{ card_product.featured_media.width }}"
                 height="{{ card_product.featured_media.height }}"
+                data-card-product-image
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
@@ -118,6 +155,7 @@
                 href="{{ card_product.url }}"
                 id="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}"
                 class="full-unstyled-link"
+                data-card-product-link
                 aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
               >
                 {{ card_product.title | escape }}
@@ -155,11 +193,74 @@
               href="{{ card_product.url }}"
               id="CardLink-{{ section_id }}-{{ card_product.id }}"
               class="full-unstyled-link"
+              data-card-product-link
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
               {{ card_product.title | escape }}
             </a>
           </h3>
+          {%- if unique_variant_count > 1 -%}
+            <ul class="relative z-20 mt-3 mb-3 flex list-none flex-wrap items-center gap-2 p-0" role="list">
+              {%- assign rendered_variant_keys = '|' -%}
+              {%- assign rendered_variant_count = 0 -%}
+              {%- for variant in card_product.variants -%}
+                {%- if variant.featured_media == blank -%}
+                  {%- continue -%}
+                {%- endif -%}
+                {%- assign variant_key = variant.id -%}
+                {%- if color_option_index != nil -%}
+                  {%- assign variant_key = variant.options[color_option_index] -%}
+                {%- endif -%}
+                {%- assign variant_key_token = '|' | append: variant_key | append: '|' -%}
+                {%- unless rendered_variant_keys contains variant_key_token -%}
+                  {%- if rendered_variant_count >= max_variant_thumbnails -%}
+                    {%- continue -%}
+                  {%- endif -%}
+                  {%- assign rendered_variant_keys = rendered_variant_keys | append: variant_key | append: '|' -%}
+                  {%- assign rendered_variant_count = rendered_variant_count | plus: 1 -%}
+                  {%- assign variant_preview_image = variant.featured_media.preview_image -%}
+                  {%- capture variant_card_image_srcset -%}
+                    {%- if variant_preview_image.width >= 165 -%}{{ variant_preview_image | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if variant_preview_image.width >= 360 -%}{{ variant_preview_image | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if variant_preview_image.width >= 533 -%}{{ variant_preview_image | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if variant_preview_image.width >= 720 -%}{{ variant_preview_image | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if variant_preview_image.width >= 940 -%}{{ variant_preview_image | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if variant_preview_image.width >= 1066 -%}{{ variant_preview_image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ variant_preview_image | image_url }} {{ variant_preview_image.width }}w
+                  {%- endcapture -%}
+                  <li class="inline-flex">
+                    <button
+                      type="button"
+                      class="relative z-30 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-gray-300 bg-white p-0 transition duration-200 ease-out hover:-translate-y-px hover:border-gray-600{% if variant_key == selected_variant_key %} ring-1 ring-black border-black{% endif %}"
+                      data-card-variant-thumb
+                      data-variant-image-src="{{ variant_preview_image | image_url: width: 533 }}"
+                      data-variant-image-srcset="{{ variant_card_image_srcset | strip }}"
+                      data-variant-image-alt="{{ variant.featured_media.alt | default: card_product.title | escape }}"
+                      data-variant-url="{{ variant.url | default: card_product.url }}"
+                      aria-label="{{ variant.title | escape }}"
+                      aria-pressed="{% if variant_key == selected_variant_key %}true{% else %}false{% endif %}"
+                    >
+                      {{
+                        variant_preview_image
+                        | image_url: width: 72
+                        | image_tag:
+                          widths: '72',
+                          width: 36,
+                          height: 36,
+                          loading: 'lazy',
+                          class: 'h-8 w-8 rounded-full object-cover',
+                          alt: variant.title
+                      }}
+                    </button>
+                  </li>
+                {%- endunless -%}
+              {%- endfor -%}
+              {%- assign remaining_variant_count = unique_variant_count | minus: max_variant_thumbnails -%}
+              {%- if remaining_variant_count > 0 -%}
+                <li class="text-sm text-gray-600">+{{ remaining_variant_count }}</li>
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
           <div class="card-information">
             {%- if show_vendor -%}
               <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
