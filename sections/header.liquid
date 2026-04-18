@@ -67,12 +67,19 @@
     summary.list-menu__item {
       padding-right: 1.6875rem;
     }
-  .header__menu-item {
+  /* Desktop inline nav + mobile/tablet menu drawer share the same type scale */
+  .header__menu-item,
+  .menu-drawer .header__menu-item {
     font-size: 1.1625rem;
     font-weight: 700;
     font-family: "acumin-pro-extra-condensed", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+  }
+
+  .menu-drawer .header__menu-item::after {
+    display: none;
+    content: none;
   }
      /* Level-1 items with submenus match font size of level-1 links without submenus */
     .header__inline-menu .list-menu--inline > li > details > summary.header__menu-item,

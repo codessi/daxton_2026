@@ -8,7 +8,7 @@
 {% endcomment %}
 
 {%- capture drawer_item -%}
-block w-full border-0 bg-transparent px-[1.875rem] py-[0.6875rem] text-left text-lg leading-normal text-[rgb(var(--color-foreground))] no-underline transition-colors hover:bg-[rgba(var(--color-foreground),0.04)] focus-visible:bg-[rgba(var(--color-foreground),0.04)] link link--text focus-inset
+header__menu-item block w-full border-0 bg-transparent px-[1.875rem] py-[0.6875rem] text-left text-[rgb(var(--color-foreground))] no-underline transition-colors  focus-visible:bg-[rgba(var(--color-foreground),0.04)] link link--text focus-inset
 {%- endcapture -%}
 {%- capture drawer_summary -%}
 relative cursor-pointer list-none pr-[3.25rem] {{ drawer_item | strip }}
@@ -16,9 +16,12 @@ relative cursor-pointer list-none pr-[3.25rem] {{ drawer_item | strip }}
 {%- capture drawer_chevron -%}
 menu-drawer__menu-chevron svg-wrapper absolute right-[1.875rem] top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center origin-center scale-125 transition-transform duration-200 ease-out
 {%- endcapture -%}
+{% comment %} {%- capture drawer_close -%}
+header__menu-item mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.625rem] text-left no-underline text-[rgb(var(--color-foreground))] transition-colors link link--text focus-inset [&_.svg-wrapper]:mr-2.5 [&_.svg-wrapper]:flex [&_.svg-wrapper]:h-5 [&_.svg-wrapper]:w-5 [&_.svg-wrapper]:items-center [&_.svg-wrapper]:justify-center [&_.svg-wrapper]:origin-center [&_.svg-wrapper]:scale-125 [&_.svg-wrapper]:rotate-90
+{%- endcapture -%} {% endcomment %}
 {%- capture drawer_close -%}
-mt-[0.9375rem] flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.625rem] text-left text-sm no-underline text-[rgb(var(--color-foreground))] transition-colors hover:bg-[rgba(var(--color-foreground),0.04)] link link--text focus-inset [&_.svg-wrapper]:mr-2.5 [&_.svg-wrapper]:w-[15px] [&_.svg-wrapper]:rotate-180
-{%- endcapture -%}
+  header__menu-item  flex w-full items-center bg-transparent py-3 pl-[1.875rem] pr-[1.625rem] text-left no-underline text-[rgb(var(--color-foreground))] transition-colors link link--text focus-inset [&_.svg-wrapper]:mr-2.5 [&_.svg-wrapper]:flex [&_.svg-wrapper]:h-2 [&_.svg-wrapper]:w-5 [&_.svg-wrapper]:items-center [&_.svg-wrapper]:justify-center [&_.svg-wrapper]:origin-center [&_.svg-wrapper]:scale-125 [&_.svg-wrapper]:rotate-90
+  {%- endcapture -%}
 
 <header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
   <details id="Details-menu-drawer-container" class="menu-drawer-container">
