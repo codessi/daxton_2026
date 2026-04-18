@@ -84,6 +84,8 @@
                       role="list"
                     >
                       {%- for childlink in link.links -%}
+                        {%- comment -%} Handle `shop-all` (default for title "Shop All"): drawer only, omitted on desktop mega menu. {%- endcomment -%}
+                        {%- unless childlink.handle == 'shop-all' -%}
                         <li>
                           <a
                             id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
@@ -114,6 +116,7 @@
                             </ul>
                           {%- endif -%}
                         </li>
+                        {%- endunless -%}
                       {%- endfor -%}
                     </ul>
                   </div>

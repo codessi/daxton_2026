@@ -36,6 +36,8 @@
                 hidden
               >
                 {%- for childlink in link.links -%}
+                  {%- comment -%} Handle `shop-all` (default for title "Shop All"): show in drawer only, not desktop dropdown. {%- endcomment -%}
+                  {%- unless childlink.handle == 'shop-all' -%}
                   <li>
                     {%- if childlink.links == blank -%}
                       <a
@@ -84,6 +86,7 @@
                       </div>
                     {%- endif -%}
                   </li>
+                  {%- endunless -%}
                 {%- endfor -%}
               </ul>
             </div>
