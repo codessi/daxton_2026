@@ -14,6 +14,13 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "brand_information_LRGxdt": {
+          "type": "brand_information",
+          "disabled": true,
+          "settings": {
+            "show_social": false
+          }
+        },
         "link_list_7ELiAd": {
           "type": "link_list",
           "settings": {
@@ -23,18 +30,19 @@
         }
       },
       "block_order": [
+        "brand_information_LRGxdt",
         "link_list_7ELiAd"
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "newsletter_enable": false,
+        "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
         "enable_follow_on_shop": false,
-        "show_social": false,
+        "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
         "payment_enable": false,
-        "show_policy": true,
+        "show_policy": false,
         "margin_top": 0,
         "padding_top": 36,
         "padding_bottom": 36

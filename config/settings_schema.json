@@ -1374,6 +1374,16 @@
         "id": "social_vimeo_link",
         "label": "t:settings_schema.social-media.settings.social_vimeo_link.label",
         "placeholder": "t:settings_schema.social-media.settings.social_vimeo_link.info"
+      },
+      {
+        "type": "range",
+        "id": "social_icon_size",
+        "min": 12,
+        "max": 100,
+        "step": 1,
+        "default": 22,
+        "unit": "px",
+        "label": "Social icon size"
       }
     ]
   },
