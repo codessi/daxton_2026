@@ -2354,7 +2354,7 @@ input[type='checkbox'] {
 
 /* Reserve space so content isn't hidden under fixed header group */
 body {
-  --header-group-height: 140px;
+  --header-group-height: 130px;
 }
 main#MainContent.content-for-layout {
   padding-top: var(--header-group-height);
