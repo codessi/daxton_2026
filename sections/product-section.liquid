@@ -12,7 +12,13 @@
 {% liquid
   assign current_product = product
   assign selected_variant = current_product.selected_or_first_available_variant
-  assign review_rating = current_product.metafields.reviews.rating.value | default: current_product.metafields.reviews.rating
+  assign review_rating_data = current_product.metafields.reviews.rating.value
+  assign review_rating = blank
+  assign review_scale_max = 5
+  if review_rating_data != blank
+    assign review_rating = review_rating_data.rating | default: review_rating_data
+    assign review_scale_max = review_rating_data.scale_max | default: 5
+  endif
 %}
 
 {% if current_product %}
@@ -59,11 +65,20 @@
           </div>
           {% comment %} review rating section {% endcomment %}
           <div class="flex items-center gap-2 text-sm text-gray-700">
-            <span class="text-black">★★★★★</span>
             {% if review_rating != blank %}
-              <span>{{ review_rating }} / 5</span>
-            {% else %}
-              <span>No reviews yet</span>
+              {% assign rating_value = review_rating | round: 1 %}
+              {% assign filled_stars = review_rating | round %}
+              <span class="text-black">
+                {% for i in (1..5) %}
+                  {% if i <= filled_stars %}
+                    ★
+                  {% else %}
+                    ☆
+                  {% endif %}
+                {% endfor %}
+              </span>
+              <span>{{ rating_value }} / {{ review_scale_max }}</span>
+       
             {% endif %}
           </div>
         </div>
