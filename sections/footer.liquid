@@ -149,10 +149,10 @@
                         </div>
                       {%- endif -%}
                       {%- if settings.brand_headline != blank -%}
-                        <h2 class="footer-block__heading rte">{{ settings.brand_headline }}</h2>
+                        <h2 class="footer-block__heading rte text-white">{{ settings.brand_headline }}</h2>
                       {%- endif -%}
                       {%- if settings.brand_description != blank -%}
-                        <div class="rte">{{ settings.brand_description }}</div>
+                        <div class="rte text-white [&_a]:text-white [&_a:hover]:text-white/90">{{ settings.brand_description }}</div>
                       {%- endif -%}
                       {%- if block.settings.show_social and has_social_icons -%}
                         {%- render 'social-icons', class: 'footer__list-social' -%}
@@ -220,9 +220,9 @@
                     </label>
                     <button
                       type="submit"
-                      class="newsletter-form__button field__button"
+                      class="newsletter-form__button field__button text-white"
                       name="commit"
-                      id="Subscribe"
+                      id="Subscribe-footer-{{ section.id }}"
                       aria-label="{{ 'newsletter.button_label' | t }}"
                     >
                       <span class="svg-wrapper">
@@ -231,7 +231,7 @@
                     </button>
                   </div>
                   {%- if form.errors -%}
-                    <small class="newsletter-form__message form__message" id="ContactFooter-error">
+                    <small class="newsletter-form__message form__message text-white!" id="ContactFooter-error">
                       <span class="svg-wrapper">
                         {{- 'icon-error.svg' | inline_asset_content -}}
                       </span>
@@ -242,7 +242,7 @@
                 </div>
                 {%- if form.posted_successfully? -%}
                   <h3
-                    class="newsletter-form__message newsletter-form__message--success form__message"
+                    class="newsletter-form__message newsletter-form__message--success form__message text-white!"
                     id="ContactFooter-success"
                     tabindex="-1"
                     autofocus
@@ -273,12 +273,12 @@
 
   <div class="footer__content-bottom border-t  border-white/15 pt-12">
     <div class="footer__content-bottom-wrapper page-width">
-      <div class="footer__column footer__localization isolate ">
+      <div class="footer__column footer__localization isolate text-white [&_.disclosure__button]:text-white [&_.field__label]:text-white [&_a]:text-white [&_a:hover]:text-white/90">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form>
             {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
               <div>
-                <h2 class="caption-large text-body" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                <h2 class="caption-large text-white" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
                 {%- render 'country-localization', localPosition: 'FooterCountry' -%}
               </div>
             {%- endform -%}
@@ -289,7 +289,7 @@
           <localization-form>
             {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
               <div>
-                <h2 class="caption-large text-body" id="FooterLanguageLabel">
+                <h2 class="caption-large text-white" id="FooterLanguageLabel">
                   {{ 'localization.language_label' | t }}
                 </h2>
                 {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
@@ -314,7 +314,7 @@
       </div>
     </div>
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
-      <div class="footer__copyright caption text-white">
+      <div class="footer__copyright caption text-white [&_a]:text-white [&_a:hover]:text-white/90">
         <small class="copyright__content"
           >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
         </small>

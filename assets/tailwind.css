@@ -104,12 +104,6 @@
 .end {
   inset-inline-end: var(--spacing);
 }
-.top-0 {
-  top: calc(var(--spacing) * 0);
-}
-.top-1 {
-  top: calc(var(--spacing) * 1);
-}
 .top-1\/2 {
   top: calc(1 / 2 * 100%);
 }
@@ -127,9 +121,6 @@
 }
 .right-\[1\.875rem\] {
   right: 1.875rem;
-}
-.bottom-0 {
-  bottom: calc(var(--spacing) * 0);
 }
 .bottom-6 {
   bottom: calc(var(--spacing) * 6);
@@ -220,9 +211,6 @@
 }
 .-ml-\[0\.78125rem\] {
   margin-left: calc(0.78125rem * -1);
-}
-.ml-2 {
-  margin-left: calc(var(--spacing) * 2);
 }
 .ml-\[calc\(50\%-50vw\)\] {
   margin-left: calc(50% - 50vw);
@@ -371,14 +359,8 @@
 .flex-1 {
   flex: 1;
 }
-.flex-shrink {
-  flex-shrink: 1;
-}
 .shrink-0 {
   flex-shrink: 0;
-}
-.flex-grow {
-  flex-grow: 1;
 }
 .basis-\[40\%\] {
   flex-basis: 40%;
@@ -386,15 +368,8 @@
 .basis-\[60\%\] {
   flex-basis: 60%;
 }
-.border-collapse {
-  border-collapse: collapse;
-}
 .origin-center {
   transform-origin: center;
-}
-.-translate-y-1 {
-  --tw-translate-y: calc(var(--spacing) * -1);
-  translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .-translate-y-1\/2 {
   --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
@@ -805,10 +780,6 @@
 .text-\[10px\] {
   font-size: 10px;
 }
-.leading-normal {
-  --tw-leading: var(--leading-normal);
-  line-height: var(--leading-normal);
-}
 .leading-snug {
   --tw-leading: var(--leading-snug);
   line-height: var(--leading-snug);
@@ -937,10 +908,6 @@
   --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
-.ring {
-  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-}
 .ring-1 {
   --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -983,10 +950,6 @@
 .duration-200 {
   --tw-duration: 200ms;
   transition-duration: 200ms;
-}
-.ease-in-out {
-  --tw-ease: var(--ease-in-out);
-  transition-timing-function: var(--ease-in-out);
 }
 .ease-out {
   --tw-ease: var(--ease-out);
