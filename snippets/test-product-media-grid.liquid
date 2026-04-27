@@ -117,7 +117,8 @@
 
   {% comment %} Full-screen zoom (one per carousel; JS opens with data-test-product-zoom-trigger) {% endcomment %}
   <div
-    class="test-product-lightbox fixed inset-0 z-[100] hidden h-full w-full max-w-none flex flex-col bg-black/85 p-0"
+    class="test-product-lightbox fixed inset-0 hidden h-full w-full max-w-none flex flex-col bg-black/85 p-0"
+    style="z-index: 10000;"
     data-test-product-lightbox
     role="dialog"
     aria-modal="true"
@@ -134,6 +135,7 @@
     <button
       type="button"
       class="fixed bottom-4 left-1/2 z-20 flex h-11 items-center justify-center rounded-full bg-white/95 px-5 text-gray-900 shadow-md ring-1 ring-black/10 transition hover:bg-white -translate-x-1/2 lg:absolute lg:bottom-auto lg:left-auto lg:right-3 lg:top-3 lg:h-10 lg:w-10 lg:px-0 lg:translate-x-0"
+      style="z-index: 10020;"
       data-test-product-lightbox-close
       aria-label="{{ 'accessibility.close' | t }}"
     >

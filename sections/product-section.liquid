@@ -338,9 +338,15 @@
         if (trigger) {
           var carousel = trigger.closest('[data-test-product-carousel]');
           if (!carousel) return;
-          var lightbox = carousel.querySelector('[data-test-product-lightbox]');
-          var img = carousel.querySelector('[data-test-product-lightbox-img]');
+          var lightbox = carousel.querySelector('[data-test-product-lightbox]') || carousel.__testProductLightbox;
+          if (!lightbox) return;
+          carousel.__testProductLightbox = lightbox;
+          var img = lightbox.querySelector('[data-test-product-lightbox-img]');
           if (!lightbox || !img) return;
+          if (!lightbox.dataset.portalMounted) {
+            document.body.appendChild(lightbox);
+            lightbox.dataset.portalMounted = '1';
+          }
           img.src = trigger.getAttribute('data-zoom-src') || '';
           img.alt = trigger.getAttribute('data-zoom-alt') || '';
           lightbox.classList.remove('hidden');
