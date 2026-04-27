@@ -8,7 +8,7 @@
   assign gallery = variant.metafields.custom.variant_gallery.value
 %}
 
-<div class="relative" data-test-product-carousel>
+<div class="relative w-full" data-test-product-carousel>
   <div
     class="
       test-product-media-grid
@@ -21,10 +21,10 @@
   >
   {% if featured %}
     {%- assign zoom_src_featured = featured | image_url: width: 2048 -%}
-    <div class="min-w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
+    <div class="min-w-full w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
       <button
         type="button"
-        class="block  w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+        class="block w-full  cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         data-test-product-zoom-trigger
         data-zoom-src="{{ zoom_src_featured }}"
         data-zoom-alt="{{ product.title | escape }}"
@@ -35,7 +35,7 @@
           | image_url: width: 1200
           | image_tag:
             alt: product.title,
-            class: 'test-product-main-image__img pointer-events-none h-auto w-full object-cover',
+            class: 'test-product-main-image__img pointer-events-none block h-auto w-full max-w-full object-contain',
             loading: 'lazy'
         }}
       </button>
@@ -43,7 +43,7 @@
   {% endif %}
   {% if gallery != blank %}
     {% for file in gallery %}
-      <div class="min-w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
+      <div class="min-w-full w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">
         {% if file.preview_image %}
           {%- assign zoom_file = file.preview_image -%}
         {% else %}
@@ -52,7 +52,7 @@
         {%- assign zoom_src_gallery = zoom_file | image_url: width: 2048 -%}
         <button
           type="button"
-          class="block h-full w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          class="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
           data-test-product-zoom-trigger
           data-zoom-src="{{ zoom_src_gallery }}"
           data-zoom-alt="{{ product.title | escape }}"
@@ -64,7 +64,7 @@
               | image_url: width: 1200
               | image_tag:
                 alt: product.title,
-                class: 'test-product-main-image__img pointer-events-none h-auto w-full object-cover',
+                class: 'test-product-main-image__img pointer-events-none block h-auto w-full max-w-full object-contain',
                 loading: 'lazy'
             }}
           {% else %}
@@ -73,7 +73,7 @@
               | image_url: width: 1200
               | image_tag:
                 alt: product.title,
-                class: 'test-product-main-image__img pointer-events-none h-auto w-full object-cover',
+                class: 'test-product-main-image__img pointer-events-none block h-auto w-full max-w-full object-contain',
                 loading: 'lazy'
             }}
           {% endif %}
@@ -90,7 +90,7 @@
 
   {% comment %} Mobile-only prev/next over bottom of gallery {% endcomment %}
   <div
-    class="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-between px-8 gap-4 lg:hidden"
+    class="pointer-events-none  absolute inset-x-0 bottom-6 z-10 flex justify-between px-8 gap-4 lg:hidden"
     data-test-carousel-nav
   >
     <button
@@ -144,7 +144,7 @@
     {% comment %} Tall images: scroll vertically; object-contain keeps full photo visible while scrolling (object-cover crops and cannot reveal the rest by scrolling). {% endcomment %}
     <div class="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden pt-14" data-test-product-lightbox-scroll>
       <div
-        class="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain px-2 pb-6 [-webkit-overflow-scrolling:touch] sm:px-4"
+        class="min-h-0  w-full flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain px-2 pb-6 [-webkit-overflow-scrolling:touch] sm:px-4"
         tabindex="0"
       >
         <img
