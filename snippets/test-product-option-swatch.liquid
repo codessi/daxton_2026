@@ -54,7 +54,7 @@
     {% endif %}
     aria-label="{{ option.name | escape }}: {{ value | escape }}"
   >
-  <span class="flex h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 border-gray-200 bg-gray-50 transition hover:border-gray-400 peer-checked:border-black peer-checked:ring-2 peer-checked:ring-black peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black md:h-16 md:w-16">
+  <span class="flex h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-gray-50 transition hover:border-gray-400 peer-checked:border-black peer-checked:ring-2 peer-checked:ring-black peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-gray-400 md:h-16 md:w-16">
     {%- if swatch_image != blank -%}
       {{
         swatch_image
