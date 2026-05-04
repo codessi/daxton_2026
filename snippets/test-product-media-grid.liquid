@@ -14,7 +14,7 @@
       test-product-media-grid
       flex flex-row gap-0 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]
       snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0
-      lg:grid lg:grid-cols-2 lg:gap-0 lg:overflow-visible lg:snap-none
+      lg:grid lg:grid-cols-2 lg:gap-3 lg:overflow-visible lg:snap-none
     "
     data-test-product-media-grid
     data-product-title="{{ product.title | escape }}"
@@ -145,7 +145,7 @@
     {% comment %} Dawn-style: all media in modal; scroll vertically (see product-media-modal + product-modal.js). {% endcomment %}
     <div class="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden pt-16 sm:pt-20" data-test-product-lightbox-scroll>
       <div
-        class="test-product-lightbox__items min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain [-webkit-overflow-scrolling:touch]"
+        class="test-product-lightbox__items min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain px-3 py-0 [-webkit-overflow-scrolling:touch] sm:px-6"
         data-test-product-lightbox-items
         tabindex="0"
       >
@@ -154,7 +154,7 @@
         %}
         {% if featured %}
           <div
-            class="test-product-lightbox__item block"
+            class="test-product-lightbox__item"
             data-test-product-lightbox-item
             data-test-product-lightbox-index="{{ lb_i }}"
           >
@@ -179,7 +179,7 @@
               {%- assign zoom_img = file -%}
             {% endif %}
             <div
-              class="test-product-lightbox__item block"
+              class="test-product-lightbox__item"
               data-test-product-lightbox-item
               data-test-product-lightbox-index="{{ lb_i }}"
             >
