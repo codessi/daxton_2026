@@ -761,6 +761,9 @@
 .px-\[3rem\] {
   padding-inline: 3rem;
 }
+.py-0 {
+  padding-block: calc(var(--spacing) * 0);
+}
 .py-2 {
   padding-block: calc(var(--spacing) * 2);
 }
