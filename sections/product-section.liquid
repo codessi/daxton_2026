@@ -341,17 +341,24 @@
           var lightbox = carousel.querySelector('[data-test-product-lightbox]') || carousel.__testProductLightbox;
           if (!lightbox) return;
           carousel.__testProductLightbox = lightbox;
-          var img = lightbox.querySelector('[data-test-product-lightbox-img]');
-          if (!lightbox || !img) return;
+          var itemsRoot = lightbox.querySelector('[data-test-product-lightbox-items]');
+          if (!itemsRoot) return;
           if (!lightbox.dataset.portalMounted) {
             document.body.appendChild(lightbox);
             lightbox.dataset.portalMounted = '1';
           }
-          img.src = trigger.getAttribute('data-zoom-src') || '';
-          img.alt = trigger.getAttribute('data-zoom-alt') || '';
+          var idx = parseInt(trigger.getAttribute('data-test-product-lightbox-index') || '0', 10);
           lightbox.classList.remove('hidden');
           lightbox.classList.add('flex');
           document.body.style.overflow = 'hidden';
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              var item = lightbox.querySelector(
+                '[data-test-product-lightbox-item][data-test-product-lightbox-index="' + idx + '"]'
+              );
+              if (item) item.scrollIntoView({ block: 'start', behavior: 'auto' });
+            });
+          });
           return;
         }
 
@@ -438,7 +445,12 @@
             '<div class="col-span-full flex min-w-full shrink-0 snap-start lg:min-w-0 h-72 items-center justify-center rounded-lg bg-gray-100 text-sm text-gray-500">No image available</div>';
           grid.scrollLeft = 0;
           var carouselEmpty = wrap.querySelector('[data-test-product-carousel]');
-          if (carouselEmpty) refreshCarouselNav(carouselEmpty);
+          if (carouselEmpty) {
+            refreshCarouselNav(carouselEmpty);
+            var lbEmpty = carouselEmpty.querySelector('[data-test-product-lightbox]') || carouselEmpty.__testProductLightbox;
+            var itemsEmpty = lbEmpty && lbEmpty.querySelector('[data-test-product-lightbox-items]');
+            if (itemsEmpty) itemsEmpty.innerHTML = '';
+          }
           return;
         }
         var safeAlt = title.replace(/"/g, '&quot;');
@@ -453,12 +465,11 @@
           return u.replace(/([?&])width=\d+/i, '$1width=2048');
         }
         grid.innerHTML = images
-          .map(function (url) {
-            var zoomSrc = toZoomUrl(url);
+          .map(function (url, idx) {
             return (
               '<div class="min-w-full w-full shrink-0 snap-start overflow-hidden rounded-lg bg-gray-100 lg:min-w-0">' +
-              '<button type="button" class="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2" data-test-product-zoom-trigger data-zoom-src="' +
-              escapeAttr(zoomSrc) +
+              '<button type="button" class="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2" data-test-product-zoom-trigger data-test-product-lightbox-index="' +
+              idx +
               '" data-zoom-alt="' +
               safeAlt +
               '" aria-label="Enlarge image">' +
@@ -473,7 +484,29 @@
           .join('');
         grid.scrollLeft = 0;
         var carousel = wrap.querySelector('[data-test-product-carousel]');
-        if (carousel) refreshCarouselNav(carousel);
+        if (carousel) {
+          refreshCarouselNav(carousel);
+          var lb = carousel.querySelector('[data-test-product-lightbox]') || carousel.__testProductLightbox;
+          var itemsEl = lb && lb.querySelector('[data-test-product-lightbox-items]');
+          if (itemsEl) {
+            itemsEl.innerHTML = images
+              .map(function (url, idx) {
+                var zoomSrc = toZoomUrl(url);
+                return (
+                  '<div class="test-product-lightbox__item block" data-test-product-lightbox-item data-test-product-lightbox-index="' +
+                  idx +
+                  '">' +
+                  '<img src="' +
+                  escapeAttr(zoomSrc) +
+                  '" alt="' +
+                  safeAlt +
+                  '" width="2048" height="2048" class="test-product-lightbox__img mx-auto box-border block h-auto w-full max-w-none object-contain" loading="lazy" />' +
+                  '</div>'
+                );
+              })
+              .join('');
+          }
+        }
       });
     }
 
