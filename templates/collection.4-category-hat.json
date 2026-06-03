@@ -16,7 +16,7 @@
           "type": "collection_filter",
           "settings": {
             "show": true,
-            "filter_param_name": "Color"
+            "filter_param_name": "color"
           }
         },
         "collection_filter_yMxNRh": {
