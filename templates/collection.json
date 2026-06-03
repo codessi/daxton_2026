@@ -12,6 +12,13 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "blocks": {
+        "collection_filter_Vw7Hmy": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Size"
+          }
+        },
         "collection_filter_3hLfwW": {
           "type": "collection_filter",
           "settings": {
@@ -24,13 +31,6 @@
           "settings": {
             "show": true,
             "filter_param_name": "Color"
-          }
-        },
-        "collection_filter_Vw7Hmy": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Composition"
           }
         },
         "collection_filter_kGYRXx": {
@@ -58,7 +58,7 @@
           "type": "collection_filter",
           "settings": {
             "show": true,
-            "filter_param_name": "Bill"
+            "filter_param_name": "Size"
           }
         },
         "collection_filter_yMxNRh": {
@@ -77,9 +77,9 @@
         }
       },
       "block_order": [
+        "collection_filter_Vw7Hmy",
         "collection_filter_3hLfwW",
         "collection_filter_iXH7C4",
-        "collection_filter_Vw7Hmy",
         "collection_filter_kGYRXx",
         "collection_filter_XezRx9",
         "collection_filter_GHah8p",
@@ -99,6 +99,8 @@
         "show_rating": false,
         "quick_add": "none",
         "enable_filtering": true,
+        "show_zero_count_filter_options": false,
+        "expand_all_filters": false,
         "clear_filters_target_collection": "all-headwear",
         "customize_collection_filters": true,
         "filter_type": "vertical",

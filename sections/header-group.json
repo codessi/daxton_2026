@@ -42,13 +42,12 @@
         "mobile_logo_position": "center",
         "menu": "minimal-main-menu",
         "headwear_menu_handle": "",
-        "headwear_featured_image": "shopify://shop_images/black4_1c3f308d-fa22-42a0-ab5c-ae4919f8d7c2.jpg",
         "headwear_featured_heading": "Spring Training Collection",
         "headwear_featured_link": "shopify://collections/headwear",
-        "menu_type_desktop": "mega",
+        "menu_type_desktop": "dropdown",
         "pin_mega_menu_open": false,
         "mega_menu_debug_borders": false,
-        "menu_item_spacing": 24,
+        "menu_item_spacing": 8,
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
         "color_scheme": "scheme-1",
@@ -57,8 +56,8 @@
         "enable_language_selector": false,
         "enable_customer_avatar": true,
         "margin_bottom": 0,
-        "padding_top": 12,
-        "padding_bottom": 12
+        "padding_top": 4,
+        "padding_bottom": 4
       }
     }
   },

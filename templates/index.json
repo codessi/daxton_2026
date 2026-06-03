@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "The Science of the Perfect Fit",
+            "heading": "The Science of the Perfect Hat",
             "heading_size": "h1"
           }
         },
@@ -45,9 +45,9 @@
         "button"
       ],
       "settings": {
-        "image": "shopify://shop_images/a-guy-and-girl-wearing-baseball-cap-standing-a-part.png",
+        "image": "shopify://shop_images/openart-image_1778108479059_9042d8de_1778108479318_38ce98b7.png",
         "placeholder_image": "hero-apparel-1",
-        "image_overlay_opacity": 10,
+        "image_overlay_opacity": 20,
         "image_height": "large",
         "image_behavior": "none",
         "desktop_content_position": "top-center",
@@ -59,9 +59,160 @@
         "show_text_below": false
       }
     },
+    "featured_collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "col_3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "snapback",
+            "image": "shopify://shop_images/snapback_collection.jpg"
+          }
+        },
+        "featured_collection_Jibxbn": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "frame",
+            "image": "shopify://shop_images/trucker_collection.jpg"
+          }
+        },
+        "featured_collection_VXhxmr": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bucket-hats",
+            "image": "shopify://shop_images/bucket_hat_collection.jpg"
+          }
+        },
+        "featured_collection_myn9yY": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cambridge-collection",
+            "image": "shopify://shop_images/pb22_collection1.jpg"
+          }
+        },
+        "featured_collection_W4hedn": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "low-profile",
+            "image": "shopify://shop_images/dad_hat_collection.jpg"
+          }
+        },
+        "featured_collection_rxc6A3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "corduroy",
+            "image": "shopify://shop_images/corduroy_collection.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "col_3",
+        "featured_collection_Jibxbn",
+        "featured_collection_VXhxmr",
+        "featured_collection_myn9yY",
+        "featured_collection_W4hedn",
+        "featured_collection_rxc6A3"
+      ],
+      "settings": {
+        "title": "Featured Hat Collections",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "color_scheme": "scheme-1",
+        "padding_top": 12,
+        "padding_bottom": 4
+      }
+    },
+    "shop_by": {
+      "type": "shop-by",
+      "blocks": {
+        "style_3": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/5lu.jpg",
+            "label": "5 Panel/Low Profile",
+            "link": "https://www.daxtonapparel.com/products/lu-original-performance-cap-hot5"
+          }
+        },
+        "style_2": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/5ms.jpg",
+            "label": "5 Panel/Mid Profile",
+            "link": "https://www.daxtonapparel.com/products/lu-originals-5-panel-high-profile-mesh-trucker"
+          }
+        },
+        "style_1": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/5hs.jpg",
+            "label": "5 Panel/High Profile",
+            "link": "https://www.daxtonapparel.com/products/high-profile-5-panel-cotton-snapback-hat"
+          }
+        },
+        "style_6": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/6_LOW_UNS.jpg",
+            "label": "6 Panel/Low Profile",
+            "link": "https://www.daxtonapparel.com/products/classic-unstructured-cotton-dad-hat-brass-buckle-c1463"
+          }
+        },
+        "style_5": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/5lu.jpg",
+            "label": "6 Panel/Mid Profile",
+            "link": "https://www.daxtonapparel.com/products/pb222-cambridge-mesh-trucker-hat-mid-profile"
+          }
+        },
+        "style_4": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/6DS.jpg",
+            "label": "6 Panel/High Profile",
+            "link": "https://www.daxtonapparel.com/products/pb103-premium-wool-blend-high-profile-snapback"
+          }
+        }
+      },
+      "block_order": [
+        "style_3",
+        "style_2",
+        "style_1",
+        "style_6",
+        "style_5",
+        "style_4"
+      ],
+      "settings": {
+        "title": "Shop By",
+        "heading_size": "h2",
+        "tab_1_label": "Headwear",
+        "tab_1_link": "shopify://collections/all-headwear",
+        "tab_2_label": "Apparel",
+        "tab_2_link": "shopify://collections/apparel",
+        "active_tab": "1",
+        "color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "shop_by_team": {
       "type": "shop-by-team",
       "blocks": {
+        "team_HUM48K": {
+          "type": "team",
+          "settings": {
+            "image": "shopify://shop_images/khaki_047f032c-bb52-4815-9208-70940a60b837.jpg",
+            "link": "https://0qd3dyo8mg3tatrw-30611046539.shopifypreview.com/products_preview?preview_key=5ff9099d621902aedd6dce60bfe014cc",
+            "label": ""
+          }
+        },
+        "team_DCzijM": {
+          "type": "team",
+          "settings": {
+            "link": "",
+            "label": ""
+          }
+        },
         "team_1": {
           "type": "team",
           "settings": {
@@ -141,6 +292,8 @@
         }
       },
       "block_order": [
+        "team_HUM48K",
+        "team_DCzijM",
         "team_1",
         "team_jUjHHF",
         "team_4BzBBC",
@@ -153,12 +306,13 @@
         "team_8",
         "team_9"
       ],
+      "disabled": true,
       "settings": {
         "title": "Original Classics",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "color_scheme": "scheme-1",
-        "padding_top": 44,
-        "padding_bottom": 44
+        "padding_top": 16,
+        "padding_bottom": 16
       }
     },
     "image_banner_2": {
@@ -167,15 +321,15 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Spring 2026",
-            "heading_size": "h0"
+            "heading": "2 Way-Up Visor Bike Hat",
+            "heading_size": "h1"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
             "button_label_1": "Shop the collection",
-            "button_link_1": "shopify://collections/all",
+            "button_link_1": "shopify://products/pb325-2-way-up-visor-bike-hat-retro-cycling-cap",
             "button_style_secondary_1": true,
             "button_label_2": "",
             "button_link_2": "",
@@ -188,142 +342,18 @@
         "button"
       ],
       "settings": {
-        "image": "shopify://shop_images/Gemini_Generated_Image_bn2fulbn2fulbn2f.png",
+        "image": "shopify://shop_images/3.jpg",
         "placeholder_image": "hero-apparel-2",
-        "image_overlay_opacity": 40,
+        "image_overlay_opacity": 30,
         "image_height": "large",
         "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
+        "desktop_content_position": "top-center",
         "desktop_content_alignment": "center",
         "show_text_box": false,
         "color_scheme": "scheme-3",
         "stack_images_on_mobile": false,
         "mobile_content_alignment": "center",
         "show_text_below": false
-      }
-    },
-    "featured_collections": {
-      "type": "featured-collections",
-      "blocks": {
-        "col_1": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "snapbacks",
-            "image": "shopify://shop_images/ROYAL-F.jpg"
-          }
-        },
-        "col_2": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "structured-baseball-hat"
-          }
-        },
-        "col_3": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "frame"
-          }
-        },
-        "col_4": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "col_5": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "col_1",
-        "col_2",
-        "col_3",
-        "col_4",
-        "col_5"
-      ],
-      "settings": {
-        "title": "Featured Collections",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "color_scheme": "scheme-1",
-        "padding_top": 44,
-        "padding_bottom": 44
-      }
-    },
-    "shop_by": {
-      "type": "shop-by",
-      "blocks": {
-        "style_1": {
-          "type": "style",
-          "settings": {
-            "image": "shopify://shop_images/shopping.webp",
-            "label": "Baseball",
-            "link": ""
-          }
-        },
-        "style_2": {
-          "type": "style",
-          "settings": {
-            "image": "shopify://shop_images/5-panel-hat.png",
-            "label": "5 Panel",
-            "link": "https://www.daxtonapparel.com/collections/headwear?filter.v.price.gte=&filter.v.price.lte=&filter.p.m.custom.style=5+Panel&sort_by=best-selling"
-          }
-        },
-        "style_3": {
-          "type": "style",
-          "settings": {
-            "image": "shopify://shop_images/wholesale-blank-caps-in-bulk-gray-vintage-plain-caps_1.webp",
-            "label": "Dad",
-            "link": ""
-          }
-        },
-        "style_4": {
-          "type": "style",
-          "settings": {
-            "image": "shopify://shop_images/67538c6ebaaa70e69bdfedb1_6d905d05-5959-4344-99b6-f6672883639a.webp",
-            "label": "Trucker",
-            "link": ""
-          }
-        },
-        "style_5": {
-          "type": "style",
-          "settings": {
-            "image": "shopify://shop_images/download_1.jpg",
-            "label": "Flat Bill",
-            "link": ""
-          }
-        },
-        "style_6": {
-          "type": "style",
-          "settings": {
-            "image": "shopify://shop_images/2.jpg",
-            "label": "Backs",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "style_1",
-        "style_2",
-        "style_3",
-        "style_4",
-        "style_5",
-        "style_6"
-      ],
-      "settings": {
-        "title": "Shop By",
-        "heading_size": "h1",
-        "tab_1_label": "Headwear",
-        "tab_1_link": "",
-        "tab_2_label": "Apparel",
-        "tab_2_link": "",
-        "active_tab": "1",
-        "color_scheme": "scheme-1",
-        "padding_top": 44,
-        "padding_bottom": 44
       }
     },
     "looking_for_more": {
@@ -421,10 +451,10 @@
   },
   "order": [
     "image_banner",
-    "shop_by_team",
-    "image_banner_2",
     "featured_collections",
     "shop_by",
+    "shop_by_team",
+    "image_banner_2",
     "looking_for_more",
     "family_rewards"
   ]
