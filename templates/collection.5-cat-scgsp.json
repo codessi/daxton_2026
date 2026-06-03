@@ -12,6 +12,13 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "blocks": {
+        "collection_filter_aiBRkX": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "gender"
+          }
+        },
         "collection_filter_Vw7Hmy": {
           "type": "collection_filter",
           "settings": {
@@ -39,53 +46,14 @@
             "show": true,
             "filter_param_name": "Style"
           }
-        },
-        "collection_filter_XezRx9": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Fit"
-          }
-        },
-        "collection_filter_GHah8p": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Closure"
-          }
-        },
-        "collection_filter_8hd9Af": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Size"
-          }
-        },
-        "collection_filter_yMxNRh": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Size"
-          }
-        },
-        "collection_filter_YhBmyD": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Profile"
-          }
         }
       },
       "block_order": [
+        "collection_filter_aiBRkX",
         "collection_filter_Vw7Hmy",
         "collection_filter_3hLfwW",
         "collection_filter_iXH7C4",
-        "collection_filter_kGYRXx",
-        "collection_filter_XezRx9",
-        "collection_filter_GHah8p",
-        "collection_filter_8hd9Af",
-        "collection_filter_yMxNRh",
-        "collection_filter_YhBmyD"
+        "collection_filter_kGYRXx"
       ],
       "settings": {
         "products_per_page": 16,
