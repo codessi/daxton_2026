@@ -1,0 +1,23 @@
+{% comment %}
+  Returns "y" when filter matches a single allowlist token (param or label).
+  @param filter {Object}
+  @param token {String}
+{% endcomment %}
+{%- liquid
+  assign match = false
+  assign tt = token | strip
+  if tt != ''
+    assign tt_down = tt | downcase
+    assign fp = filter.param_name | strip | downcase
+    assign fl = filter.label | strip | downcase
+    if fp == tt_down
+      assign match = true
+    elsif tt contains 'filter.'
+    else
+      if fl == tt_down
+        assign match = true
+      endif
+    endif
+  endif
+-%}
+{%- if match -%}y{%- endif -%}

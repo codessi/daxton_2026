@@ -47,11 +47,27 @@
 
   assign facet_visibility_allowlist = ''
   assign facet_allowlist_count = 0
+  assign facet_ordered_param_list = ''
   if section.settings.customize_collection_filters
+    assign seen_facet_params = '|||'
     for block in section.blocks
       if block.type == 'collection_filter' and block.settings.show and block.settings.filter_param_name != blank
         assign facet_visibility_allowlist = facet_visibility_allowlist | append: block.settings.filter_param_name | strip | append: '|||'
         assign facet_allowlist_count = facet_allowlist_count | plus: 1
+        assign block_token = block.settings.filter_param_name | strip
+        for f in collection.filters
+          capture _token_match
+            render 'facet-filter-matches-token', filter: f, token: block_token
+          endcapture
+          if _token_match contains 'y'
+            assign param_marker = f.param_name | append: '|||'
+            unless seen_facet_params contains param_marker
+              assign facet_ordered_param_list = facet_ordered_param_list | append: f.param_name | append: '|||'
+              assign seen_facet_params = seen_facet_params | append: param_marker
+            endunless
+            break
+          endif
+        endfor
       endif
     endfor
   endif
@@ -99,6 +115,7 @@
               , paginate: paginate
               , customize_collection_filters: section.settings.customize_collection_filters
               , facet_visibility_allowlist: facet_visibility_allowlist
+              , facet_ordered_param_list: facet_ordered_param_list
               , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
               , expand_all_filters: section.settings.expand_all_filters
             %}
@@ -216,6 +233,7 @@
                 , paginate: paginate
                 , customize_collection_filters: section.settings.customize_collection_filters
                 , facet_visibility_allowlist: facet_visibility_allowlist
+                , facet_ordered_param_list: facet_ordered_param_list
                 , show_zero_count_filter_options: section.settings.show_zero_count_filter_options
                 , expand_all_filters: section.settings.expand_all_filters
               %}
@@ -520,7 +538,7 @@
     "blocks": [
       {
         "type": "collection_filter",
-        "name": "Filter",
+        "name": "Collection filter",
         "settings": [
           {
             "type": "checkbox",
@@ -531,8 +549,8 @@
           {
             "type": "text",
             "id": "filter_param_name",
-            "label": "Filter (param or label)",
-            "info": "Use the full URL param (e.g. filter.p.m.custom.profile from the filter details id Details-PARAM-sectionId), or the filter’s exact storefront label (e.g. Profile) — case-insensitive. Shorthand only matches the label, not a substring."
+            "label": "Filter name (matches storefront label)",
+            "info": "Drag blocks in this sidebar to set display order on the collection page. Use the filter label (e.g. Profile, Size) or full URL param (e.g. filter.p.m.custom.profile). Case-insensitive."
           }
         ]
       }
