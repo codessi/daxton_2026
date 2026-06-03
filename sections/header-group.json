@@ -47,7 +47,7 @@
         "menu_type_desktop": "dropdown",
         "pin_mega_menu_open": false,
         "mega_menu_debug_borders": false,
-        "menu_item_spacing": 8,
+        "menu_item_spacing": 20,
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
         "color_scheme": "scheme-1",
