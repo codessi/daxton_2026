@@ -41,6 +41,17 @@ function isMegaMenuDebug() {
 }
 
 class HeaderMenu extends HTMLElement {
+  isHoverLinkMenu(el) {
+    return el && (el.classList.contains('mega-menu') || el.classList.contains('header-menu--hover-link'));
+  }
+
+  isHoverOnlyMenu(el) {
+    return (
+      el &&
+      (el.classList.contains('mega-menu--hover-only') || el.classList.contains('header-menu--hover-link'))
+    );
+  }
+
   connectedCallback() {
     if (!isMegaMenuDebug() || this._megaDebugAutoOpened) return;
     const disclosure = this.querySelector('.header__disclosure.mega-menu');
@@ -64,7 +75,7 @@ class HeaderMenu extends HTMLElement {
       this.content = this.mainDetailsToggle.querySelector('summary').nextElementSibling;
       this.mainDetailsToggle.addEventListener('focusout', this.onFocusOut.bind(this));
       this.mainDetailsToggle.addEventListener('toggle', this.onToggle.bind(this));
-      if (this.mainDetailsToggle.classList.contains('mega-menu')) {
+      if (this.isHoverLinkMenu(this.mainDetailsToggle)) {
         this.addEventListener('mouseenter', this.onHoverEnter.bind(this));
         this.addEventListener('mouseleave', this.onHoverLeave.bind(this));
         if (this.content) {
@@ -80,11 +91,13 @@ class HeaderMenu extends HTMLElement {
       this.trigger = this.useButtonTrigger.querySelector('button[aria-controls]');
       this.content = this.trigger ? document.getElementById(this.trigger.getAttribute('aria-controls')) : null;
       if (this.trigger && this.content) {
-        this.trigger.addEventListener('click', this.onButtonToggle.bind(this));
+        if (!this.isHoverOnlyMenu(this.useButtonTrigger)) {
+          this.trigger.addEventListener('click', this.onButtonToggle.bind(this));
+        }
         this.useButtonTrigger.addEventListener('focusout', this.onFocusOut.bind(this));
         this.initNestedDisclosures(this.content);
       }
-      if (this.useButtonTrigger.classList.contains('mega-menu')) {
+      if (this.isHoverLinkMenu(this.useButtonTrigger)) {
         this.addEventListener('mouseenter', this.onHoverEnter.bind(this));
         this.addEventListener('mouseleave', this.onHoverLeave.bind(this));
         if (this.content) {
@@ -97,7 +110,7 @@ class HeaderMenu extends HTMLElement {
   }
 
   onMegaFocusIn() {
-    if (!this.useButtonTrigger || !this.useButtonTrigger.classList.contains('mega-menu')) return;
+    if (!this.useButtonTrigger || !this.isHoverLinkMenu(this.useButtonTrigger)) return;
     if (this.hoverCloseTimeout) {
       clearTimeout(this.hoverCloseTimeout);
       this.hoverCloseTimeout = null;
@@ -126,7 +139,7 @@ class HeaderMenu extends HTMLElement {
 
   onButtonToggle() {
     if (!this.trigger || !this.content) return;
-    if (this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu--hover-only')) {
+    if (this.useButtonTrigger && this.isHoverOnlyMenu(this.useButtonTrigger)) {
       return;
     }
     const open = this.content.hidden;
@@ -182,7 +195,7 @@ class HeaderMenu extends HTMLElement {
       if (this.useButtonTrigger) {
         this.useButtonTrigger.classList.remove('mega-menu--open');
       }
-      if (this.header && this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu')) {
+      if (this.header && this.useButtonTrigger && this.isHoverLinkMenu(this.useButtonTrigger)) {
         this.header.preventHide = false;
       }
     }
@@ -199,7 +212,7 @@ class HeaderMenu extends HTMLElement {
       if (this.useButtonTrigger) {
         this.useButtonTrigger.classList.add('mega-menu--open');
       }
-      if (this.header && this.useButtonTrigger && this.useButtonTrigger.classList.contains('mega-menu')) {
+      if (this.header && this.useButtonTrigger && this.isHoverLinkMenu(this.useButtonTrigger)) {
         document.documentElement.style.setProperty(
           '--header-bottom-position-desktop',
           `${Math.floor(this.header.getBoundingClientRect().bottom)}px`
