@@ -12,13 +12,6 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "blocks": {
-        "collection_filter_YhBmyD": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Profile"
-          }
-        },
         "collection_filter_iXH7C4": {
           "type": "collection_filter",
           "settings": {
@@ -49,7 +42,6 @@
         }
       },
       "block_order": [
-        "collection_filter_YhBmyD",
         "collection_filter_iXH7C4",
         "collection_filter_yMxNRh",
         "collection_filter_kGYRXx",
