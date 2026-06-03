@@ -4,6 +4,8 @@
   "scripts": {
     "build:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --minify",
     "watch:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --watch",
+    "merge:css": "npm run build:css && git add assets/tailwind.css",
+    "setup:git": "git config merge.tailwind-css-merge.name 'Regenerate Tailwind CSS' && git config merge.tailwind-css-merge.driver \"$(pwd)/scripts/tailwind-merge-driver.sh %O %A %B\"",
     "theme:dev": "shopify theme dev --store daksten",
     "theme:push": "shopify theme push --store daksten"
   },

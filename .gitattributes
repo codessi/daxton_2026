@@ -1,0 +1,3 @@
+# Generated CSS — both branches change this file when Tailwind classes change.
+# Use merge driver (npm run setup:git) to rebuild instead of manual conflict resolution.
+assets/tailwind.css merge=tailwind-css-merge
