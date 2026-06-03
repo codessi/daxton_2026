@@ -19,13 +19,6 @@
             "filter_param_name": "color"
           }
         },
-        "collection_filter_Qgznym": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "color"
-          }
-        },
         "collection_filter_KQPM4t": {
           "type": "collection_filter",
           "settings": {
@@ -50,7 +43,6 @@
       },
       "block_order": [
         "collection_filter_JznQ7D",
-        "collection_filter_Qgznym",
         "collection_filter_KQPM4t",
         "collection_filter_kGYRXx",
         "collection_filter_3hLfwW"
