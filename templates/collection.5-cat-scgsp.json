@@ -12,25 +12,18 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "blocks": {
+        "collection_filter_Vw7Hmy": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "size"
+          }
+        },
         "collection_filter_aiBRkX": {
           "type": "collection_filter",
           "settings": {
             "show": true,
             "filter_param_name": "gender"
-          }
-        },
-        "collection_filter_Vw7Hmy": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Size"
-          }
-        },
-        "collection_filter_3hLfwW": {
-          "type": "collection_filter",
-          "settings": {
-            "show": true,
-            "filter_param_name": "Price"
           }
         },
         "collection_filter_iXH7C4": {
@@ -46,14 +39,21 @@
             "show": true,
             "filter_param_name": "Style"
           }
+        },
+        "collection_filter_3hLfwW": {
+          "type": "collection_filter",
+          "settings": {
+            "show": true,
+            "filter_param_name": "Price"
+          }
         }
       },
       "block_order": [
-        "collection_filter_aiBRkX",
         "collection_filter_Vw7Hmy",
-        "collection_filter_3hLfwW",
+        "collection_filter_aiBRkX",
         "collection_filter_iXH7C4",
-        "collection_filter_kGYRXx"
+        "collection_filter_kGYRXx",
+        "collection_filter_3hLfwW"
       ],
       "settings": {
         "products_per_page": 16,
