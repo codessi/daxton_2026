@@ -1,0 +1,54 @@
+{% comment %}
+  Color option as a Shopify swatch (admin color/image swatch), not variant thumbnail.
+  Accepts: option, value, swatch_shape (circle | square)
+{% endcomment %}
+{%- liquid
+  assign shape = swatch_shape | default: 'circle'
+  if shape == 'square'
+    assign swatch_shape_arg = 'square'
+    assign outer_shape = 'rounded-md'
+  else
+    assign swatch_shape_arg = 'circle'
+    assign outer_shape = 'rounded-full'
+  endif
+-%}
+<label class="group inline-flex cursor-pointer">
+  <input
+    class="peer sr-only"
+    type="radio"
+    name="options[{{ option.name | escape }}]"
+    value="{{ value | escape }}"
+    {% if value.selected or option.selected_value == value %}
+      checked
+    {% endif %}
+    aria-label="{{ option.name | escape }}: {{ value | escape }}"
+  >
+  <span
+    class="
+      test-product-option-color-swatch
+      flex h-10 w-10 shrink-0 overflow-hidden border-2 border-gray-300 bg-white
+      {{ outer_shape }}
+      transition-[border-color,opacity]
+      peer-not-checked:hover:opacity-90
+      peer-checked:border-black peer-checked:hover:border-black
+      peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black
+      [&_.swatch]:!m-0 [&_.swatch]:!box-border [&_.swatch]:!h-full [&_.swatch]:!w-full [&_.swatch]:!max-w-none [&_.swatch]:!border-0
+      {% if swatch_shape_arg == 'circle' %}[&_.swatch]:!rounded-full{% else %}[&_.swatch]:!rounded-none{% endif %}
+    "
+  >
+    {%- if value.swatch -%}
+      {% if swatch_shape_arg == 'square' %}
+        {% render 'swatch', swatch: value.swatch, shape: 'square' %}
+      {% else %}
+        {% render 'swatch', swatch: value.swatch %}
+      {% endif %}
+    {%- else -%}
+      <span
+        class="flex h-full w-full items-center justify-center bg-gray-200 text-[10px] font-semibold uppercase text-gray-700"
+        title="{{ value | escape }}"
+      >
+        {{ value | escape }}
+      </span>
+    {%- endif -%}
+  </span>
+</label>

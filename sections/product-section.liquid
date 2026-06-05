@@ -22,6 +22,7 @@
 %}
 
 {% if current_product %}
+  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
   <section class="w-full px-4 py-4">
     <div class="mx-auto flex gap-5 max-w-[1700px]">
       <div class="desktop-only flex-1 flex flex-col gap-3 max-[80rem]:hidden">
@@ -145,14 +146,39 @@
                     {{ option.name | escape }}:
                     <span data-option-selected-value>{{ option.selected_value | escape }}</span>
                   </legend>
-                  <div class="flex flex-wrap gap-2">
+                  <div class="flex flex-wrap gap-2.5">
+                    {% liquid
+                      assign option_name_down = option.name | downcase
+                    %}
                     {% for value in option.values %}
-                      {% render 'test-product-option-swatch',
-                        product: current_product,
-                        option: option,
-                        value: value,
-                        selected_variant: selected_variant
-                      %}
+                      {% if option_name_down == 'size' %}
+                        {% render 'test-product-option-button',
+                          option: option,
+                          value: value
+                        %}
+                      {% elsif option_name_down == 'color' or option_name_down == 'colour' %}
+                        {% if section.settings.color_option_style == 'image' %}
+                          {% render 'test-product-option-swatch',
+                            product: current_product,
+                            option: option,
+                            value: value,
+                            selected_variant: selected_variant
+                          %}
+                        {% else %}
+                          {% render 'test-product-option-color-swatch',
+                            option: option,
+                            value: value,
+                            swatch_shape: section.settings.color_swatch_shape
+                          %}
+                        {% endif %}
+                      {% else %}
+                        {% render 'test-product-option-swatch',
+                          product: current_product,
+                          option: option,
+                          value: value,
+                          selected_variant: selected_variant
+                        %}
+                      {% endif %}
                     {% endfor %}
                   </div>
                 </fieldset>
@@ -521,7 +547,46 @@
 {% schema %}
 {
   "name": "Test product section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Variant options"
+    },
+    {
+      "type": "select",
+      "id": "color_option_style",
+      "label": "Color option display",
+      "options": [
+        {
+          "value": "color_swatch",
+          "label": "Color swatch"
+        },
+        {
+          "value": "image",
+          "label": "Variant image"
+        }
+      ],
+      "default": "color_swatch",
+      "info": "How the Color (or Colour) option is shown. Other options except Size keep variant images unless changed separately."
+    },
+    {
+      "type": "select",
+      "id": "color_swatch_shape",
+      "label": "Color swatch shape",
+      "options": [
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "default": "circle",
+      "info": "Uses swatch colors from Shopify admin (Settings → Custom data → Products, or category metafields / Search & Discovery swatches)."
+    }
+  ],
   "presets": [
     {
       "name": "Test product section"

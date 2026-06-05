@@ -1,0 +1,29 @@
+{% comment %}
+  Text option as a circular button (e.g. Size: S, M, L, XL, 2X).
+  Accepts: option, value
+{% endcomment %}
+<label class="group cursor-pointer">
+  <input
+    class="peer sr-only"
+    type="radio"
+    name="options[{{ option.name | escape }}]"
+    value="{{ value | escape }}"
+    {% if option.selected_value == value %}
+      checked
+    {% endif %}
+    aria-label="{{ option.name | escape }}: {{ value | escape }}"
+  >
+  <span
+    class="
+      test-product-option-button
+      flex h-12 min-w-12 shrink-0 items-center justify-center rounded-full border border-black bg-white px-2
+      text-sm font-bold uppercase leading-none tracking-wide text-black
+      transition-colors
+      peer-not-checked:hover:bg-gray-50
+      peer-checked:border-black peer-checked:bg-black peer-checked:text-white peer-checked:hover:bg-black peer-checked:hover:text-white
+      peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black
+    "
+  >
+    {{ value | escape }}
+  </span>
+</label>
