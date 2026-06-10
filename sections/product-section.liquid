@@ -23,10 +23,11 @@
 
 {% if current_product %}
   {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+  {{ 'section-product-section.css' | asset_url | stylesheet_tag }}
   {% if section.settings.show_delivery_estimate %}
     <script src="{{ 'product-delivery-estimate.js' | asset_url }}" defer="defer"></script>
   {% endif %}
-  <section class="w-full px-4 py-4">
+  <section class="product-section-47 w-full px-4 py-4">
     <div class="mx-auto flex gap-5 max-w-[1700px]">
       <div class="desktop-only flex-1 flex flex-col gap-3 max-[80rem]:hidden">
 
@@ -35,13 +36,13 @@
           {% render 'test-product-media-grid', variant: selected_variant, product: current_product %}
         </div>
         {% comment %} sku section {% endcomment %}
-        <div class="text-sm text-gray-600">
-          <span class="font-medium text-gray-900">SKU:</span>
+        <div class="product-section-47__sku">
+          <span class="product-section-47__sku-label">SKU:</span>
           <span>{{ selected_variant.sku | default: 'N/A' }}</span>
         </div>
         {% comment %} description section {% endcomment %}
         {% if current_product.description != blank %}
-          <div class="prose prose-sm max-w-none text-gray-800">
+          <div class="product-section-47__description">
             {{ current_product.description }}
           </div>
         {% endif %}
@@ -49,7 +50,7 @@
 
       <div class="section-right min-w-0 self-start xl:w-[34%] sticky top-[var(--header-group-height)]">
         {% comment %} bread crumb section {% endcomment %}
-        <nav class="text-xs text-gray-500">
+        <nav class="product-section-47__breadcrumb text-gray-500">
           <a href="{{ routes.root_url }}" class="hover:text-black">Home</a>
           <span class="mx-1">/</span>
           {% if collection %}
@@ -61,14 +62,14 @@
           <span class="text-gray-800">{{ current_product.title }}</span>
         </nav>
         {% comment %} title section {% endcomment %}
-        <h1 class="text-2xl font-bold tracking-tight text-black">{{ current_product.title }}</h1>
-        <div class="flex justify-between">
+        <h1 class="product-section-47__title">{{ current_product.title }}</h1>
+        <div class="product-section-47__price-row flex justify-between">
           {% comment %} price section {% endcomment %}
-          <div class="text-xl font-semibold text-black">
+          <div class="product-section-47__price">
             {{ selected_variant.price | money }}
           </div>
           {% comment %} review rating section {% endcomment %}
-          <div class="flex items-center gap-2 text-sm text-gray-700">
+          <div class="product-section-47__reviews flex items-center gap-2 text-gray-700">
             {% if review_rating != blank %}
               {% assign rating_value = review_rating | round: 1 %}
               {% assign filled_stars = review_rating | round %}
@@ -145,7 +146,7 @@
             <div class="flex flex-col gap-4">
               {% for option in current_product.options_with_values %}
                 <fieldset class="test-product-option-fieldset border-0 flex flex-col gap-3" data-option-name="{{ option.name | escape }}">
-                  <legend class="text-sm font-bold uppercase tracking-wide text-gray-900">
+                  <legend class="product-section-47__option-legend">
                     {{ option.name | escape }}:
                     <span data-option-selected-value>{{ option.selected_value | escape }}</span>
                   </legend>
@@ -194,7 +195,7 @@
           <button
             type="submit"
             name="add"
-            class="w-full rounded bg-black px-4 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            class="product-section-47__submit w-full rounded bg-black px-4 py-3 text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
             {% unless selected_variant.available %}
               disabled
             {% endunless %}
@@ -218,21 +219,21 @@
 
         <div class="mobile-only xl:hidden flex flex-col gap-3">
           {% comment %} sku section {% endcomment %}
-          <div class="text-sm text-gray-600">
-            <span class="font-medium text-gray-900">SKU:</span>
+          <div class="product-section-47__sku">
+            <span class="product-section-47__sku-label">SKU:</span>
             <span>{{ selected_variant.sku | default: 'N/A' }}</span>
           </div>
           {% comment %} description section {% endcomment %}
           {% if current_product.description != blank %}
-            <div class="prose prose-sm max-w-none text-gray-800">
+            <div class="product-section-47__description">
               {{ current_product.description }}
             </div>
           {% endif %}
         </div>
 
         {% comment %} share section {% endcomment %}
-        <div class="flex items-center gap-3 text-sm">
-          <span class="font-medium text-gray-900">Share:</span>
+        <div class="product-section-47__share flex items-center gap-3">
+          <span class="product-section-47__share-label">Share:</span>
           <a
             href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: current_product.url | url_encode }}"
             target="_blank"
@@ -260,7 +261,7 @@
         {% comment %} related products section {% endcomment %}
         {% if collection and collection.products_count > 1 %}
           <div class="flex flex-col gap-3">
-            <h2 class="text-lg font-semibold text-gray-900">Related products</h2>
+            <h2 class="product-section-47__related-title text-gray-900">Related products</h2>
             <div class="flex gap-3 overflow-x-auto pb-2">
               {% for related_product in collection.products limit: 8 %}
                 {% if related_product.id != current_product.id %}
@@ -272,8 +273,8 @@
                         | image_tag: alt: related_product.title, class: 'mb-2 h-40 w-full rounded object-cover'
                       }}
                     {% endif %}
-                    <p class="line-clamp-2 text-sm font-medium text-gray-900">{{ related_product.title }}</p>
-                    <p class="mt-1 text-sm text-gray-700">{{ related_product.price | money }}</p>
+                    <p class="product-section-47__related-name line-clamp-2 text-gray-900">{{ related_product.title }}</p>
+                    <p class="product-section-47__related-price mt-1 text-gray-700">{{ related_product.price | money }}</p>
                   </a>
                 {% endif %}
               {% endfor %}
@@ -599,7 +600,14 @@
       "type": "checkbox",
       "id": "delivery_start_open",
       "label": "Show ZIP code field by default",
-      "default": true
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "delivery_auto_detect_zip",
+      "label": "Auto-detect visitor ZIP code",
+      "default": true,
+      "info": "Uses the logged-in customer address when available, otherwise estimates ZIP from the visitor’s IP (US only). Visitors can change it with the caret."
     },
     {
       "type": "text",
@@ -623,9 +631,19 @@
       "min": 1,
       "max": 10,
       "step": 1,
-      "label": "Base transit time (business days)",
-      "default": 3,
-      "info": "Added to processing time. Extra days may apply for distant US ZIP codes."
+      "label": "Local transit time (business days)",
+      "default": 2,
+      "info": "Ground transit for SoCal ZIPs (900–935) after processing. Extra days apply for distant US ZIPs (ships from Los Angeles)."
+    },
+    {
+      "type": "range",
+      "id": "delivery_transit_range_days",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "label": "Delivery date range (extra business days)",
+      "default": 1,
+      "info": "Adds buffer days to the latest “Get it by” date (e.g. Wed – Fri)."
     },
     {
       "type": "richtext",

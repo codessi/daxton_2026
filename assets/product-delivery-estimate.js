@@ -1,5 +1,7 @@
 (function () {
   const STORAGE_KEY = 'daxton_delivery_zip';
+  const GEO_SESSION_KEY = 'daxton_delivery_geo_zip';
+  let detectZipPromise = null;
 
   function parseConfig(root) {
     try {
@@ -35,17 +37,36 @@
     return date;
   }
 
+  /**
+   * Transit business days from Los Angeles warehouse (900xx).
+   * `config.transitDays` is the SoCal local baseline; distant zones add on top.
+   */
   function transitDaysForZip(zip, config) {
-    const base = parseInt(config.transitDays, 10) || 3;
+    const localBase = parseInt(config.transitDays, 10) || 2;
     const z = String(zip || '').replace(/\D/g, '');
-    if (!z || z.length < 3) return base;
+    if (!z || z.length < 3) return localBase;
     const prefix = parseInt(z.slice(0, 3), 10);
-    if (Number.isNaN(prefix)) return base;
-    if (prefix >= 900 && prefix <= 961) return base;
-    if (prefix >= 100 && prefix <= 299) return base + 1;
-    if (prefix >= 300 && prefix <= 599) return base + 2;
-    if (prefix >= 600 && prefix <= 799) return base + 3;
-    return base + 4;
+    if (Number.isNaN(prefix)) return localBase;
+
+    // SoCal / greater Los Angeles
+    if (prefix >= 900 && prefix <= 935) return localBase;
+    // Rest of CA, NV, AZ
+    if (prefix >= 936 && prefix <= 961) return localBase + 1;
+    if (prefix >= 890 && prefix <= 898) return localBase + 1;
+    // Pacific NW, Mountain, Rockies
+    if (prefix >= 970 && prefix <= 994) return localBase + 2;
+    if (prefix >= 800 && prefix <= 816) return localBase + 2;
+    // Central / South
+    if (prefix >= 700 && prefix <= 799) return localBase + 2;
+    if (prefix >= 600 && prefix <= 699) return localBase + 3;
+    if (prefix >= 300 && prefix <= 599) return localBase + 3;
+    // East Coast / Northeast
+    if (prefix >= 100 && prefix <= 299) return localBase + 4;
+    // Alaska & Hawaii
+    if (prefix >= 995 && prefix <= 999) return localBase + 6;
+    if (prefix >= 967 && prefix <= 968) return localBase + 6;
+
+    return localBase + 3;
   }
 
   function formatDeliveryDate(date, locale) {
@@ -55,11 +76,82 @@
     return weekday + ', ' + month + ' ' + day;
   }
 
-  function computeDeliveryDate(zip, config) {
+  function formatDeliveryRange(earliest, latest, locale) {
+    const earlyStr = formatDeliveryDate(earliest, locale);
+    const lateStr = formatDeliveryDate(latest, locale);
+    if (earlyStr === lateStr) return earlyStr;
+    return earlyStr + ' \u2013 ' + lateStr;
+  }
+
+  function computeDeliveryDates(zip, config) {
     const processing = parseInt(config.processingDays, 10) || 1;
-    const transit = transitDaysForZip(zip, config);
+    const transitMin = transitDaysForZip(zip, config);
+    const rangeBuffer = Math.max(0, parseInt(config.transitRangeDays, 10) || 1);
+    const transitMax = transitMin + rangeBuffer;
     const afterProcessing = addBusinessDays(new Date(), processing);
-    return addBusinessDays(afterProcessing, transit);
+    return {
+      earliest: addBusinessDays(afterProcessing, transitMin),
+      latest: addBusinessDays(afterProcessing, transitMax),
+    };
+  }
+
+  function detectZipFromIp(country) {
+    if (detectZipPromise) return detectZipPromise;
+
+    detectZipPromise = (async function () {
+      try {
+        const cached = sessionStorage.getItem(GEO_SESSION_KEY);
+        if (cached) return cached;
+      } catch (e) {}
+
+      if (country !== 'US' && country !== 'USA') return '';
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(function () {
+          controller.abort();
+        }, 5000);
+        const response = await fetch('https://ipapi.co/json/', {
+          signal: controller.signal,
+          headers: { Accept: 'application/json' },
+        });
+        clearTimeout(timeoutId);
+        if (!response.ok) return '';
+        const data = await response.json();
+        const zip = normalizeZip(data.postal || '', country);
+        if (!isValidZip(zip, country)) return '';
+        try {
+          sessionStorage.setItem(GEO_SESSION_KEY, zip);
+        } catch (e) {}
+        return zip;
+      } catch (e) {
+        return '';
+      }
+    })();
+
+    return detectZipPromise;
+  }
+
+  async function resolveInitialZip(config, country) {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const normalized = normalizeZip(stored, country);
+        if (isValidZip(normalized, country)) return normalized;
+      }
+    } catch (e) {}
+
+    if (config.customerZip) {
+      const customerZip = normalizeZip(config.customerZip, country);
+      if (isValidZip(customerZip, country)) return customerZip;
+    }
+
+    if (config.autoDetectZip !== false) {
+      const detected = await detectZipFromIp(country);
+      if (detected) return detected;
+    }
+
+    return config.defaultZip || '';
   }
 
   function init(root) {
@@ -93,33 +185,38 @@
       }
     }
 
-    function updateUI(zip) {
+    function updateUI(zip, persist) {
       const normalized = normalizeZip(zip, country);
       if (!isValidZip(normalized, country)) {
         setError(config.invalidZipMessage || 'Enter a valid ZIP code.');
         return;
       }
       setError('');
-      try {
-        localStorage.setItem(STORAGE_KEY, normalized);
-      } catch (e) {}
+      if (persist !== false) {
+        try {
+          localStorage.setItem(STORAGE_KEY, normalized);
+        } catch (e) {}
+      }
 
       if (zipDisplay) zipDisplay.textContent = normalized;
       zipInput.value = normalized;
 
-      const deliveryDate = computeDeliveryDate(normalized, config);
-      dateEl.textContent = formatDeliveryDate(deliveryDate, locale);
+      const dates = computeDeliveryDates(normalized, config);
+      dateEl.textContent = formatDeliveryRange(dates.earliest, dates.latest, locale);
 
       if (unavailableEl) unavailableEl.classList.add('hidden');
       dateEl.closest('[data-delivery-estimate-row]')?.classList.remove('hidden');
     }
 
-    let initialZip = '';
-    try {
-      initialZip = localStorage.getItem(STORAGE_KEY) || '';
-    } catch (e) {}
-    if (!initialZip && config.defaultZip) initialZip = config.defaultZip;
-    updateUI(initialZip);
+    // Show fallback estimate immediately, then refine with saved/detected ZIP.
+    updateUI(config.defaultZip || '', false);
+
+    resolveInitialZip(config, country).then(function (zip) {
+      if (!zip) return;
+      const current = normalizeZip(zipInput.value, country);
+      const resolved = normalizeZip(zip, country);
+      if (resolved !== current) updateUI(resolved);
+    });
 
     function setZipPanelOpen(open) {
       if (!zipPanel) return;
@@ -132,7 +229,7 @@
     }
 
     if (zipToggle && zipPanel) {
-      setZipPanelOpen(config.startOpen !== false);
+      setZipPanelOpen(config.startOpen === true);
       zipToggle.addEventListener('click', function () {
         setZipPanelOpen(zipPanel.classList.contains('hidden'));
       });

@@ -1,0 +1,206 @@
+/**
+ * Product section typography — aligned with 47brand PDP
+ * (Acumin Pro body + Acumin Pro Extra Condensed headings/labels)
+ */
+.product-section-47 {
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  color: rgb(var(--color-foreground));
+}
+
+.product-section-47__breadcrumb {
+  margin: 0 0 1.875rem;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.product-section-47__title {
+  margin: 0;
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 30px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.23;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+}
+
+.product-section-47__price-row {
+  margin-top: 0.75rem;
+}
+
+.product-section-47__price {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: rgb(var(--color-foreground));
+}
+
+.product-section-47__reviews {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.46;
+}
+
+.product-section-47__option-legend {
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+}
+
+.product-section-47 .test-product-option-button {
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.product-section-47__submit {
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.product-section-47__sku {
+  margin: 0.625rem 0;
+  font-family: var(--font-body-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.product-section-47__sku-label {
+  font-weight: 400;
+  color: rgb(var(--color-foreground));
+}
+
+.product-section-47__description {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.product-section-47__description p {
+  margin: 0;
+}
+
+.product-section-47__description ul,
+.product-section-47__description ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.product-section-47__share {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.46;
+}
+
+.product-section-47__share-label {
+  font-weight: 700;
+}
+
+.product-section-47__related-title {
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.product-section-47__related-name {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.product-section-47__related-price {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.product-section-47 .product-delivery-estimate {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.46;
+}
+
+.product-section-47 .product-delivery-estimate__header,
+.product-section-47 .product-delivery-estimate [data-delivery-estimate-row] {
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.46;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.product-section-47 .product-delivery-estimate__notes {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.69;
+  text-transform: none;
+}
+
+.product-section-47 .product-delivery-estimate [data-delivery-zip-update] {
+  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.product-section-47 .product-delivery-estimate [data-delivery-zip-input] {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 1200px) {
+  .product-section-47__breadcrumb {
+    margin: 0.75rem 0 1.875rem;
+  }
+
+  .product-section-47__title {
+    font-size: 22px;
+  }
+
+  .product-section-47__description {
+    font-size: 16px;
+  }
+}
