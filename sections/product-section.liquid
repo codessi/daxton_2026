@@ -50,16 +50,16 @@
 
       <div class="section-right min-w-0 self-start xl:w-[34%] sticky top-[var(--header-group-height)]">
         {% comment %} bread crumb section {% endcomment %}
-        <nav class="product-section-47__breadcrumb text-gray-500">
-          <a href="{{ routes.root_url }}" class="hover:text-black">Home</a>
-          <span class="mx-1">/</span>
+        <nav class="product-section-47__breadcrumb" aria-label="Breadcrumb">
+          <a href="{{ routes.root_url }}">Home</a>
+          <span class="product-section-47__breadcrumb-sep" aria-hidden="true">/</span>
           {% if collection %}
-            <a href="{{ collection.url }}" class="hover:text-black">{{ collection.title }}</a>
+            <a href="{{ collection.url }}">{{ collection.title }}</a>
           {% else %}
-            <a href="{{ routes.all_products_collection_url }}" class="hover:text-black">Products</a>
+            <a href="{{ routes.all_products_collection_url }}">Products</a>
           {% endif %}
-          <span class="mx-1">/</span>
-          <span class="text-gray-800">{{ current_product.title }}</span>
+          <span class="product-section-47__breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">{{ current_product.title }}</span>
         </nav>
         {% comment %} title section {% endcomment %}
         <h1 class="product-section-47__title">{{ current_product.title }}</h1>
@@ -195,7 +195,7 @@
           <button
             type="submit"
             name="add"
-            class="product-section-47__submit w-full rounded bg-black px-4 py-3 text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            class="product-section-47__submit w-full border-0 bg-black text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
             {% unless selected_variant.available %}
               disabled
             {% endunless %}

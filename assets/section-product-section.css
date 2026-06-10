@@ -11,11 +11,35 @@
 .product-section-47__breadcrumb {
   margin: 0 0 1.875rem;
   font-family: var(--font-body-family);
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 11px;
+  font-weight: 600;
   line-height: 1.4;
   letter-spacing: normal;
-  text-transform: none;
+  text-transform: capitalize;
+  color: #595959;
+}
+
+.product-section-47__breadcrumb a,
+.product-section-47__breadcrumb span {
+  color: #595959;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.product-section-47__breadcrumb a:link,
+.product-section-47__breadcrumb a:visited,
+.product-section-47__breadcrumb a:hover,
+.product-section-47__breadcrumb a:active,
+.product-section-47__breadcrumb a:focus {
+  color: #595959;
+  text-decoration: none;
+}
+
+.product-section-47__breadcrumb-sep {
+  display: inline-block;
+  padding: 0 3px;
+  color: #595959;
+  font-weight: 600;
 }
 
 .product-section-47__title {
@@ -72,11 +96,14 @@
 
 .product-section-47__submit {
   font-family: var(--font-heading-family-condensed, var(--font-heading-family));
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: normal;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  padding: 18px 16px;
+  border-radius: 4px;
+  min-height: 52px;
 }
 
 .product-section-47__sku {
