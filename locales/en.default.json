@@ -189,7 +189,17 @@
       "taxes_included": "Taxes included.",
       "duties_included": "Duties included.",
       "duties_and_taxes_included": "Duties and taxes included.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout."
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+      "delivery_estimate": {
+        "ship_to": "Ship to",
+        "zip_label": "ZIP code",
+        "zip_placeholder": "ZIP code",
+        "update": "Update",
+        "get_it_by": "Get it by",
+        "unavailable": "Delivery estimate unavailable",
+        "invalid_zip": "Enter a valid ZIP code.",
+        "toggle_zip": "Show or hide ZIP code field"
+      }
     },
     "modal": {
       "label": "Media gallery"
