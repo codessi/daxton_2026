@@ -177,47 +177,6 @@
   line-height: 1.4;
 }
 
-.product-section-47 .product-delivery-estimate {
-  font-family: var(--font-body-family);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.46;
-}
-
-.product-section-47 .product-delivery-estimate__header,
-.product-section-47 .product-delivery-estimate [data-delivery-estimate-row] {
-  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.46;
-  letter-spacing: normal;
-  text-transform: uppercase;
-}
-
-.product-section-47 .product-delivery-estimate__notes {
-  font-family: var(--font-body-family);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.69;
-  text-transform: none;
-}
-
-.product-section-47 .product-delivery-estimate [data-delivery-zip-update] {
-  font-family: var(--font-heading-family-condensed, var(--font-heading-family));
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: normal;
-  text-transform: uppercase;
-}
-
-.product-section-47 .product-delivery-estimate [data-delivery-zip-input] {
-  font-family: var(--font-body-family);
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: normal;
-  text-transform: uppercase;
-}
-
 @media screen and (max-width: 1200px) {
   .product-section-47__breadcrumb {
     margin: 0.75rem 0 1.875rem;

@@ -29,3 +29,12 @@
   --swatch--border-radius: 0.25rem;
   border-radius: var(--swatch--border-radius);
 }
+
+/* Collection card variant / color swatches — selection via aria-pressed */
+.card-wrapper [data-card-variant-thumb] {
+  border-color: #d1d5db;
+}
+
+.card-wrapper [data-card-variant-thumb][aria-pressed='true'] {
+  border-color: #000;
+}

@@ -318,9 +318,6 @@ function onProductCardVariantThumbnailClick(event) {
 
   cardWrapper.querySelectorAll('[data-card-variant-thumb]').forEach((button) => {
     const isSelected = button === variantThumbButton;
-    button.classList.toggle('ring-1', isSelected);
-    button.classList.toggle('ring-black', isSelected);
-    button.classList.toggle('border-black', isSelected);
     button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
   });
 
