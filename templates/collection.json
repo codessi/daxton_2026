@@ -99,7 +99,7 @@
         "show_rating": false,
         "quick_add": "standard",
         "enable_filtering": true,
-        "show_zero_count_filter_options": false,
+        "show_zero_count_filter_options": true,
         "expand_all_filters": false,
         "clear_filters_target_collection": "all-headwear",
         "customize_collection_filters": true,
