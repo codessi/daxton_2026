@@ -57,7 +57,7 @@
       ],
       "settings": {
         "products_per_page": 16,
-        "columns_desktop": 3,
+        "columns_desktop": 4,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "square",
@@ -71,7 +71,7 @@
         "expand_all_filters": false,
         "clear_filters_target_collection": "all-headwear",
         "customize_collection_filters": true,
-        "filter_type": "vertical",
+        "filter_type": "horizontal",
         "show_collection_description": true,
         "show_collection_image": false,
         "banner_color_scheme": "",
