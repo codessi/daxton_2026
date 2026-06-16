@@ -97,7 +97,7 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "enable_filtering": true,
         "show_zero_count_filter_options": false,
         "expand_all_filters": false,
