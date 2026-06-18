@@ -11,7 +11,19 @@
   "sections": {
     "main-product": {
       "type": "product-section",
-      "settings": {}
+      "settings": {
+        "color_option_style": "color_swatch",
+        "color_swatch_shape": "circle",
+        "show_delivery_estimate": true,
+        "delivery_start_open": false,
+        "delivery_auto_detect_zip": true,
+        "delivery_default_zip": "90013",
+        "delivery_processing_days": 1,
+        "delivery_transit_days": 2,
+        "delivery_transit_range_days": 1,
+        "delivery_note_1": "<p>FREE SHIPPING on all orders.</p>",
+        "delivery_note_2": "<p>Orders $75+ qualify for free standard shipping.</p>"
+      }
     },
     "17767922839fa3dad5": {
       "type": "apps",
